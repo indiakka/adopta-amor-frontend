@@ -1,0 +1,72 @@
+.animalInfocontainer {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-content: center;    
+    border-radius: 5px;
+    border: 2px solid var(--text-color);
+    color: var(--text-color);
+    margin: 4rem;
+}
+
+.animalInfoImg--container {
+    width: 50%;
+    display: flex;
+    padding: 2rem;
+}
+
+.animalInfo--img {
+    height: 500px;
+    border-radius: 5px;
+    width: 90%;
+    object-fit: cover;
+    align-self: center;
+}
+
+.animalInfoTxt--container {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
+}
+
+.container--button {
+    padding: 1em;
+}
+
+.btn--conoceme {
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    gap: 4%;
+}
+
+.iconoConoceme {
+    width: 20%;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.contenedor--botones--editar {
+    padding-top: 1rem;
+}
+
+.botones--editar {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+/* @media móvil */
+@media only screen and (max-width: 360px) {
+    .animalInfocontainer {
+        flex-direction: column;
+    }
+    .animalInfoImg--container {
+        width: 100%;
+    }
+    .animalInfoTxt--container{
+        width: 100%;
+    }
+}

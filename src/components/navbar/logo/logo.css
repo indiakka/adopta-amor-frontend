@@ -1,0 +1,25 @@
+.logo {
+    width: 20%;
+    margin: auto;
+    padding: 0;
+    display: block;
+}
+
+.logo:hover {
+    width: 21%;
+}
+
+@media only screen and (max-width: 480px) {
+
+    .logo {
+        width: 50%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+
+    .logo {
+        width: 50%;
+
+    }
+}

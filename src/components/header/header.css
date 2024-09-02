@@ -1,0 +1,34 @@
+  .container-header {
+    width: 90%;
+    height: 70vh;
+    margin: 0 5% 0 5%;
+    box-sizing: border-box;
+    border: 5px solid var(--main-color);
+    background-image: url('src/assets/images/portada.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+
+  .botones-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 2em;
+  }
+
+  /* @media móvil */
+  @media only screen and (max-width: 360px) {
+
+    .container-header {
+      background-position: 70% 50%;
+    }
+
+  }

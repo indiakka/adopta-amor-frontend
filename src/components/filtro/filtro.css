@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+.filtro {
+    border: 2px solid;
+    margin: 2rem 12rem;
+    border-radius: 5px;
+    color: var(--color-texto);
+    align-content: center;
+}
+
+.campoFiltro {
+    width: 25%;
+    height: 7vh;
+    color: var(--color-texto);
+    background-color: transparent;
+    font-family: Manrope;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    padding-inline: 0.5em;
+    cursor: pointer;
+    transition: color 0.5s;
+    position: relative;
+    border: none;
+}
+
+.campoFiltro:focus,
+.campoFiltro:active {
+    color: var(--color-principal);
+}
+
+.campoFiltro ul {
+    color: var(--color-texto);
+}
+
+.campoFiltro:nth-of-type(1) {
+    border-right: 2px solid var(--color-texto);
+}
+
+.campoFiltro:nth-of-type(2) {
+    border-right: 2px solid var(--color-texto);
+}
+
+.campoFiltro:nth-of-type(3) {
+    border-right: 2px solid var(--color-texto);
+}
+
+.campoFiltro:hover {
+    background: var(--color-principal-claro);
+    color: rgb(78, 28, 124);
+}
+
+.listaFiltro {
+    width: 75%;
+    list-style: none;
+    padding: 0;
+    text-align: center;
+    position: absolute;
+    top: 100%;
+    border: 2px solid;
+    margin: 0;
+    margin-inline: 16px;
+    background-color: white;
+}
+
+.opcionSeleccionada {
+    margin-left: 5px;
+    font-weight: bold;
+    color: rgb(92, 88, 88);
+    font-size: 20px;
+}
+
+.elementoListaFiltro:hover {
+    background-color: rgb(215, 188, 236);
+}
+
+.iconoPapelera {
+    margin: 0 10px;
+}
+
+/* Media Queries */
+@media only screen and (max-width: 768px) {
+    .filtro {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    .filtro {
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+}

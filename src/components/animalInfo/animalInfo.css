@@ -1,0 +1,120 @@
+.contenedor--animalInfo {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: 2px solid var(--color-texto);
+    color: var(--color-texto);
+    margin: 4rem;
+    font-size: 15px;
+}
+
+.contenedor--animalInfo:hover{
+    transform: none;
+}
+
+.contenedor--imagen--animalInfo {
+    width: 50%;
+    display: flex;
+    padding: 2rem;
+}
+
+.animalInfo--img {
+    border-radius: 5px;
+    width: 20vw;
+    height: 50vh;
+    object-fit: cover;
+    align-self: center;
+}
+
+.contenedor--texto--animalInfo {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
+}
+.contenedor--texto--animalInfo p{
+    margin: 10px;
+}
+
+.contenedor--boton {
+    padding: 1em;
+}
+
+.btn--conoceme {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4%;
+}
+
+.iconoConoceme {
+    width: 20%;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.botones--editar {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.contenedor-cerrar-tarjeta {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.cerrar-tarjeta {
+    width: 20%;
+    height: 5%;
+    cursor: pointer;
+    color: var(--color-texto);
+    margin: 0;
+}
+
+.cerrar-tarjeta:hover {
+    color: var(--color-principal-claro);
+}
+
+.contenedor--principal--animalInfo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.contenedor--animalInfo {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 70vw;
+    height: 80vh;
+    overflow: auto;
+}
+
+/* @media móvil */
+@media only screen and (max-width: 360px) {
+    .contenedor--animalInfo {
+        flex-direction: column;
+    }
+
+    .contenedor--imagen--animalInfo {
+        width: 100%;
+    }
+
+    .contenedor--texto--animalInfo {
+        width: 100%;
+    }
+}

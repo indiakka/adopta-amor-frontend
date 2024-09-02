@@ -1,0 +1,117 @@
+* {
+  font-family: Manrope;
+  box-sizing: border-box;
+}
+
+/* .estilo-adoptar {
+  width: 100%;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  display: grid;
+  grid-template-columns: repeat(3, 30%);
+  justify-items: center;
+  column-gap: 2em;
+  row-gap: 4em;
+  align-items: center;
+  justify-content: center;
+  font-family: Manrope;
+  padding-inline: 4em;
+} */
+
+.tarjetas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 0 12rem;
+}
+
+.tarjeta {
+  border-radius: 5px;
+  border: 2px solid #8e8585;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.tarjeta--componentes {
+  color: var(--color-texto);
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 2em;
+}
+
+.tarjeta:hover {
+  border-color: var(--color-principal-claro);
+  /* color: var(--color-principal-claro); */
+  transition: all 0.3s ease-in-out;
+}
+
+.tarjeta:hover .contenedor--texto--animalInfo,
+.tarjeta:hover .tarjeta--componentes--descripcion strong {
+  color: var(--color-principal-claro);
+}
+
+.tarjeta:hover .tarjeta--componentes--nombre {
+  color: var(--color-principal);
+}
+
+.tarjeta--componentes--nombre {
+  text-align: left;
+  color: var(--color-texto);
+  align-self: self-start;
+}
+
+.tarjeta--imagen {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.tarjeta--componentes--button {
+  display: flex;
+  justify-content: center;
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.tarjeta--componentes--icono {
+  width: 4rem;
+  cursor: pointer;
+  padding-right: 2em;
+}
+
+
+
+/* @media tablet */
+@media only screen and (max-width: 768px) {
+  .estilo-adoptar {
+    grid-template-columns: repeat(2, 48%);
+    column-gap: 0.5em;
+    row-gap: 1.5em;
+  }
+
+  .tarjeta:hover {
+    background-color: inherit;
+  }
+
+  .tarjeta--componentes--icono {
+    width: 40px;
+  }
+}
+
+/* @media móvil */
+@media only screen and (max-width: 360px) {
+  .estilo-adoptar {
+    grid-template-columns: 99%;
+    row-gap: 1.5em;
+  }
+
+  .tarjeta:hover {
+    background-color: inherit;
+  }
+}

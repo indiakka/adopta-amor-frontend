@@ -1,0 +1,10 @@
+@import "src/variables-css/variables.css";
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+.sobreNosotras-container {
+    display: flex;
+    flex-direction: column;
+    margin: 2% 5% 2% 5%;
+    color: var(--text-color);
+    ;
+}

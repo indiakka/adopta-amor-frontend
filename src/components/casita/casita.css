@@ -1,0 +1,81 @@
+.contenedor-casita-tarjeta {
+    position: absolute;
+    top: 14%;
+    right: 3%;
+    display: grid;
+    border: 3px solid var(--main-color);
+    border-radius: 10px;
+    width: 15%;
+    height: auto;
+    padding: 5px;
+    font-family: Manrope;
+    background-color: #FFF
+}
+
+.casita-tarjeta {
+    border-radius: 3%;
+    width: 85%;
+    border: 2px solid var(--text-color);
+    padding: 10px;
+    margin: 5px;
+    justify-self: center;
+}
+
+.casita-imagen {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 3%;
+}
+
+.casita-texto h4,
+h5 {
+    text-align: left;
+    color: var(--text-color);
+    margin: 5px;
+}
+
+.casita-boton {
+    width: 120px;
+    height: 2.5em;
+    border-radius: 40px;
+    border-style: none;
+    color: #FFF;
+    background-color: var(--main-color);
+    font-family: var(--fuente-principal);
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 5px;
+    margin-left: 2.7em;
+    cursor: pointer;
+}
+
+.contenedor-x-tarjeta {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.x-tarjeta {
+    width: 11%;
+    margin: 7px;
+    cursor: pointer;
+
+}
+
+@media only screen and (max-width: 768px) {
+    .contenedor-casita-tarjeta {
+        width: 20%;
+        margin-top: 5px;
+        right: 8%;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .contenedor-casita-tarjeta {
+        width: 90%;
+        margin: auto;
+        top: 150px;
+        right: 0;
+        left: 0;
+    }
+}

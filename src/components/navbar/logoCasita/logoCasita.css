@@ -1,0 +1,35 @@
+.casita {
+    width: 39%;
+    height: 9%;
+    stroke: var(--color-principal);
+}
+
+.casita:hover {
+transform: scale(1.1);
+    width: 40%;
+}
+
+/* .casita-dropdown {
+    z-index: 999;
+} */
+
+.contador-animales {
+    font-size: 12px;
+}
+
+.contador {
+    position: relative;
+    top: -20px;
+    right: -20px;
+
+    background-color: var(--color-principal-claro);
+    color: var(--color-gris);
+    width: 25px;
+    height: 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+

@@ -1,0 +1,109 @@
+@import "src/variables-css/variables.css";
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+.navbar-container {
+    margin: 20px 0;
+    padding: 0;
+    width: 100%;
+    height: 17vh;
+    display: inline-flex;
+}
+
+.navbar {
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(3, 34%);
+    margin: auto;
+    transition: transform 0.3s, font-size 0.3s;
+    align-items: center;
+}
+
+.navlink-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10%;
+    width: 100%;
+    height: 50%;
+}
+
+.navlink {
+    padding: 0.5%;
+    color: var(--main-color);
+    font-family: 'Manrope', sans-serif;
+    font-size: 20px;
+    text-decoration: none;
+    text-wrap: nowrap;
+}
+
+.navlink.active-link,
+#navlink:active,
+.navlink:focus {
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+.hamburger {
+    display: none;
+}
+
+.navlink:hover {
+    font-size: 21px;
+    transform: scale(1.1);
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+}
+
+
+.casita-container {
+    width: 80%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.casita {
+    width: 9%;
+    height: 9%;
+}
+
+.casita:hover {
+    width: 10%;
+}
+
+@media only screen and (max-width: 768px) {
+    .navbar {
+        width: 90%;
+        display: grid;
+        grid-template-columns: repeat(3, 34%);
+    }
+
+    .navlink {
+        display: none;
+    }
+
+    .hamburger {
+        font-size: 30px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .casita-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .casita {
+        width: 35%;
+    }
+}
