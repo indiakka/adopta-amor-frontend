@@ -1,24 +1,20 @@
-import { Outlet, useLocation } from "react-router-dom"
-import Navbar from "../components/navbar/nav/Navbar"
-import Footer from "../components/footer/Footer"
-import './layout.css'
-
+import { Outlet, useLocation } from "react-router-dom";
+import Navbar from "../components/navbar/nav/Navbar";
+import Footer from "../components/footer/Footer";
+import "./layout.css";
 
 const Layout = () => {
-    const location = useLocation();
-    const classes = {
-        "/adoptar": "style-adoptar",
-    }
-    const claseActual = classes[location.pathname];
-    return (
-        <>
-            <Navbar />
-            <main className={claseActual}>
-                <Outlet />
-            </main>
-            <Footer />
-        </>
-    )
-}
+  return (
+    <div className="contenedor-principal">
+      <div className="contenedor-principal-navbar-main">
+        <Navbar />
+        <main>
+          <Outlet />
+        </main>
+      </div>
+      <Footer />
+    </div>
+  );
+};
 
-export default Layout
+export default Layout;
