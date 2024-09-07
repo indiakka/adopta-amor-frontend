@@ -5,7 +5,7 @@ import React from "react";
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated } = useAuth(); // Verificar autenticación desde el contexto
 
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  return isAuthenticated ? children : <Navigate to="/signin" />;
 };
 
 export default PrivateRoute;
