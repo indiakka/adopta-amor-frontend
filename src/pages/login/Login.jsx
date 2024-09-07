@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import Input from "../../components/input/Input";
 import Button from "../../components/buttons/Button";
 import Popup from "../../components/popups/Popups.jsx";
-import axios from "axios"; // Ensure axios is imported
-import "./login.css"
+import axios from "axios";
+import { useAuth } from "../../context/AuthContext"; // Usa el contexto de autenticación
+import "./login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,24 +16,17 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState("");
+  const { login } = useAuth(); // Usamos el contexto de autenticación
   const navigate = useNavigate();
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
-    if (!e.target.value) {
-      setEmailError(true);
-    } else {
-      setEmailError(false);
-    }
+    setEmailError(!e.target.value);
   };
 
   const handlePassword = (e) => {
     setPassword(e.target.value);
-    if (!e.target.value) {
-      setPasswordError(true);
-    } else {
-      setPasswordError(false);
-    }
+    setPasswordError(!e.target.value);
   };
 
   const closePopup = () => {
@@ -46,7 +40,6 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Validate input before sending request
     if (!email || !password) {
       setEmailError(!email);
       setPasswordError(!password);
@@ -61,11 +54,11 @@ const Login = () => {
         password,
       });
 
-      console.log("Response Data:", response.data);
-
       const { token, userId, name, role } = response.data;
+
       if (token && userId && name && role) {
-        localStorage.setItem("authToken", token);
+        // Usa el login del contexto en lugar de manipular directamente el localStorage
+        login(token);
         localStorage.setItem("user", JSON.stringify({ userId, name, role }));
 
         alert(`Bienvenido ${name}`);

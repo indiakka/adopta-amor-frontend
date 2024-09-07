@@ -70,7 +70,6 @@ const SignIn = () => {
     }
   };
 
-
   const navigateLogin = () => {
     if (isPopupOpen) setIsPopupOpen(false);
     console.log("Redirigiendo al login...");
@@ -83,39 +82,39 @@ const SignIn = () => {
   };
 
   return (
-    <div className="form-container">
-      <section className="form-section">
-        <h1 className="form-title">Registro de usuario</h1>
-        <hr className="form-separator" />
+    <div className="flex-container">
+      <section className="section-container">
+        <h1 className="heading">Registro de usuario</h1>
+        <hr className="divider" />
         <form onSubmit={handleSubmit}>
           <Input
-            title="Nombre"
+            title="Nombre "
             placeholder="Escribe tu nombre..."
             type="text"
             value={name}
             onChange={handleName}
           />
-          {nameError && <p className="form-error">Nombre requerido</p>}
+          {nameError && <p className="error-text">Nombre requerido</p>}
           <Input
-            title="E-mail"
+            title="E-mail "
             placeholder="Escribe tu email..."
             type="email"
             value={email}
             onChange={handleEmail}
           />
-          {emailError && <p className="form-error">Email requerido</p>}
+          {emailError && <p className="error-text">Email requerido</p>}
           <Input
-            title="Contraseña"
+            title="Contraseña "
             placeholder="Escribe tu contraseña..."
             type="password"
             value={password}
             onChange={handlePassword}
           />
-          {passwordError && <p className="form-error">Contraseña requerida</p>}
-          <div className="form-buttons">
-            <Button className="button-accept" text="Aceptar" type="submit" />
+          {passwordError && <p className="error-text">Contraseña requerida</p>}
+          <div className="button-container">
+            <Button className="green-button" text="Aceptar" type="submit" />
             <Button
-              className="button-cancel"
+              className="pink-button"
               text="Cancelar"
               onClick={() => {
                 navigate("/");
@@ -123,9 +122,12 @@ const SignIn = () => {
             />
           </div>
         </form>
-        <h2 className="form-link">
-          ¿Ya tienes cuenta? Accede <Link to="/login">aquí</Link>
-        </h2>
+        <h3 className="login-text">
+          ¿Ya tienes cuenta? Accede{" "}
+          <Link to="/login" className="link">
+            aquí
+          </Link>
+        </h3>
       </section>
       <Popup
         isPopupOpen={isPopupOpen}

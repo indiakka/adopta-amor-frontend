@@ -63,7 +63,23 @@
     display: flex;
     justify-content: flex-end;
 }
+/* Estilos para el ícono de cerrar sesión */
+.logout-icon {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 20px;
+    font-size: 24px;
+    color: var(--main-color);
+    /* Color principal */
+}
 
+.logout-icon:hover {
+    color: var(--text-color);
+    /* Color al hacer hover */
+    transform: scale(1.1);
+    transition: color 0.3s, transform 0.3s;
+}
 @media only screen and (max-width: 768px) {
     .navbar {
         width: 90%;
