@@ -10,10 +10,10 @@ const EditInfo = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const animalEditar = async () => {
+    const animalEdit = async () => {
       setAnimalGuardado(await recibirAnimal(id));
     };
-    animalEditar();
+    animalEdit();
   }, [id]);
 
   const manejarEnvio = async (event) => {

@@ -1,78 +1,160 @@
-import { useEffect } from "react";
-import { useState } from "react"
-import AnimalCard from "../components/card/AnimalCard";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Filter from "../components/filter/Filter";
-
+import Filtro from "../components/filtro/Filtro";
+import AnimalCard from "../components/card/AnimalCard";
+import Pagination from "../components/pagination/Pagination";
+import { recibirAnimales } from "../axios";
 
 const Adoptar = () => {
-  const [animales, setAnimales] = useState([]);
-  const [filterCriteria, setFilterCriteria] = useState({})
+  const [animals, setAnimals] = useState([]); // Inicializar como array vacío
+  const [animalesFiltradosYMezclados, setAnimalesFiltradosYMezclados] =
+    useState([]);
+  const [criteriosFiltro, setCriteriosFiltro] = useState({
+    tipo: [],
+    tamano: [],
+    edad: [],
+  });
+  const [paginaActual, setPaginaActual] = useState(1);
+  const elementosPorPagina = 6;
+
+  // Obtener datos de animales
   useEffect(() => {
-    const data = async () => {
-      const response = await axios.get("http://localhost:3000/results"
-      );
-      const info = await response.data;
-      setAnimales(info);
-      console.log(info)
-    }
-
-    data()
-  }, [])
-
-  const handleFilterChange = (category, value) => {
-    setFilterCriteria((prevFilterCriteria) => {
-      const updatedFilterCriteria = {
-        [category]: value,
+    const obtenerDatos = async () => {
+      try {
+        const animals = await recibirAnimales();
+        if (Array.isArray(animals)) {
+          setAnimals(animals);
+        } else {
+          console.error("La respuesta no es un array:", animals);
+          setAnimals([]); // Asignar un array vacío si la respuesta no es válida
+        }
+      } catch (error) {
+        console.error("Error al obtener datos: ", error);
+        setAnimals([]); // En caso de error, asignar un array vacío
       }
-      //filter delete or basically checking if it null or empty string then myFilteredAnimals will be all animals
-      if (value === null || value === "") {
-        Object.keys(prevFilterCriteria).forEach((key) => {
-          updatedFilterCriteria[key] = null
-        })
-      } else {
-        //reset filters when new filter is clicked 
-        Object.keys(prevFilterCriteria).forEach((key) => {
-          if (key !== category) {
-            updatedFilterCriteria[key] = null
+    };
+
+    obtenerDatos();
+  }, []);
+
+  // Manejar los cambios en los filtros
+  const manejarCambioFiltro = (filtroSeleccionado, valor) => {
+    setCriteriosFiltro((filtroActual) => ({
+      ...filtroActual,
+      [filtroSeleccionado]: valor,
+    }));
+  };
+
+  // Aplicar los filtros a los animales
+  useEffect(() => {
+    let animalesFiltrados = animals.filter((animal) => {
+      if (
+        criteriosFiltro.tipo.length > 0 &&
+        !criteriosFiltro.tipo.includes(animal.tipo)
+      ) {
+        return false;
+      }
+      if (
+        criteriosFiltro.tamano.length > 0 &&
+        !criteriosFiltro.tamano.includes(animal.tamano)
+      ) {
+        return false;
+      }
+      if (criteriosFiltro.edad.length > 0) {
+        const edad = parseInt(animal.edad, 10); // Convertir la edad a número
+        if (isNaN(edad)) {
+          return false; // Si la edad no es un número, excluir al animal
+        }
+        if (criteriosFiltro.edad.includes("Cachorrito")) {
+          if (!(edad >= 0 && edad <= 1)) {
+            return false;
           }
-        })
+        }
+        if (criteriosFiltro.edad.includes("Adulto")) {
+          if (!(edad > 1 && edad < 5)) {
+            return false;
+          }
+        }
       }
-      return updatedFilterCriteria
-    })
-  }
+      return true;
+    });
 
-  const filteredAnimales = animales.filter((animal) => {
-    if (filterCriteria.tipo && animal.tipo !== filterCriteria.tipo) {
-      return false
-    }
-    if (filterCriteria.tamano && animal.tamaño !== filterCriteria.tamano) {
-      return false
-    }
-    // Edad filter logic
-    if (filterCriteria.edad) {
-      const edad = animal.años
+    animalesFiltrados = mezclarAnimales(animalesFiltrados);
 
-      switch (filterCriteria.edad) {
-        case "Cachorrito":
-          return edad >= 0 && edad <= 1
-        case "Adulto":
-          return edad > 1 && edad < 5
-        default:
-          return true
-      }
+    setAnimalesFiltradosYMezclados(animalesFiltrados);
+  }, [animals, criteriosFiltro]);
+
+  // Función para mezclar animales filtrados
+  const mezclarAnimales = (array) => {
+    if (!Array.isArray(array) || array.length === 0) {
+      return []; // Devolver un array vacío si no hay elementos
     }
-    return true
-  })
+
+    let indiceActual = array.length;
+    let valorTemporal, indiceAleatorio;
+
+    while (indiceActual !== 0) {
+      indiceAleatorio = Math.floor(Math.random() * indiceActual);
+      indiceActual -= 1;
+
+      valorTemporal = array[indiceActual];
+      array[indiceActual] = array[indiceAleatorio];
+      array[indiceAleatorio] = valorTemporal;
+    }
+
+    return array;
+  };
+
+  // Función para manejar el cambio de página
+  const manejarCambioPagina = (numeroPagina) => {
+    setPaginaActual(numeroPagina);
+  };
+
+  // Función para borrar los filtros
+  const borrarFiltros = () => {
+    setCriteriosFiltro({ tipo: [], tamano: [], edad: [] });
+  };
+
+  // Calcular los elementos de la página actual
+  const indiceUltimoElemento = paginaActual * elementosPorPagina;
+  const indicePrimerElemento = indiceUltimoElemento - elementosPorPagina;
+  const elementosActuales =
+    Array.isArray(animalesFiltradosYMezclados) &&
+    animalesFiltradosYMezclados.length > 0
+      ? animalesFiltradosYMezclados.slice(
+          indicePrimerElemento,
+          indiceUltimoElemento
+        )
+      : [];
 
   return (
     <>
-      <Filter onClick={handleFilterChange} />
-      {filteredAnimales.map((animal) => (
-        <AnimalCard key={animal.id} animal={animal} />
-      ))}
+      <Filtro onClick={manejarCambioFiltro} onClearFilters={borrarFiltros} />
+      <div className="cards">
+        {elementosActuales.length > 0 ? (
+          elementosActuales.map((animal) => (
+            <AnimalCard
+              alEliminar={async () => setAnimals(await recibirAnimales())}
+              key={animal.id}
+              animal={animal}
+            />
+          ))
+        ) : (
+          <p>No hay animales disponibles</p>
+        )}
+      </div>
+      {animalesFiltradosYMezclados.length > 0 && (
+        <div className="pagination">
+          <Pagination
+            totalItems={animalesFiltradosYMezclados.length}
+            itemsPorPagina={elementosPorPagina}
+            paginaActual={paginaActual}
+            alCambiarPagina={manejarCambioPagina}
+          />
+        </div>
+      )}
     </>
-  )
-}
+  );
+};
 
-export default Adoptar
+export default Adoptar;

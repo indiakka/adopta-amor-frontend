@@ -1,12 +1,16 @@
 .logo {
-    width: 20%;
+    width: 100%;
+    height: 17vh;
     margin: auto;
     padding: 0;
     display: block;
+    stroke: var(--main-color);
+    fill: var(--main-color);
 }
 
 .logo:hover {
-    width: 21%;
+    transform: scale(1.1);
+    width: 101%;
 }
 
 @media only screen and (max-width: 480px) {

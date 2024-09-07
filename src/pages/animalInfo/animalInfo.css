@@ -48,11 +48,11 @@
     vertical-align: middle;
 }
 
-.container--buttons--editar {
+.container--buttons--edit {
     padding-top: 1rem;
 }
 
-.buttons--editar {
+.buttons--edit {
     background-color: transparent;
     border: none;
     cursor: pointer;

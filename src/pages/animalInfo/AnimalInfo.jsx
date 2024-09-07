@@ -1,22 +1,28 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
-import { useState } from "react";
-import "./animalInfo.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPaw } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaw } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
+import "./animalInfo.css";
 
 const AnimalInfo = () => {
-  const [animal, setAnimal] = useState([]);
+  const [animal, setAnimal] = useState({});
   const { id } = useParams();
   const [animalesCasita, setAnimalesCasita] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const animalInfo = async () => {
-      const response = await axios.get(`http://localhost:3000/results/${id}`);
-      setAnimal(response.data);
+      try {
+        const response = await axios.get(`http://localhost:4001/pets/${id}`);
+        setAnimal(response.data);
+      } catch (error) {
+        console.error("Error al obtener la información del animal:", error);
+        alert(
+          "No se pudo cargar la información del animal. Inténtalo más tarde."
+        );
+      }
     };
     animalInfo();
   }, [id]);
@@ -24,31 +30,34 @@ const AnimalInfo = () => {
   const anadirAnimal = () => {
     const listadoAnimales = [...animalesCasita, { ...animal, id: animal.id }];
     setAnimalesCasita(listadoAnimales);
-    alert("Animal añadido a tu casita")
+    alert("Animal añadido a tu casita");
   };
 
   useEffect(() => {
-    const animalesAlmacenados = localStorage.getItem('animalesCasita');
+    const animalesAlmacenados = localStorage.getItem("animalesCasita");
     if (animalesAlmacenados) {
       setAnimalesCasita(JSON.parse(animalesAlmacenados));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('animalesCasita', JSON.stringify(animalesCasita));
+    localStorage.setItem("animalesCasita", JSON.stringify(animalesCasita));
   }, [animalesCasita]);
 
-  const handleSubmit = async ( id ) =>
-  {
-    const conf = window.confirm( '¿Quieres realmente borrar este animal?' )
-    if ( conf )
-    {
-      await axios.delete( `http://localhost:3000/results/${id}` )
-      alert( 'Este animal ha sido borrado correctamente' )
-      navigate( '/adoptar' )
+  // Manejar la eliminación del animal
+  const handleSubmit = async (id) => {
+    const conf = window.confirm("¿Quieres realmente borrar este animal?");
+    if (conf) {
+      try {
+        await axios.delete(`http://localhost:4001/pets/${id}`);
+        alert("Este animal ha sido borrado correctamente");
+        navigate("/adoptar");
+      } catch (error) {
+        console.error("Error al borrar el animal:", error);
+        alert("No se pudo borrar el animal. Inténtalo más tarde.");
+      }
     }
-  }
-
+  };
 
   return (
     <div className="animalInfocontainer">
@@ -63,28 +72,36 @@ const AnimalInfo = () => {
         <h2>Información sobre {animal.nombre}</h2>
         <p>Tipo: {animal.tipo}</p>
         <p>Raza: {animal.raza}</p>
-        <p>Tamaño: {animal.tamaño}</p>
+        <p>Tamaño: {animal.tamano}</p>
         <p>Cuidados Especiales: {animal.cuidadosEspeciales}</p>
         <p>Ubicación: {animal.ubicacion}</p>
-        <p>Años: {animal.años}</p>
+        <p>Años: {animal.edad}</p>
         <p>Gastos de Gestión: {animal.gastosDeGestion}</p>
         <div className="container--button">
-          <div className="container--button">
-            <button onClick={anadirAnimal} className="button-adopta btn--conoceme">
-              <FontAwesomeIcon icon={faPaw} />Conóceme</button>
-          </div>
+          <button
+            onClick={anadirAnimal}
+            className="button-adopta btn--conoceme"
+          >
+            <FontAwesomeIcon icon={faPaw} />
+            Conóceme
+          </button>
         </div>
       </div>
-      <div className="contenedor--botones--editar">
-        <NavLink to={`/editarInfo/${animal.id}`}>
-          <button className="botones--editar">
-            <img src="../src/assets/images/Edit.png" alt="editar" /></button>
+      <div className="container--buttons--edit">
+        <NavLink to={`/editInfo/${animal.id}`}>
+          <button className="buttons--edit">
+            <img src="..assets/images/Edit.png" alt="editar" />
+          </button>
         </NavLink>
-        <button onClick={e => handleSubmit( animal.id )} className="botones--editar">
-          <img src="../src/assets/images/Delete.png" alt="borrar" /></button>
+        <button
+          onClick={() => handleSubmit(animal.id)}
+          className="buttons--edit"
+        >
+          <img src="..assets/images/Delete.png" alt="borrar" />
+        </button>
       </div>
     </div>
   );
 };
 
-export default AnimalInfo
+export default AnimalInfo;
