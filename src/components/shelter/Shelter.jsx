@@ -76,7 +76,7 @@ const Shelter = ({ todosLosAnimales, setTodosLosAnimales }) => {
             </button>
           </>
         ) : (
-          <p>La shelter está vacía</p>
+          <p>La casita está vacía</p>
         )}
       </div>
       <NavLink to="/contact">

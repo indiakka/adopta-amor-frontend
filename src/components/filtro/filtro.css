@@ -4,14 +4,14 @@
     border: 2px solid;
     margin: 2rem 12rem;
     border-radius: 5px;
-    color: var(--color-texto);
+    color: var(--text-color);
     align-content: center;
 }
 
 .campoFiltro {
     width: 25%;
     height: 7vh;
-    color: var(--color-texto);
+    color: var(--text-color);
     background-color: transparent;
     font-family: Manrope;
     font-size: 20px;
@@ -26,27 +26,27 @@
 
 .campoFiltro:focus,
 .campoFiltro:active {
-    color: var(--color-principal);
+    color: var(--main-color);
 }
 
 .campoFiltro ul {
-    color: var(--color-texto);
+    color: var(--text-color);
 }
 
 .campoFiltro:nth-of-type(1) {
-    border-right: 2px solid var(--color-texto);
+    border-right: 2px solid var(--text-color);
 }
 
 .campoFiltro:nth-of-type(2) {
-    border-right: 2px solid var(--color-texto);
+    border-right: 2px solid var(--text-color);
 }
 
 .campoFiltro:nth-of-type(3) {
-    border-right: 2px solid var(--color-texto);
+    border-right: 2px solid var(--text-color);
 }
 
 .campoFiltro:hover {
-    background: var(--color-principal-claro);
+    background: var(main-color-light);
     color: rgb(78, 28, 124);
 }
 
@@ -74,7 +74,7 @@
     background-color: rgb(215, 188, 236);
 }
 
-.iconoPapelera {
+.iconsPapelera {
     margin: 0 10px;
 }
 
