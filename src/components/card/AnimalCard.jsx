@@ -1,30 +1,45 @@
+import React, { useState } from "react";
 import "./animalCard.css";
-import { NavLink } from "react-router-dom";
+import AnimalInfo from "../animalInfo/AnimalInfo";
 
-const AnimalCard = ({ animal }) => {
+const CardAnimal = ({ animal, alEliminar }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const changeInfoState = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div className="card">
-      <img src={animal.imagen} alt={animal.nombre} className="card--imagen" />
-      <div className="card--componentes">
-        <div>
-          <h2 className="card--componentes--nombre">{animal.nombre}</h2>
-          <p className="card--componentes--descripcion">
-            Edad: {animal.años}, {animal.raza}, {animal.ubicacion}.
-          </p>
-        </div>
-        <div>
-          <NavLink to={`/animal-info/${animal.id}`}><button className="card--componentes--button">
+    <>
+      <div className="card" onClick={changeInfoState}>
+        <img src={animal.imagen} alt={animal.nombre} className="card--imagen" />
+        <div className="card--components">
+          <div>
+            <h2 className="card--components--name">{animal.nombre}</h2>
+            <p className="card--components--description">
+              <strong>Edad:</strong> {animal.edad} <br /> <strong>Raza:</strong>{" "}
+              {animal.raza} <br /> <strong>Ubicación:</strong>{" "}
+              {animal.ubicacion}
+            </p>
+          </div>
+          <div>
             <img
-              src="src/assets/images/iconoInfo.png"
-              alt="iconInfo"
-              className="card--componentes--icono"
+              src="/assets/images/iconoInfo.png"
+              alt="icono información"
+              className="card--components--icons"
             />
-          </button>
-          </NavLink>
+          </div>
         </div>
       </div>
-    </div>
+      {isOpen && (
+        <AnimalInfo
+          alEliminar={alEliminar}
+          animal={animal}
+          onClick={changeInfoState}
+        />
+      )}
+    </>
   );
 };
 
-export default AnimalCard;
+export default CardAnimal;

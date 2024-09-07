@@ -1,22 +1,20 @@
-import './header.css';
-import BotonAdopta from "./botonAdopta/BotonAdopta.jsx"
-import BotonDona from "./botonDona/BotonDona.jsx"
+import "./header.css";
+import ButtonDona from "../buttons/buttonDona/ButtonDona";
+import ButtonAdopta from "../buttons/buttonAdopta/ButtonAdopta";
+import React from "react"; 
 
 
 const Header = () => {
   return (
     <>
-
-    <div className='container-header'>
-      <div className='botones-header'>
-      <BotonAdopta />
-      <BotonDona />
+      <div className="container-header">
+        <div className="buttons-header">
+          <ButtonAdopta />
+          <ButtonDona />
+        </div>
       </div>
-    </div>
-
     </>
+  );
+};
 
-  )
-}
-
-export default Header
+export default Header;
