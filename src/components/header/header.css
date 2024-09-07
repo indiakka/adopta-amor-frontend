@@ -4,7 +4,7 @@
     margin: 0 5% 0 5%;
     box-sizing: border-box;
     border: 5px solid var(--main-color);
-    background-image: url('src/assets/images/portada.png');
+    background-image: url('/assets/images/portada.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -15,7 +15,7 @@
   }
 
 
-  .botones-header {
+  .buttons-header {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

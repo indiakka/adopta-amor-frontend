@@ -1,0 +1,78 @@
+/* Estilos generales del Popup */
+.ventana-Popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 150000;
+}
+
+/* Fondo del popup */
+.popup-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.66);
+    /* Fondo negro con opacidad */
+    top: 0;
+    left: 0;
+    z-index: 150000;
+}
+
+/* Contenedor del contenido del popup */
+.popup-content {
+    background-color: #FFD700;
+    /* Color amarillo */
+    width: 21.6875rem;
+    /* Tamaño por defecto */
+    height: 10.5rem;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: fixed;
+    margin: auto;
+    z-index: 150001;
+}
+
+@media (min-width: 1024px) {
+    .popup-content {
+        width: 29.375rem;
+        /* Tamaño en pantallas grandes */
+        height: 12.5rem;
+    }
+}
+
+/* Texto del mensaje */
+.popup-message {
+    color: #0000FF;
+    /* Color azul */
+    font-size: 1.25rem;
+    padding-top: 1.3rem;
+}
+
+/* Botones */
+.popup-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.625rem;
+    margin-top: 1.25rem;
+    padding-bottom: 1rem;
+}
+
+/* Estilos específicos para los botones */
+.popup-button-accept {
+    background-color: #00FF00;
+    /* Verde */
+}
+
+.popup-button-cancel {
+    background-color: #FF1493;
+    /* Rosa */
+}

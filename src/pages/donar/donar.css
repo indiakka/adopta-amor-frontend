@@ -1,8 +1,11 @@
-.donarContainer{
-    padding-top: 12em;
+.container-donar {
     height: 20vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+h1 {
+    color: var(main-color-light);
 }

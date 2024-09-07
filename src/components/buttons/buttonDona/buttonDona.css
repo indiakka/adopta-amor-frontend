@@ -1,0 +1,12 @@
+.button-dona {
+    width: 200px;
+    height: 2.5em;
+    border-radius: 40px;
+    border-style: none;
+    color: var(--main-color);
+    background-color: #FFF;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    cursor: pointer;
+}

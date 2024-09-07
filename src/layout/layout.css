@@ -1,14 +1,14 @@
 * {
-    font-family: var(--fuente-principal);
+    font-family: var(--main-font);
 }
 
-.contenedor-principal {
+.container-principal {
     position: relative;
     min-height: 100vh;
 
 }
 
-.contenedor-principal-navbar-main {
+.container-principal-navbar-main {
     padding-bottom: 15rem;
 }
 

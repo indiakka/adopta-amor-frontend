@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     align-self: center;
-    justify-content: center;    
+    justify-content: center;
     border-radius: 5px;
     border: 2px solid var(--text-color);
     color: var(--text-color);
@@ -37,22 +37,22 @@
 
 .btn--conoceme {
     display: flex;
-    align-items:center;
+    align-items: center;
     justify-content: center;
     gap: 4%;
 }
 
-.iconoConoceme {
+.iconsConoceme {
     width: 20%;
     cursor: pointer;
     vertical-align: middle;
 }
 
-.contenedor--botones--editar {
+.container--buttons--editar {
     padding-top: 1rem;
 }
 
-.botones--editar {
+.buttons--editar {
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -63,10 +63,12 @@
     .animalInfocontainer {
         flex-direction: column;
     }
+
     .animalInfoImg--container {
         width: 100%;
     }
-    .animalInfoTxt--container{
+
+    .animalInfoTxt--container {
         width: 100%;
     }
 }

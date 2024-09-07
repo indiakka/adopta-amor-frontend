@@ -1,4 +1,4 @@
-.paginacion {
+.pagination {
     position: absolute;
     display: flex;
     left: 50%;
@@ -6,25 +6,25 @@
     margin: 1rem 0;
 }
 
-.paginacion button {
+.pagination button {
     margin: 0 5px;
     padding: 5px 10px;
     border: 1px solid #ccc;
-    background-color: var(--color-texto);
+    background-color: var(--text-color);
     cursor: pointer;
 }
 
-.paginacion button:hover {
-    background-color: var(--color-principal);
+.pagination button:hover {
+    background-color: var(--main-color);
 }
 
-.paginacion .active {
-    background-color: var(--color-principal-claro);
+.pagination .active {
+    background-color: var(main-color-light);
     color: #fff;
 }
 
 @media only screen and (max-width: 768px) {
-    .paginacion {
+    .pagination {
         position: absolute;
         display: flex;
         left: 50%;
@@ -34,7 +34,7 @@
 }
 
 @media only screen and (max-width: 360px) {
-    .paginacion {
+    .pagination {
         position: absolute;
         display: flex;
         width: 5px;

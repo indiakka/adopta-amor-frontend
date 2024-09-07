@@ -3,7 +3,7 @@
   box-sizing: border-box;
 }
 
-
+/* 
 .style-adoptar {
   width: 100%;
   padding-top: 2em;
@@ -19,61 +19,72 @@
 
   font-family: Manrope;
   padding-inline: 4em;
+} */
+
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 0 12rem;
 }
 
-
 .card {
-  width: 80%;
-  height: 100%;
   border-radius: 5px;
   border: 2px solid #8e8585;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 1em;
+  gap: 1rem;
+  cursor: pointer;
 }
 
 
 .card:hover {
-  background-color: var(--main-color-light);
+  border-color: var(--main-color-light);
+  transition: all 0.3s ease-in-out;
 }
 
-.card--componentes {
+.tarjeta:hover .container--text--animalInfo,
+.tarjeta:hover .card--components--description strong {
+  color: var(--main-color-light);
+}
+
+.card--components {
   color: var(--text-color);
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  /*   padding-inline: 1em; */
   padding-left: 2em;
 }
 
-.card--componentes--nombre {
+.card--components--name {
   text-align: left;
   color: var(--text-color);
   align-self: self-start;
 }
 
-
-.card--imagen {
-  height: 400px;
-  width: 90%;
-  object-fit: cover;
-  align-self: center;
-  border-radius: 3%;
-  padding: 1em;
+.card:hover .card--components--name {
+  color: var(--color-principal);
 }
 
-.card--componentes--button {
+.card--imagen {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.card--components--button {
   display: flex;
   justify-content: center;
   border: none;
   background-color: rgba(255, 255, 255, 0);
 }
 
-.card--componentes--icono {
-  width: 55px;
+.card--components--icons {
+  width: 4rem;
   cursor: pointer;
   padding-right: 2em;
 }
@@ -82,7 +93,7 @@
 
 /* @media tablet */
 @media only screen and (max-width: 768px) {
-  .style-adoptar  {
+  .style-adoptar {
     grid-template-columns: repeat(2, 48%);
     column-gap: 0.5em;
     row-gap: 1.5em;
@@ -92,14 +103,14 @@
     background-color: inherit;
   }
 
-  .card--componentes--icono {
+  .card--components--icons {
     width: 40px;
   }
 }
 
 /* @media móvil */
 @media only screen and (max-width: 360px) {
-  .style-adoptar  {
+  .style-adoptar {
     grid-template-columns: 99%;
     row-gap: 1.5em;
   }

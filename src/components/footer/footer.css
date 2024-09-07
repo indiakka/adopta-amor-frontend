@@ -1,11 +1,14 @@
 footer a {
     text-decoration: none;
+    /* Quita la subrayado del enlace */
     color: inherit;
+    /* Usa el color del texto del elemento padre */
     cursor: pointer;
+    /* Cambia el cursor al estilo predeterminado de un enlace */
 }
 
 .footer {
-    background-color: var(--color-gris);
+    background-color: var(--gray-color);
     position: absolute;
     font-size: 16px;
     color: white;
@@ -19,7 +22,7 @@ footer a {
     align-items: center;
 }
 
-.footer-primer-bloque {
+.footer-first-block {
     width: 20%;
 }
 
@@ -28,11 +31,11 @@ footer a {
     margin-left: 100%;
 }
 
-.footer-naming-solo-mobile {
+.footer-naming-only-mobile {
     display: none;
 }
 
-.footer-segundo-bloque {
+.footer-second-block {
     width: 80%;
     display: grid;
     align-self: center;
@@ -40,33 +43,33 @@ footer a {
     gap: 10%;
 }
 
-.footer-redes-sociales img {
+.footer-social-media img {
     margin: 4%;
     width: 15%;
     display: inline;
 }
 
-.footer-redes-sociales p {
+.footer-social-media p {
     margin: 0;
 }
 
-.efecto-claro:hover {
-    color: var(--color-principal-claro)
+.light-effect:hover {
+    color: var(main-color-light)
 }
 
 
-
+/* @media móvil */
 @media only screen and (max-width: 360px) {
 
-    .footer-primer-bloque {
+    .footer-first-block {
         width: 100%;
     }
 
-    .footer-segundo-bloque {
+    .footer-second-block {
         width: 100%;
     }
 
-    .footer-nav-descubrir {
+    .footer-nav-discover {
         display: none;
     }
 
@@ -79,7 +82,7 @@ footer a {
         text-align: center;
     }
 
-    .footer-naming-solo-mobile {
+    .footer-naming-only-mobile {
         display: block;
     }
 
@@ -87,7 +90,7 @@ footer a {
         display: none;
     }
 
-    .footer-redes-sociales {
+    .footer-social-media {
         margin: auto;
     }
 }

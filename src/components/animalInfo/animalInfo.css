@@ -1,20 +1,20 @@
-.contenedor--animalInfo {
+.container--animalInfo {
     display: flex;
     flex-direction: row;
     align-self: center;
     justify-content: center;
     border-radius: 5px;
-    border: 2px solid var(--color-texto);
-    color: var(--color-texto);
+    border: 2px solid var(--text-color);
+    color: var(--text-color);
     margin: 4rem;
     font-size: 15px;
 }
 
-.contenedor--animalInfo:hover{
+.container--animalInfo:hover {
     transform: none;
 }
 
-.contenedor--imagen--animalInfo {
+.container--imagen--animalInfo {
     width: 50%;
     display: flex;
     padding: 2rem;
@@ -28,18 +28,19 @@
     align-self: center;
 }
 
-.contenedor--texto--animalInfo {
+.container--texto--animalInfo {
     width: 40%;
     display: flex;
     flex-direction: column;
     align-self: center;
     justify-content: center;
 }
-.contenedor--texto--animalInfo p{
+
+.container--texto--animalInfo p {
     margin: 10px;
 }
 
-.contenedor--boton {
+.container--button {
     padding: 1em;
 }
 
@@ -50,37 +51,37 @@
     gap: 4%;
 }
 
-.iconoConoceme {
+.iconsConoceme {
     width: 20%;
     cursor: pointer;
     vertical-align: middle;
 }
 
-.botones--editar {
+.buttons--editar {
     background-color: transparent;
     border: none;
     cursor: pointer;
 }
 
-.contenedor-cerrar-tarjeta {
+.container-cerrar-card {
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;
 }
 
-.cerrar-tarjeta {
+.cerrar-card {
     width: 20%;
     height: 5%;
     cursor: pointer;
-    color: var(--color-texto);
+    color: var(--text-color);
     margin: 0;
 }
 
-.cerrar-tarjeta:hover {
-    color: var(--color-principal-claro);
+.cerrar-card:hover {
+    color: var(main-color-light);
 }
 
-.contenedor--principal--animalInfo {
+.container--principal--animalInfo {
     position: fixed;
     top: 0;
     left: 0;
@@ -94,7 +95,7 @@
     z-index: 9999;
 }
 
-.contenedor--animalInfo {
+.container--animalInfo {
     background-color: white;
     padding: 15px;
     border-radius: 10px;
@@ -106,15 +107,15 @@
 
 /* @media móvil */
 @media only screen and (max-width: 360px) {
-    .contenedor--animalInfo {
+    .container--animalInfo {
         flex-direction: column;
     }
 
-    .contenedor--imagen--animalInfo {
+    .container--imagen--animalInfo {
         width: 100%;
     }
 
-    .contenedor--texto--animalInfo {
+    .container--texto--animalInfo {
         width: 100%;
     }
 }
