@@ -1,35 +1,43 @@
-import './animalInfo.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faPaw } from '@fortawesome/free-solid-svg-icons';
-import { NavLink } from 'react-router-dom';
-import { eliminarAnimal } from '../../axios';
-import React, { useState, useEffect } from 'react';
+import "./animalInfo.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes, faPaw } from "@fortawesome/free-solid-svg-icons";
+import { NavLink } from "react-router-dom";
+import { eliminarAnimal } from "../../axios";
+import React, { useState, useEffect } from "react";
 
-const AnimalInfo = ({ animal, setTodosLosAnimales, todosLosAnimales, onClick, alEliminar }) => {
+const AnimalInfo = ({
+  animal,
+  setTodosLosAnimales,
+  todosLosAnimales,
+  onClick,
+  alEliminar,
+}) => {
   const [animalesCasita, setAnimalesCasita] = useState([]);
-  const [estaAbierta, setEstaAbierta] = useState(true); // Estado para controlar la visibilidad de la tarjeta
+  const [estaAbierta, setEstaAbierta] = useState(true); // Estado para controlar la visibilidad de la card
 
   const anadirAnimal = (animal) => {
     if (todosLosAnimales.find((elemento) => elemento.id === animal.id)) {
-      const animales = todosLosAnimales.map((elemento) =>
-        elemento.id ? { ...elemento, cantidad: elemento.cantidad + 1 } : elemento,
+      const animals = todosLosAnimales.map((elemento) =>
+        elemento.id === animal.id
+          ? { ...elemento, cantidad: elemento.cantidad + 1 }
+          : elemento
       );
       setTotal(total);
       setContarAnimales(contarAnimales + animal.cantidad);
-      alert('Animal añadido a tu casita');
-      return setTodosLosAnimales([...animales]);
+      alert("Animal añadido a tu casita");
+      return setTodosLosAnimales([...animals]);
     }
   };
 
   useEffect(() => {
-    const animalesAlmacenados = localStorage.getItem('animalesCasita');
+    const animalesAlmacenados = localStorage.getItem("animalesCasita");
     if (animalesAlmacenados) {
       setAnimalesCasita(JSON.parse(animalesAlmacenados));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('animalesCasita', JSON.stringify(animalesCasita));
+    localStorage.setItem("animalesCasita", JSON.stringify(animalesCasita));
   }, [animalesCasita]);
 
   const clickEliminarAnimal = async (event) => {
@@ -39,21 +47,25 @@ const AnimalInfo = ({ animal, setTodosLosAnimales, todosLosAnimales, onClick, al
   };
 
   const manejarCerrar = () => {
-    setEstaAbierta(false); // Cambiar el estado para ocultar la tarjeta
+    setEstaAbierta(false); // Cambiar el estado para ocultar la card
   };
 
-  // Verificar si la tarjeta está abierta
+  // Verificar si la card está abierta
   if (!estaAbierta) {
     return null; // Si está cerrada, no renderizamos nada
   }
 
   return (
-    <div className="contenedor--principal--animalInfo" onClick={onClick}>
-      <div className="contenedor--animalInfo">
-        <div className="contenedor--imagen--animalInfo">
-          <img src={animal.imagen} alt={animal.nombre} className="animalInfo--img" />
+    <div className="container--principal--animalInfo" onClick={onClick}>
+      <div className="container--animalInfo">
+        <div className="container--imagen--animalInfo">
+          <img
+            src={animal.imagen}
+            alt={animal.nombre}
+            className="animalInfo--img"
+          />
         </div>
-        <div className="contenedor--texto--animalInfo">
+        <div className="container--texto--animalInfo">
           <h2>Información sobre {animal.nombre}</h2>
           <p>
             <strong>Tipo:</strong> {animal.tipo}
@@ -76,23 +88,30 @@ const AnimalInfo = ({ animal, setTodosLosAnimales, todosLosAnimales, onClick, al
           <p>
             <strong>Gastos de Gestión:</strong> {animal.gastosDeGestion}
           </p>
-          <div className="contenedor--boton">
-            <button onClick={anadirAnimal} className="boton-adopta btn--conoceme">
+          <div className="container--button">
+            <button
+              onClick={anadirAnimal}
+              className="button-adopta btn--conoceme"
+            >
               <FontAwesomeIcon icon={faPaw} /> Conóceme
             </button>
           </div>
         </div>
-        <div className="contenedor--botones--editar">
-          <div className="contenedor-cerrar-tarjeta">
-            <FontAwesomeIcon icon={faTimes} className="cerrar-tarjeta" onClick={manejarCerrar} />
+        <div className="container--buttons--edit">
+          <div className="container-cerrar-card">
+            <FontAwesomeIcon
+              icon={faTimes}
+              className="cerrar-card"
+              onClick={manejarCerrar}
+            />
           </div>
-          <NavLink to={`/editarInfo/${animal.id}`}>
-            <button onClick={manejarCerrar} className="botones--editar">
-              <img src="../src/assets/images/Edit.png" alt="editar" />
+          <NavLink to={`/editInfo/${animal.id}`}>
+            <button onClick={manejarCerrar} className="buttons--edit">
+              <img src="..//assets/images/Edit.png" alt="edit" />
             </button>
           </NavLink>
-          <button onClick={clickEliminarAnimal} className="botones--editar">
-            <img src="../src/assets/images/Delete.png" alt="borrar" />
+          <button onClick={clickEliminarAnimal} className="buttons--edit">
+            <img src="..//assets/images/Delete.png" alt="borrar" />
           </button>
         </div>
       </div>

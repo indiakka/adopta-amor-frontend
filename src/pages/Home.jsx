@@ -1,5 +1,5 @@
 import Header from "../components/header/Header"
-import BotonAdopta from "../components/header/botonAdopta/BotonAdopta"
+import React from "react"; 
 
 function Home() {
   return (
