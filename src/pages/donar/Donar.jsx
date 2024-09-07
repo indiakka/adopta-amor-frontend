@@ -1,17 +1,18 @@
-import Formulario from "../../components/formulario/Formulario"
+import Form from "../../components/form/Form";
+import React from "react";
+import SignIn from "../signin/SignIn";
 import "./donar.css";
 
 const Donar = () => {
-
   return (
     <div>
-      <div className="donarContainer">
-      <h1>Dona un animal</h1>
-      <p>¿Conoces un animal que necesita un nuevo hogar?</p>
+      <div className="container-donar">
+        <h1>Dona un animal</h1>
+        <p>¿Conoces un animal que necesita un nuevo hogar?</p>
       </div>
-      <Formulario />
+      <Form />
     </div>
-  )
-}
+  );
+};
 
-export default Donar
+export default Donar;
