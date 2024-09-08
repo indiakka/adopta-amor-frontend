@@ -14,7 +14,7 @@
     transform: none;
 }
 
-.container--imagen--animalInfo {
+.container--image--animalInfo {
     width: 50%;
     display: flex;
     padding: 2rem;
@@ -28,7 +28,7 @@
     align-self: center;
 }
 
-.container--texto--animalInfo {
+.container--text--animalInfo {
     width: 40%;
     display: flex;
     flex-direction: column;
@@ -36,7 +36,7 @@
     justify-content: center;
 }
 
-.container--texto--animalInfo p {
+.container--text--animalInfo p {
     margin: 10px;
 }
 
@@ -44,7 +44,7 @@
     padding: 1em;
 }
 
-.btn--conoceme {
+.button--conoceme {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,13 +63,13 @@
     cursor: pointer;
 }
 
-.container-cerrar-card {
+.container-close-card {
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;
 }
 
-.cerrar-card {
+.close-card {
     width: 20%;
     height: 5%;
     cursor: pointer;
@@ -77,11 +77,11 @@
     margin: 0;
 }
 
-.cerrar-card:hover {
+.close-card:hover {
     color: var(main-color-light);
 }
 
-.container--principal--animalInfo {
+.container--first--animalInfo {
     position: fixed;
     top: 0;
     left: 0;
@@ -111,11 +111,11 @@
         flex-direction: column;
     }
 
-    .container--imagen--animalInfo {
+    .container--image--animalInfo {
         width: 100%;
     }
 
-    .container--texto--animalInfo {
+    .container--text--animalInfo {
         width: 100%;
     }
 }
