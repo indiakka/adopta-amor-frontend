@@ -18,7 +18,7 @@ const AnimalInfo = ({
 
   useEffect(() => {
     // Leer el rol del usuario desde el localStorage
-    const user = JSON.parse(localStorage.getItem("USER"));
+    const user = JSON.parse(localStorage.getItem("user"));
     if (user && user.role === "ADMIN") {
       setIsAdmin(true); // Si el rol es admin, actualizar el estado
     }
