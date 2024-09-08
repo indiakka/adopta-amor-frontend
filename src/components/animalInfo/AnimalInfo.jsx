@@ -13,7 +13,16 @@ const AnimalInfo = ({
   alEliminar,
 }) => {
   const [animalesCasita, setAnimalesCasita] = useState([]);
-  const [estaAbierta, setEstaAbierta] = useState(true); // Estado para controlar la visibilidad de la card
+  const [estaAbierta, setEstaAbierta] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false); // Estado para verificar si es admin
+
+  useEffect(() => {
+    // Leer el rol del usuario desde el localStorage
+    const user = JSON.parse(localStorage.getItem("USER"));
+    if (user && user.role === "ADMIN") {
+      setIsAdmin(true); // Si el rol es admin, actualizar el estado
+    }
+  }, []);
 
   const anadirAnimal = (animal) => {
     if (todosLosAnimales.find((elemento) => elemento.id === animal.id)) {
@@ -56,16 +65,16 @@ const AnimalInfo = ({
   }
 
   return (
-    <div className="container--principal--animalInfo" onClick={onClick}>
+    <div className="container--first--animalInfo" onClick={onClick}>
       <div className="container--animalInfo">
-        <div className="container--imagen--animalInfo">
+        <div className="container--image--animalInfo">
           <img
             src={animal.imagen}
             alt={animal.nombre}
             className="animalInfo--img"
           />
         </div>
-        <div className="container--texto--animalInfo">
+        <div className="container--text--animalInfo">
           <h2>Información sobre {animal.nombre}</h2>
           <p>
             <strong>Tipo:</strong> {animal.tipo}
@@ -91,28 +100,35 @@ const AnimalInfo = ({
           <div className="container--button">
             <button
               onClick={anadirAnimal}
-              className="button-adopta btn--conoceme"
+              className="button-adopta button--conoceme"
             >
               <FontAwesomeIcon icon={faPaw} /> Conóceme
             </button>
           </div>
         </div>
+
         <div className="container--buttons--edit">
-          <div className="container-cerrar-card">
+          <div className="container-close-card">
             <FontAwesomeIcon
               icon={faTimes}
-              className="cerrar-card"
+              className="close-card"
               onClick={manejarCerrar}
             />
           </div>
-          <NavLink to={`/editInfo/${animal.id}`}>
-            <button onClick={manejarCerrar} className="buttons--edit">
-              <img src="..//assets/images/Edit.png" alt="edit" />
-            </button>
-          </NavLink>
-          <button onClick={clickEliminarAnimal} className="buttons--edit">
-            <img src="..//assets/images/Delete.png" alt="borrar" />
-          </button>
+
+          {/* Mostrar botones de editar y eliminar solo si el usuario es admin */}
+          {isAdmin && (
+            <>
+              <NavLink to={`/editInfo/${animal.id}`}>
+                <button onClick={manejarCerrar} className="buttons--edit">
+                  <img src="..//assets/images/Edit.png" alt="editar" />
+                </button>
+              </NavLink>
+              <button onClick={clickEliminarAnimal} className="buttons--edit">
+                <img src="..//assets/images/Delete.png" alt="borrar" />
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>
