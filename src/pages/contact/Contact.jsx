@@ -14,13 +14,13 @@ const Contact = () => {
         <p>
           <b>Rellene los siguientes campos: </b>
         </p>
-        <div className="container--entradas--divs">
+        <div className="container--input--divs">
           <input type="text" placeholder="Nombre completo*" />
         </div>
-        <div className="container--entradas--divs">
+        <div className="container--input--divs">
           <input type="text" placeholder="Correo electrónico*" />
         </div>
-        <div className="container--entradas--divs">
+        <div className="container--input--divs">
           <input type="text" placeholder="Número de contact*" />
         </div>
         <div
@@ -30,7 +30,7 @@ const Contact = () => {
         >
           <article>¡Gracias!¡Nos pondremos en contact muy pronto!</article>
         </div>
-        <button className="button-adopta btn--conoceme" type="submit">
+        <button className="button-adopta button--conoceme" type="submit">
           Enviar
         </button>
       </form>

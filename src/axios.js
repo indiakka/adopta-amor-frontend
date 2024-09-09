@@ -22,8 +22,14 @@ export const recibirAnimales = async () => {
 // Obtener un animal por ID
 export const recibirAnimal = async (id) => {
   try {
+    const token = localStorage.getItem("authToken"); // Obtener el token desde localStorage
+    if (!token) {
+      throw new Error("Token no encontrado");
+    }
+
     const respuesta = await axios.get(`${url}/${id}`, {
       headers: {
+        Authorization: `Bearer ${token}`, // Incluir el token de autorización en la solicitud
         "Content-Type": "application/json",
       },
     });
@@ -35,16 +41,19 @@ export const recibirAnimal = async (id) => {
   }
 };
 
+
 // Guardar un nuevo animal
-export const guardarAnimal = async (event, datos) => {
+export const guardarAnimal = async (datos) => {
   try {
-    const token = localStorage.getItem("authToken"); // Obtener el token actualizado
+    const token = localStorage.getItem("authToken");
+    console.log("Token enviado:", token);
+    console.log("Datos enviados al servidor:", datos);
+
     await axios.post(url, datos, {
       headers: {
-        Authorization: `Bearer ${token}`, // Incluir el token de autorización
-        "Content-Type": "application/json", // Especificar el tipo de contenido
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
-      
     });
     alert("Animal guardado correctamente.");
   } catch (error) {
@@ -53,16 +62,30 @@ export const guardarAnimal = async (event, datos) => {
   }
 };
 
+
+
+
 // Actualizar un animal existente
-export const actualizarAnimal = async (event, id, animalGuardado) => {
+export const actualizarAnimal = async (id, animalGuardado) => {
   try {
     const token = localStorage.getItem("authToken"); // Obtener el token actualizado
+
+    // Verificar que animalGuardado contenga datos válidos
+    console.log("Datos enviados al servidor:", animalGuardado);
+
+    // Verificar que todos los campos obligatorios estén presentes
+    if (!animalGuardado || !animalGuardado.nombre || !animalGuardado.tipo) {
+      alert("Faltan datos por completar");
+      return null;
+    }
+
     const respuesta = await axios.put(`${url}/${id}`, animalGuardado, {
       headers: {
         Authorization: `Bearer ${token}`, // Incluir el token de autorización
         "Content-Type": "application/json",
       },
     });
+    
     alert("Animal actualizado correctamente.");
     return respuesta.data;
   } catch (error) {
@@ -71,6 +94,7 @@ export const actualizarAnimal = async (event, id, animalGuardado) => {
     return null;
   }
 };
+
 
 // Eliminar un animal por ID
 export const eliminarAnimal = async (id) => {

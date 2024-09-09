@@ -1,7 +1,6 @@
 import "./form.css";
-import React from "react";
+import React, { useState } from "react";
 import { guardarAnimal } from "../../axios";
-import { useState } from "react";
 import { useNavigate } from "react-router";
 
 const Form = () => {
@@ -11,24 +10,33 @@ const Form = () => {
   const [tamano, setTamano] = useState("");
   const [cuidadosEspeciales, setCuidadosEspeciales] = useState("");
   const [edad, setEdad] = useState(0);
+  const [ubicacion, setUbicacion] = useState("");
   const [imagen, setImagen] = useState("");
   const navigate = useNavigate();
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    await guardarAnimal(event, {
+
+    const datos = {
       tipo,
       raza,
       nombre,
       tamano,
       cuidadosEspeciales,
-      ubicacion: "Barcelona",
-      edad,
-      gastosDeGestion: "500€",
+      ubicacion,
+      edad: parseInt(edad), // Convertir edad a número
       imagen,
-    });
-    alert("Tu peludito se ha guardado correctamente");
-    navigate("/adoptar");
+    };
+    console.log("Datos a enviar:", datos); // Verifica los datos antes de enviarlos
+
+    try {
+      await guardarAnimal(datos); // Llamada a guardarAnimal sin pasar 'event'
+      alert("Tu peludito se ha guardado correctamente");
+      navigate("/adoptar"); // Redirigir después de guardar
+    } catch (error) {
+      console.error("Error al guardar el animal:", error);
+      alert("Hubo un problema al guardar el animal.");
+    }
   };
 
   return (
@@ -61,8 +69,8 @@ const Form = () => {
             Gato
           </label>
         </div>
-        <div className="container--entradas--form">
-          <div className="container--entradas--divs">
+        <div className="container--input--form">
+          <div className="container--input--divs">
             <div>
               <label htmlFor="nombre">Nombre</label>
               <input
@@ -94,7 +102,17 @@ const Form = () => {
               />
             </div>
           </div>
-          <div className="container--entradas--divs">
+          <div className="container--input--divs">
+            <div>
+              <label htmlFor="ubicacion">Ubicación</label>
+              <input
+                id="ubicacion"
+                value={ubicacion}
+                type="text"
+                placeholder="Ubicación"
+                onChange={(event) => setUbicacion(event.target.value)}
+              />
+            </div>
             <div>
               <label htmlFor="imagen">Enlace de la foto</label>
               <input
@@ -121,6 +139,8 @@ const Form = () => {
                 <option value="pequeño">Pequeño</option>
               </select>
             </div>
+          </div>
+          <div className="container--input--divs">
             <div>
               <label htmlFor="cuidados">Cuidados especiales</label>
               <input
