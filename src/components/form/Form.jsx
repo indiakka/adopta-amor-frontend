@@ -1,7 +1,6 @@
 import "./form.css";
-import React from "react";
+import React, { useState } from "react";
 import { guardarAnimal } from "../../axios";
-import { useState } from "react";
 import { useNavigate } from "react-router";
 
 const Form = () => {
@@ -17,19 +16,27 @@ const Form = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    await guardarAnimal(event, {
+
+    const datos = {
       tipo,
       raza,
       nombre,
       tamano,
       cuidadosEspeciales,
       ubicacion,
-      edad,
-      gastosDeGestion: "500€",
+      edad: parseInt(edad), // Convertir edad a número
       imagen,
-    });
-    alert("Tu peludito se ha guardado correctamente");
-    navigate("/adoptar");
+    };
+    console.log("Datos a enviar:", datos); // Verifica los datos antes de enviarlos
+
+    try {
+      await guardarAnimal(datos); // Llamada a guardarAnimal sin pasar 'event'
+      alert("Tu peludito se ha guardado correctamente");
+      navigate("/adoptar"); // Redirigir después de guardar
+    } catch (error) {
+      console.error("Error al guardar el animal:", error);
+      alert("Hubo un problema al guardar el animal.");
+    }
   };
 
   return (
@@ -131,7 +138,7 @@ const Form = () => {
                 <option value="mediano">Mediano</option>
                 <option value="pequeño">Pequeño</option>
               </select>
-            </div>{" "}
+            </div>
           </div>
           <div className="container--input--divs">
             <div>

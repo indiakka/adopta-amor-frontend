@@ -43,15 +43,17 @@ export const recibirAnimal = async (id) => {
 
 
 // Guardar un nuevo animal
-export const guardarAnimal = async (event, datos) => {
+export const guardarAnimal = async (datos) => {
   try {
-    const token = localStorage.getItem("authToken"); // Obtener el token actualizado
+    const token = localStorage.getItem("authToken");
+    console.log("Token enviado:", token);
+    console.log("Datos enviados al servidor:", datos);
+
     await axios.post(url, datos, {
       headers: {
-        Authorization: `Bearer ${token}`, // Incluir el token de autorización
-        "Content-Type": "application/json", // Especificar el tipo de contenido
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
-      
     });
     alert("Animal guardado correctamente.");
   } catch (error) {
@@ -59,6 +61,9 @@ export const guardarAnimal = async (event, datos) => {
     alert("Hubo un problema al guardar el animal.");
   }
 };
+
+
+
 
 // Actualizar un animal existente
 export const actualizarAnimal = async (id, animalGuardado) => {
