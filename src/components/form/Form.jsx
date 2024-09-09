@@ -11,6 +11,7 @@ const Form = () => {
   const [tamano, setTamano] = useState("");
   const [cuidadosEspeciales, setCuidadosEspeciales] = useState("");
   const [edad, setEdad] = useState(0);
+  const [ubicacion, setUbicacion] = useState("");
   const [imagen, setImagen] = useState("");
   const navigate = useNavigate();
 
@@ -22,7 +23,7 @@ const Form = () => {
       nombre,
       tamano,
       cuidadosEspeciales,
-      ubicacion: "Barcelona",
+      ubicacion,
       edad,
       gastosDeGestion: "500€",
       imagen,
@@ -61,8 +62,8 @@ const Form = () => {
             Gato
           </label>
         </div>
-        <div className="container--entradas--form">
-          <div className="container--entradas--divs">
+        <div className="container--input--form">
+          <div className="container--input--divs">
             <div>
               <label htmlFor="nombre">Nombre</label>
               <input
@@ -94,7 +95,17 @@ const Form = () => {
               />
             </div>
           </div>
-          <div className="container--entradas--divs">
+          <div className="container--input--divs">
+            <div>
+              <label htmlFor="ubicacion">Ubicación</label>
+              <input
+                id="ubicacion"
+                value={ubicacion}
+                type="text"
+                placeholder="Ubicación"
+                onChange={(event) => setUbicacion(event.target.value)}
+              />
+            </div>
             <div>
               <label htmlFor="imagen">Enlace de la foto</label>
               <input
@@ -120,7 +131,9 @@ const Form = () => {
                 <option value="mediano">Mediano</option>
                 <option value="pequeño">Pequeño</option>
               </select>
-            </div>
+            </div>{" "}
+          </div>
+          <div className="container--input--divs">
             <div>
               <label htmlFor="cuidados">Cuidados especiales</label>
               <input

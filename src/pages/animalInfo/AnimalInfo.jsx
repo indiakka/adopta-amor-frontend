@@ -80,7 +80,7 @@ const AnimalInfo = () => {
         <div className="container--button">
           <button
             onClick={anadirAnimal}
-            className="button-adopta btn--conoceme"
+            className="button-adopta button--conoceme"
           >
             <FontAwesomeIcon icon={faPaw} />
             Conóceme
