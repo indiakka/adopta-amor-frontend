@@ -1,29 +1,22 @@
-@import "src/variables-css/variables.css";
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 
 .filter {
-    width: 94%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
     border: 2px solid;
-    border-radius: 20px;
+    margin: 2rem 12rem;
+    border-radius: 5px;
     color: var(--text-color);
-    grid-column-start: 1;
-    grid-column-end: 4;
-    /*     position: relative; */
-
+    align-content: center;
 }
 
-.filterField {
+.campoFilter {
     width: 25%;
+    height: 7vh;
     color: var(--text-color);
     background-color: transparent;
     font-family: Manrope;
-    font-size: calc(10px + (30 - 4) * ((100vw - 368px) / (1920 - 368)));
+    font-size: 20px;
     font-weight: bold;
     margin: 0;
-    padding: 1em 0% 1em 0%;
     padding-inline: 0.5em;
     cursor: pointer;
     transition: color 0.5s;
@@ -31,43 +24,33 @@
     border: none;
 }
 
-.filterField:focus,
-.filterField:active {
+.campoFilter:focus,
+.campoFilter:active {
     color: var(--main-color);
 }
 
-.filterField ul {
+.campoFilter ul {
     color: var(--text-color);
 }
 
-.filterField:nth-of-type(1) {
+.campoFilter:nth-of-type(1) {
     border-right: 2px solid var(--text-color);
 }
 
-.filterField:nth-of-type(2) {
+.campoFilter:nth-of-type(2) {
     border-right: 2px solid var(--text-color);
 }
 
-.filterField:nth-of-type(3) {
+.campoFilter:nth-of-type(3) {
     border-right: 2px solid var(--text-color);
 }
 
-
-.filterField:hover {
-    background: var(--main-color-light);
+.campoFilter:hover {
+    background: var(main-color-light);
+    color: rgb(78, 28, 124);
 }
 
-.filterFieldRadiusLeft:hover {
-    border-start-start-radius: 18px;
-    border-end-start-radius: 18px;
-}
-
-.filterFieldRadiusRight:hover {
-    border-start-end-radius: 18px;
-    border-end-end-radius: 18px;
-}
-
-.filter-ul {
+.listaFilter {
     width: 75%;
     list-style: none;
     padding: 0;
@@ -80,19 +63,22 @@
     background-color: white;
 }
 
-.selected-option {
+.opcionSeleccionada {
     margin-left: 5px;
     font-weight: bold;
     color: rgb(92, 88, 88);
     font-size: 20px;
 }
 
-
-li:hover {
-    background-color: var(--main-color-light);
+.elementoListaFilter:hover {
+    background-color: rgb(215, 188, 236);
 }
 
-/* @media tablet */
+.iconsPapelera {
+    margin: 0 10px;
+}
+
+/* Media Queries */
 @media only screen and (max-width: 768px) {
     .filter {
         grid-column-start: 1;
@@ -100,7 +86,6 @@ li:hover {
     }
 }
 
-/* @media móvil */
 @media only screen and (max-width: 360px) {
     .filter {
         grid-column-start: 1;
