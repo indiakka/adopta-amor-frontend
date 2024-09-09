@@ -1,124 +1,172 @@
 import { useState } from "react";
-import "./Filter.css";
+import React from "react";
+import "./filter.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-const Filter = ( { onClick } ) =>
-{
-    const [ isAnimalListOpen, setAnimalListOpen ] = useState( false );
-    const [ isTamanoListOpen, setTamanoListOpen ] = useState( false );
-    const [ isEdadListOpen, setEdadListOpen ] = useState( false );
+const Filter = ({ onClick, onClearFilters }) => {
+  const [estaListaAnimalesAbierta, setEstaListaAnimalesAbierta] =
+    useState(false);
+  const [estaListaTamanosAbierta, setEstaListaTamanosAbierta] = useState(false);
+  const [estaListaEdadesAbierta, setEstaListaEdadesAbierta] = useState(false);
 
-    // State for selected filters
-    const [ selectedAnimal, setSelectedAnimal ] = useState( null );
-    const [ selectedTamano, setSelectedTamano ] = useState( null );
-    const [ selectedEdad, setSelectedEdad ] = useState( null );
+  const [especieSeleccionada, setEspeciesSeleccionadas] = useState([]);
+  const [tamanoSeleccionado, setTamanoSeleccionado] = useState([]);
+  const [edadSeleccionada, setEdadSeleccionada] = useState([]);
 
-    const toggleAnimal = () =>
-    {
-        setAnimalListOpen( !isAnimalListOpen );
-        setTamanoListOpen( false );
-        setEdadListOpen( false );
-    };
+  const alternarListaAnimales = () => {
+    setEstaListaAnimalesAbierta(!estaListaAnimalesAbierta);
+    setEstaListaTamanosAbierta(false);
+    setEstaListaEdadesAbierta(false);
+  };
 
-    const toggleTamano = () =>
-    {
-        setTamanoListOpen( !isTamanoListOpen );
-        setAnimalListOpen( false );
-        setEdadListOpen( false );
-    };
+  const alternarListaTamanos = () => {
+    setEstaListaTamanosAbierta(!estaListaTamanosAbierta);
+    setEstaListaAnimalesAbierta(false);
+    setEstaListaEdadesAbierta(false);
+  };
 
-    const toggleEdad = () =>
-    {
-        setEdadListOpen( !isEdadListOpen );
-        setAnimalListOpen( false );
-        setTamanoListOpen( false );
-    };
+  const alternarListaEdades = () => {
+    setEstaListaEdadesAbierta(!estaListaEdadesAbierta);
+    setEstaListaAnimalesAbierta(false);
+    setEstaListaTamanosAbierta(false);
+  };
 
-    const handleAnimalClick = ( tipo ) =>
-    {
-        console.log( "Selected Animal:", tipo );
-        setSelectedAnimal( tipo );
-        onClick( "tipo", tipo );
-    };
+  const manejarClicAnimal = (tipo) => {
+    console.log("Especie seleccionada:", tipo);
+    setEspeciesSeleccionadas(tipo);
+    onClick("tipo", [tipo]);
+  };
 
-    const handleTamanoClick = ( tamano ) =>
-    {
-        console.log( "Selected Tamano:", tamano );
-        setSelectedTamano( tamano );
-        onClick( "tamano", tamano );
-    };
+  const manejarClicTamano = (tamano) => {
+    console.log("Tamaño seleccionado:", tamano);
+    setTamanoSeleccionado(tamano);
+    onClick("tamano", [tamano]);
+  };
 
-    const handleEdadClick = ( edad ) =>
-    {
-        console.log( "Selected Edad:", edad );
-        setSelectedEdad( edad );
-        onClick( "edad", edad );
-    };
+  const manejarClicEdad = (edad) => {
+    console.log("Edad seleccionada:", edad);
+    setEdadSeleccionada(edad);
+    onClick("edad", [edad]);
+  };
 
-    const clearFilters = () =>
-    {
-        setSelectedAnimal( null );
-        setSelectedTamano( null );
-        setSelectedEdad( null );
-        onClick( "" );
-    };
+  const borrarFilters = () => {
+    setEspeciesSeleccionadas([]);
+    setTamanoSeleccionado([]);
+    setEdadSeleccionada([]);
+    if (typeof onClearFilters === "function") {
+      onClearFilters();
+    }
+  };
 
-    return (
-        <div className="filter">
-            {/* Animal filter */}
-            <button className="filterField filterFieldRadiusLeft" onClick={toggleAnimal}>
-                Animales {selectedAnimal && <span className="selected-option">{selectedAnimal}</span>} <FontAwesomeIcon icon={faCaretDown} />
-                {isAnimalListOpen ? (
-                    <ul className="filter-ul">
-                        <li className={`filter-li ${selectedAnimal === "Perro" ? "selected" : ""}`} onClick={() => handleAnimalClick( "Perro" )}>
-                            Perros
-                        </li>
-                        <li className={`filter-li ${selectedAnimal === "Gato" ? "selected" : ""}`} onClick={() => handleAnimalClick( "Gato" )}>
-                            Gatos
-                        </li>
-                    </ul>
-                ) : null}
-            </button>
+  return (
+    <div className="filter">
+      {/* Filter de animals */}
+      <button
+        className="campoFilter campoFilterRadioIzquierda"
+        onClick={alternarListaAnimales}
+      >
+        Especies{" "}
+        {especieSeleccionada && (
+          <span className="opcionSeleccionada">{especieSeleccionada}</span>
+        )}{" "}
+        <FontAwesomeIcon icon={faCaretDown} />
+        {estaListaAnimalesAbierta ? (
+          <ul className="listaFilter">
+            <li
+              className={`elementoListaFilter ${
+                especieSeleccionada.includes("Perro") ? "seleccionado" : ""
+              }`}
+              onClick={() => manejarClicAnimal("Perro")}
+            >
+              Perros
+            </li>
+            <li
+              className={`elementoListaFilter ${
+                especieSeleccionada.includes("Gato") ? "seleccionado" : ""
+              }`}
+              onClick={() => manejarClicAnimal("Gato")}
+            >
+              Gatos
+            </li>
+          </ul>
+        ) : null}
+      </button>
 
-            {/* Tamaño filter */}
-            <button className="filterField" onClick={toggleTamano}>
-                Tamaño {selectedTamano && <span className="selected-option">{selectedTamano}</span>} <FontAwesomeIcon icon={faCaretDown} />
-                {isTamanoListOpen ? (
-                    <ul className="filter-ul">
-                        <li className={`filter-li ${selectedTamano === "Pequeño" ? "selected" : ""}`} onClick={() => handleTamanoClick( "Pequeño" )}>
-                            Pequeño
-                        </li>
-                        <li className={`filter-li ${selectedTamano === "Mediano" ? "selected" : ""}`} onClick={() => handleTamanoClick( "Mediano" )}>
-                            Mediano
-                        </li>
-                        <li className={`filter-li ${selectedTamano === "Grande" ? "selected" : ""}`} onClick={() => handleTamanoClick( "Grande" )}>
-                            Grande
-                        </li>
-                    </ul>
-                ) : null}
-            </button>
+      {/* Filter de tamaño */}
+      <button className="campoFilter" onClick={alternarListaTamanos}>
+        Tamaño{" "}
+        {tamanoSeleccionado && (
+          <span className="opcionSeleccionada">{tamanoSeleccionado}</span>
+        )}{" "}
+        <FontAwesomeIcon icon={faCaretDown} />
+        {estaListaTamanosAbierta ? (
+          <ul className="listaFilter">
+            <li
+              className={`elementoListaFilter ${
+                tamanoSeleccionado.includes("Pequeño") ? "seleccionado" : ""
+              }`}
+              onClick={() => manejarClicTamano("Pequeño")}
+            >
+              Pequeño
+            </li>
+            <li
+              className={`elementoListaFilter ${
+                tamanoSeleccionado.includes("Mediano") ? "seleccionado" : ""
+              }`}
+              onClick={() => manejarClicTamano("Mediano")}
+            >
+              Mediano
+            </li>
+            <li
+              className={`elementoListaFilter ${
+                tamanoSeleccionado.includes("Grande") ? "seleccionado" : ""
+              }`}
+              onClick={() => manejarClicTamano("Grande")}
+            >
+              Grande
+            </li>
+          </ul>
+        ) : null}
+      </button>
 
-            {/* Edad filter */}
-            <button className="filterField" onClick={toggleEdad}>
-                Edad {selectedEdad && <span className="selected-option">{selectedEdad}</span>} <FontAwesomeIcon icon={faCaretDown} />
-                {isEdadListOpen ? (
-                    <ul className="filter-ul">
-                        <li className={`filter-li ${selectedEdad === "Cachorrito" ? "selected" : ""}`} onClick={() => handleEdadClick( "Cachorrito" )}>
-                            Cachorrito
-                        </li>
-                        <li className={`filter-li ${selectedEdad === "Adulto" ? "selected" : ""}`} onClick={() => handleEdadClick( "Adulto" )}>
-                            Adulto
-                        </li>
-                    </ul>
-                ) : null}
-            </button>
-            {/* Delete Filter */}
-            <button className="filterField filterFieldRadiusRight" onClick={clearFilters}>
-                Borrar filtros <FontAwesomeIcon icon={faTrash} />
-            </button>
-        </div>
-    );
+      {/* Filter de edad */}
+      <button className="campoFilter" onClick={alternarListaEdades}>
+        Edad{" "}
+        {edadSeleccionada && (
+          <span className="opcionSeleccionada">{edadSeleccionada}</span>
+        )}{" "}
+        <FontAwesomeIcon icon={faCaretDown} />
+        {estaListaEdadesAbierta ? (
+          <ul className="listaFilter">
+            <li
+              className={`elementoListaFilter ${
+                edadSeleccionada.includes("Cachorrito") ? "seleccionado" : ""
+              }`}
+              onClick={() => manejarClicEdad("Cachorrito")}
+            >
+              Cachorrito
+            </li>
+            <li
+              className={`elementoListaFilter ${
+                edadSeleccionada.includes("Adulto") ? "seleccionado" : ""
+              }`}
+              onClick={() => manejarClicEdad("Adulto")}
+            >
+              Adulto
+            </li>
+          </ul>
+        ) : null}
+      </button>
+      <button
+        className="campoFilter campoFilterRadioDerecha"
+        onClick={borrarFilters}
+      >
+        Borrar filtros
+        <FontAwesomeIcon className="iconsPapelera" icon={faTrash} />
+      </button>
+    </div>
+  );
 };
 
 export default Filter;

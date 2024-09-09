@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Filtro from "../components/filtro/Filtro";
+import Filter from "../components/filter/Filter";
 import AnimalCard from "../components/card/AnimalCard";
 import Pagination from "../components/pagination/Pagination";
 import { recibirAnimales } from "../axios";
@@ -9,7 +9,7 @@ const Adoptar = () => {
   const [animals, setAnimals] = useState([]); // Inicializar como array vacío
   const [animalesFiltradosYMezclados, setAnimalesFiltradosYMezclados] =
     useState([]);
-  const [criteriosFiltro, setCriteriosFiltro] = useState({
+  const [criteriosFilter, setCriteriosFilter] = useState({
     tipo: [],
     tamano: [],
     edad: [],
@@ -37,40 +37,40 @@ const Adoptar = () => {
     obtenerDatos();
   }, []);
 
-  // Manejar los cambios en los filtros
-  const manejarCambioFiltro = (filtroSeleccionado, valor) => {
-    setCriteriosFiltro((filtroActual) => ({
-      ...filtroActual,
-      [filtroSeleccionado]: valor,
+  // Manejar los cambios en los filters
+  const manejarCambioFilter = (filterSeleccionado, valor) => {
+    setCriteriosFilter((filterActual) => ({
+      ...filterActual,
+      [filterSeleccionado]: valor,
     }));
   };
 
-  // Aplicar los filtros a los animales
+  // Aplicar los filters a los animales
   useEffect(() => {
     let animalesFiltrados = animals.filter((animal) => {
       if (
-        criteriosFiltro.tipo.length > 0 &&
-        !criteriosFiltro.tipo.includes(animal.tipo)
+        criteriosFilter.tipo.length > 0 &&
+        !criteriosFilter.tipo.includes(animal.tipo)
       ) {
         return false;
       }
       if (
-        criteriosFiltro.tamano.length > 0 &&
-        !criteriosFiltro.tamano.includes(animal.tamano)
+        criteriosFilter.tamano.length > 0 &&
+        !criteriosFilter.tamano.includes(animal.tamano)
       ) {
         return false;
       }
-      if (criteriosFiltro.edad.length > 0) {
+      if (criteriosFilter.edad.length > 0) {
         const edad = parseInt(animal.edad, 10); // Convertir la edad a número
         if (isNaN(edad)) {
           return false; // Si la edad no es un número, excluir al animal
         }
-        if (criteriosFiltro.edad.includes("Cachorrito")) {
+        if (criteriosFilter.edad.includes("Cachorrito")) {
           if (!(edad >= 0 && edad <= 1)) {
             return false;
           }
         }
-        if (criteriosFiltro.edad.includes("Adulto")) {
+        if (criteriosFilter.edad.includes("Adulto")) {
           if (!(edad > 1 && edad < 5)) {
             return false;
           }
@@ -82,7 +82,7 @@ const Adoptar = () => {
     animalesFiltrados = mezclarAnimales(animalesFiltrados);
 
     setAnimalesFiltradosYMezclados(animalesFiltrados);
-  }, [animals, criteriosFiltro]);
+  }, [animals, criteriosFilter]);
 
   // Función para mezclar animales filtrados
   const mezclarAnimales = (array) => {
@@ -110,9 +110,9 @@ const Adoptar = () => {
     setPaginaActual(numeroPagina);
   };
 
-  // Función para borrar los filtros
-  const borrarFiltros = () => {
-    setCriteriosFiltro({ tipo: [], tamano: [], edad: [] });
+  // Función para borrar los filters
+  const borrarFilters = () => {
+    setCriteriosFilter({ tipo: [], tamano: [], edad: [] });
   };
 
   // Calcular los elementos de la página actual
@@ -129,7 +129,7 @@ const Adoptar = () => {
 
   return (
     <>
-      <Filtro onClick={manejarCambioFiltro} onClearFilters={borrarFiltros} />
+      <Filter onClick={manejarCambioFilter} onClearFilters={borrarFilters} />
       <div className="cards">
         {elementosActuales.length > 0 ? (
           elementosActuales.map((animal) => (
