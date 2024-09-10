@@ -61,8 +61,9 @@ const Login = () => {
         login(token);
         localStorage.setItem("user", JSON.stringify({ userId, name, role }));
 
-        alert(`Bienvenido ${name}`);
-        navigate("/donar");
+        // En lugar de alert, muestra el mensaje de bienvenida en el popup
+        setPopUpMessage(`Bienvenido ${name}`);
+        setIsPopupOpen(true);
       } else {
         throw new Error("Token o datos de usuario faltantes");
       }
@@ -123,6 +124,14 @@ const Login = () => {
           </div>
         </form>
       </section>
+
+      <Popup
+        isPopupOpen={isPopupOpen}
+        closePopup={closePopup}
+        message={popUpMessage}
+        onConfirm={popUpFunction} 
+        showCancel={false} 
+      />
     </div>
   );
 };
