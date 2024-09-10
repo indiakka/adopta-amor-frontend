@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import React, { useState } from "react";
-import './popups.css'
+import React from "react";
+import "./popups.css";
 import PropTypes from "prop-types";
 import Button from "../buttons/Button";
 import ReactDOM from "react-dom";

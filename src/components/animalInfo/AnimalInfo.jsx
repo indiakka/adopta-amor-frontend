@@ -14,13 +14,12 @@ const AnimalInfo = ({
 }) => {
   const [animalesCasita, setAnimalesCasita] = useState([]);
   const [estaAbierta, setEstaAbierta] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false); // Estado para verificar si es admin
+  const [isAdmin, setIsAdmin] = useState(false); 
 
   useEffect(() => {
-    // Leer el rol del usuario desde el localStorage
     const user = JSON.parse(localStorage.getItem("user"));
     if (user && user.role === "ADMIN") {
-      setIsAdmin(true); // Si el rol es admin, actualizar el estado
+      setIsAdmin(true); 
     }
   }, []);
 
@@ -56,12 +55,11 @@ const AnimalInfo = ({
   };
 
   const manejarCerrar = () => {
-    setEstaAbierta(false); // Cambiar el estado para ocultar la card
+    setEstaAbierta(false);
   };
 
-  // Verificar si la card está abierta
   if (!estaAbierta) {
-    return null; // Si está cerrada, no renderizamos nada
+    return null; 
   }
 
   return (
@@ -116,7 +114,6 @@ const AnimalInfo = ({
             />
           </div>
 
-          {/* Mostrar botones de editar y eliminar solo si el usuario es admin */}
           {isAdmin && (
             <>
               <NavLink to={`/editInfo/${animal.id}`}>

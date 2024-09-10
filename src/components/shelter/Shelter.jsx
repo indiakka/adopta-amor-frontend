@@ -25,7 +25,6 @@ const Shelter = ({ todosLosAnimales, setTodosLosAnimales }) => {
       if (
         !document.getElementById("container-shelter").contains(event.target)
       ) {
-        // Cerrar la shelter si el clic no ocurrió dentro de la shelter
         setCasitaAbierta(false);
       }
     };

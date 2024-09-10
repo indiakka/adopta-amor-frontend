@@ -1,10 +1,7 @@
 footer a {
     text-decoration: none;
-    /* Quita la subrayado del enlace */
     color: inherit;
-    /* Usa el color del texto del elemento padre */
     cursor: pointer;
-    /* Cambia el cursor al estilo predeterminado de un enlace */
 }
 
 .footer {
@@ -58,7 +55,6 @@ footer a {
 }
 
 
-/* @media móvil */
 @media only screen and (max-width: 360px) {
 
     .footer-first-block {

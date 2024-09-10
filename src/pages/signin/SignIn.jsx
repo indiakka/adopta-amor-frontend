@@ -1,141 +1,95 @@
-import { useState } from "react";
-import React from "react";
-import Button from "../../components/buttons/Button";
-import { Link, useNavigate } from "react-router-dom";
-import Input from "../../components/input/Input";
-import Popup from "../../components/popups/Popups";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./signin.css"; // Archivo CSS para estilos
+import Popup from "../../components/popups/Popups";
 
 const SignIn = () => {
-  const [name, setName] = useState("");
+  const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [nameError, setNameError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [popUpMessage, setPopUpMessage] = useState("");
-  const [popUpFunction, setPopUpFunction] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-  const navigate = useNavigate(); // Hook de redirección de React Router
+  const [popupMessage, setPopupMessage] = useState("");
+  const navigate = useNavigate();
 
   const closePopup = () => setIsPopupOpen(false);
 
-  function handleName(e) {
-    setName(e.target.value);
-    if (e.target.value) {
-      setNameError(false);
-    }
-  }
+  const onSubmit = async (event) => {
+    event.preventDefault();
 
-  function handleEmail(e) {
-    setEmail(e.target.value);
-    if (e.target.value) {
-      setEmailError(false);
-    }
-  }
-
-  function handlePassword(e) {
-    setPassword(e.target.value);
-    if (e.target.value) {
-      setPasswordError(false);
-    }
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    const datosRegistro = {
+      nombre,
+      email,
+      password,
+    };
 
     try {
-      const response = await axios.post("http://localhost:4001/auth/register", {
-        email,
-        password,
-        name,
-      });
+      await axios.post("/api/registro", datosRegistro);
 
-      if (response.data) {
-        const message = await response.data; // Manejar como texto
-        console.log("Response Data:", message);
-        setPopUpMessage("Registro exitoso. Redirigiendo al login...");
-        setIsPopupOpen(true);
-        setTimeout(() => navigate("/login"), 2000); // Redirigir después de 2 segundos
-      } else {
-        setPopUpMessage("Error en el servidor. Inténtalo nuevamente.");
-        setIsPopupOpen(true);
-      }
+      setPopupMessage("Registro exitoso. Redirigiendo...");
+      setIsPopupOpen(true);
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
     } catch (error) {
-      console.error("Error en el servidor:", error);
-      setPopUpMessage("Error en el servidor. Inténtalo nuevamente.");
+      setPopupMessage("Hubo un problema con el registro.");
       setIsPopupOpen(true);
     }
   };
 
-  const navigateLogin = () => {
-    if (isPopupOpen) setIsPopupOpen(false);
-    console.log("Redirigiendo al login...");
-    navigate("/login"); // Redirección al login
-  };
-
-  const reloadPage = () => {
-    if (isPopupOpen) setIsPopupOpen(false);
-    window.location.reload();
-  };
-
   return (
-    <div className="flex-container">
-      <section className="section-container">
-        <h1 className="heading">Registro de usuario</h1>
-        <hr className="divider" />
-        <form onSubmit={handleSubmit}>
-          <Input
-            title="Nombre "
-            placeholder="Escribe tu nombre..."
+    <div className="container--signin">
+      <form onSubmit={onSubmit} className="form">
+        <div className="form-group">
+          <label htmlFor="nombre">Nombre</label>
+          <input
             type="text"
-            value={name}
-            onChange={handleName}
+            id="nombre"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+            placeholder="Ingresa tu nombre"
+            required
           />
-          {nameError && <p className="error-text">Nombre requerido</p>}
-          <Input
-            title="E-mail "
-            placeholder="Escribe tu email..."
+        </div>
+        <div className="form-group">
+          <label htmlFor="email">Correo electrónico</label>
+          <input
             type="email"
+            id="email"
             value={email}
-            onChange={handleEmail}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Ingresa tu correo electrónico"
+            required
           />
-          {emailError && <p className="error-text">Email requerido</p>}
-          <Input
-            title="Contraseña "
-            placeholder="Escribe tu contraseña..."
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Contraseña</label>
+          <input
             type="password"
+            id="password"
             value={password}
-            onChange={handlePassword}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Ingresa tu contraseña"
+            required
           />
-          {passwordError && <p className="error-text">Contraseña requerida</p>}
-          <div className="button-container">
-            <Button className="green-button" text="Aceptar" type="submit" />
-            <Button
-              className="pink-button"
-              text="Cancelar"
-              onClick={() => {
-                navigate("/");
-              }}
-            />
-          </div>
-        </form>
-        <h3 className="login-text">
-          ¿Ya tienes cuenta? Accede{" "}
-          <Link to="/login" className="link">
-            aquí
-          </Link>
-        </h3>
-      </section>
-      <Popup
-        isPopupOpen={isPopupOpen}
-        closePopup={closePopup}
-        onConfirm={popUpFunction}
-        message={popUpMessage}
-        showCancel={false}
-      />
+        </div>
+        <button type="submit" className="button-signin">
+          Registrarse
+        </button>
+      </form>
+      <div className="signin-footer">
+        <p>
+          ¿Ya tienes cuenta? <a href="/login">Accede aquí</a>
+        </p>
+      </div>
+      {isPopupOpen && (
+        <Popup
+          isPopupOpen={isPopupOpen}
+          closePopup={closePopup}
+          message={popupMessage}
+        />
+      )}
     </div>
   );
 };

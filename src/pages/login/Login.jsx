@@ -78,52 +78,51 @@ const Login = () => {
   };
 
   return (
-    <div className="flex-container">
-      <section className="section-container">
-        <h1 className="heading">Acceso de usuario</h1>
-        <hr className="divider" />
+    <div className="container--form">
+      <section className="form">
+        <h1>Acceso de usuario</h1>
         <form onSubmit={handleSubmit}>
-          <Input
-            title="E-mail "
-            placeholder="Escribe tu email..."
-            type="email"
-            value={email}
-            onChange={handleEmail}
-          />
-          {emailError && <p className="error-text">E-mail requerido</p>}
+          <div className="container--input--form">
+            <div className="container--input--divs">
+              <Input
+                title="E-mail"
+                placeholder="Escribe tu email..."
+                type="email"
+                value={email}
+                onChange={handleEmail}
+              />
+              {emailError && <p className="error-text">E-mail requerido</p>}
+            </div>
 
-          <Input
-            title="Contraseña "
-            placeholder="Escribe tu contraseña..."
-            type="password"
-            value={password}
-            onChange={handlePassword}
-          />
-          {passwordError && <p className="error-text">Contraseña requerida</p>}
+            <div className="container--input--divs">
+              <Input
+                title="Contraseña"
+                placeholder="Escribe tu contraseña..."
+                type="password"
+                value={password}
+                onChange={handlePassword}
+              />
+              {passwordError && (
+                <p className="error-text">Contraseña requerida</p>
+              )}
+            </div>
 
-          <div className="button-container">
-            <Button
-              className={`green-button ${loading ? "disabled-button" : ""}`}
-              text={loading ? "Cargando..." : "Aceptar"}
-              type="submit"
-              disabled={loading}
-            />
-            <Button
-              className="pink-button"
-              text="Cancelar"
-              type="button"
-              onClick={() => navigate("/donar")}
-            />
+            <div className="button-container">
+              <button type="submit" className="button-signin">
+                Aceptar
+              </button>
+              <button
+                className="button-signin"
+                text="Cancelar"
+                type="button"
+                onClick={() => navigate("/donar")}
+              >
+                Cancelar
+              </button>
+            </div>
           </div>
         </form>
       </section>
-      <Popup
-        isPopupOpen={isPopupOpen}
-        closePopup={closePopup}
-        onConfirm={popUpFunction}
-        message={popUpMessage}
-        showCancel={false}
-      />
     </div>
   );
 };

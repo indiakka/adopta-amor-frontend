@@ -24,7 +24,6 @@
     margin-bottom: 2em;
   }
 
-  /* @media móvil */
   @media only screen and (max-width: 360px) {
 
     .container-header {
