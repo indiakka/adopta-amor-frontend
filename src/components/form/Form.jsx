@@ -24,10 +24,8 @@ const Form = () => {
     if (!raza) newErrors.raza = "La raza es obligatoria.";
     if (edad < -1) newErrors.edad = "La edad debe ser mayor a -1.";
     if (!ubicacion) newErrors.ubicacion = "La ubicación es obligatoria.";
-    if (!imagen) newErrors.imagen = "El enlace de la imagen es obligatorio.";
     if (!tamano) newErrors.tamano = "Por favor, selecciona el tamaño.";
-    if (!cuidadosEspeciales)
-      newErrors.cuidadosEspeciales = "Este campo es obligatorio.";
+ 
 
     return newErrors;
   };
