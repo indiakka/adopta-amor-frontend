@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { useNavigate, useParams } from "react-router";
 import { actualizarAnimal, recibirAnimal } from "../../axios";
+import "./editInfo.css"
 
 const EditInfo = () => {
   const { id } = useParams();
@@ -40,45 +41,50 @@ const EditInfo = () => {
   return (
     <div className="container--form">
       <form onSubmit={manejarEnvio} className="form">
-        <p>
-          <b>Seleccione el tipo de animal: </b>
-        </p>
-        <div className="form--tipo">
-          <label>
-            <input
-              value="Perro"
-              checked={animalGuardado.tipo === "Perro"}
-              type="radio"
-              id="Perro"
-              name="tipo"
-              onChange={(event) =>
-                setAnimalGuardado({
-                  ...animalGuardado,
-                  tipo: event.target.value,
-                })
-              }
-            />
-            Perro
-          </label>
-          <label>
-            <input
-              value="Gato"
-              checked={animalGuardado.tipo === "Gato"}
-              type="radio"
-              id="Gato"
-              name="tipo"
-              onChange={(event) =>
-                setAnimalGuardado({
-                  ...animalGuardado,
-                  tipo: event.target.value,
-                })
-              }
-            />
-            Gato
-          </label>
+        {/* Tipo de animal arriba */}
+        <div className="form--tipo-container">
+          <p>
+            <b>Seleccione el tipo de animal: </b>
+          </p>
+          <div className="form--tipo">
+            <label>
+              <input
+                value="Perro"
+                checked={animalGuardado.tipo === "Perro"}
+                type="radio"
+                id="Perro"
+                name="tipo"
+                onChange={(event) =>
+                  setAnimalGuardado({
+                    ...animalGuardado,
+                    tipo: event.target.value,
+                  })
+                }
+              />
+              Perro
+            </label>
+            <label>
+              <input
+                value="Gato"
+                checked={animalGuardado.tipo === "Gato"}
+                type="radio"
+                id="Gato"
+                name="tipo"
+                onChange={(event) =>
+                  setAnimalGuardado({
+                    ...animalGuardado,
+                    tipo: event.target.value,
+                  })
+                }
+              />
+              Gato
+            </label>
+          </div>
         </div>
-        <div className="container--input--form">
-          <div className="container--input--divs">
+
+        {/* Campos divididos en dos columnas */}
+        <div className="form--column-container">
+          <div className="form--column">
             <div>
               <input
                 className="input--text"
@@ -122,7 +128,22 @@ const EditInfo = () => {
               />
             </div>
           </div>
-          <div className="container--input--divs">
+
+          <div className="form--column">
+            <div>
+              <input
+                className="input--text"
+                value={animalGuardado.ubicacion || ""}
+                type="text"
+                placeholder="Ubicación"
+                onChange={(event) =>
+                  setAnimalGuardado({
+                    ...animalGuardado,
+                    ubicacion: event.target.value,
+                  })
+                }
+              />
+            </div>
             <div>
               <input
                 className="input--text"
@@ -164,22 +185,24 @@ const EditInfo = () => {
                 </option>
               </select>
             </div>
-            <div>
-              <input
-                className="input--text"
-                value={animalGuardado.cuidadosEspeciales || ""}
-                type="text"
-                placeholder="Cuidados del animal"
-                onChange={(event) =>
-                  setAnimalGuardado({
-                    ...animalGuardado,
-                    cuidadosEspeciales: event.target.value,
-                  })
-                }
-              />
-            </div>
           </div>
         </div>
+
+        <div className="form--cuidados">
+          <input
+            className="input--text"
+            value={animalGuardado.cuidadosEspeciales || ""}
+            type="text"
+            placeholder="Cuidados del animal"
+            onChange={(event) =>
+              setAnimalGuardado({
+                ...animalGuardado,
+                cuidadosEspeciales: event.target.value,
+              })
+            }
+          />
+        </div>
+
         <button type="submit" className="button-adopta">
           Actualizar datos
         </button>
@@ -187,5 +210,6 @@ const EditInfo = () => {
     </div>
   );
 };
+
 
 export default EditInfo;

@@ -1,0 +1,36 @@
+.form--tipo-container {
+    margin-bottom: 20px;
+    margin: 1.5rem;
+  
+}
+
+.form--tipo {
+    display: inline-flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.form--column-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.form--column {
+    width: 48%;
+}
+
+.form--cuidados {
+    margin-bottom: 20px;
+    width: 30%;
+}
+
+.input--text,
+.input--select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
