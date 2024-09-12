@@ -24,11 +24,9 @@ const Adoptar = () => {
         if (Array.isArray(animals)) {
           setAnimals(animals);
         } else {
-          console.error("La respuesta no es un array:", animals);
           setAnimals([]); 
         }
       } catch (error) {
-        console.error("Error al obtener datos: ", error);
         setAnimals([]); 
       }
     };
