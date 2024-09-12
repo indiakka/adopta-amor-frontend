@@ -111,7 +111,7 @@ const Login = () => {
                 Aceptar
               </button>
               <button
-                className="button-signin"
+                className="button-cancel"
                 text="Cancelar"
                 type="button"
                 onClick={() => navigate("/donar")}

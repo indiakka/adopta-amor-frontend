@@ -7,7 +7,7 @@
 }
 
 .section-container {
-    width:24rem;
+    width: 24rem;
     border-radius: 1.2rem;
     background-color: white;
     border: 4px solid var(--main-color-light);
@@ -43,16 +43,20 @@
     padding: 0.25rem;
 }
 
-.green-button {
-    background-color: green;
-}
-
-.pink-button {
-    background-color: pink;
-}
 
 .disabled-button {
-    background-color: green;
+    background-color: var(--main-color-light);
     opacity: 0.5;
 }
 
+.button-cancel {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    gap: 1rem;
+    background-color: white;
+    border: 1px solid var(--main-color-light);
+}
