@@ -10,7 +10,7 @@ const Contact = () => {
   return (
     <div className="formContainerContacto">
       <form className="form" onSubmit={handleSubmit}>
-        <h1>Form de Contact</h1>
+        <h1>Formulario de Contacto</h1>
         <p>
           <b>Rellene los siguientes campos: </b>
         </p>
