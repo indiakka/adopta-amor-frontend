@@ -100,5 +100,6 @@ Abre el enlace que aparece con tu puerto local.
 
 ![image](https://github.com/user-attachments/assets/935830fa-7d50-49f9-a07b-6d2266bb59a9)
 ![image](https://github.com/user-attachments/assets/9e224cf2-3a1d-4374-b792-cb2682ed98b5)
+![image](https://github.com/user-attachments/assets/dc7eda68-83f4-4dfd-a1ba-b8c18a773a00)
 
 
