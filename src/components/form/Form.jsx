@@ -13,13 +13,33 @@ const Form = () => {
   const [edad, setEdad] = useState(0);
   const [ubicacion, setUbicacion] = useState("");
   const [imagen, setImagen] = useState("");
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const onSubmit = async ( event ) =>
-  {
+  const validarFormulario = () => {
+    const newErrors = {};
+
+    if (!tipo) newErrors.tipo = "Por favor, selecciona el tipo de animal.";
+    if (!nombre) newErrors.nombre = "El nombre es obligatorio.";
+    if (!raza) newErrors.raza = "La raza es obligatoria.";
+    if (edad < -1) newErrors.edad = "La edad debe ser mayor a -1.";
+    if (!ubicacion) newErrors.ubicacion = "La ubicación es obligatoria.";
+    if (!imagen) newErrors.imagen = "El enlace de la imagen es obligatorio.";
+    if (!tamano) newErrors.tamano = "Por favor, selecciona el tamaño.";
+    if (!cuidadosEspeciales)
+      newErrors.cuidadosEspeciales = "Este campo es obligatorio.";
+
+    return newErrors;
+  };
+
+  const onSubmit = async (event) => {
     event.preventDefault();
 
-    
+    const newErrors = validarFormulario();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
 
     const datos = {
       tipo,
@@ -28,27 +48,22 @@ const Form = () => {
       tamano,
       cuidadosEspeciales,
       ubicacion,
-      edad: parseInt( edad ),
+      edad: parseInt(edad),
       imagen,
     };
 
-    try
-    {
-      await guardarAnimal( datos );
-      alert( "Tu peludito se ha guardado correctamente" );
-      navigate( "/adoptar" );
-    } catch ( error )
-    {
-  
-      if ( error.response && error.response.data && error.response.data.errors )
-      {
-        setErrors( error.response.data.errors );
-      } else
-      {
-        alert( "Hubo un problema al guardar el animal." );
+    try {
+      await guardarAnimal(datos);
+      alert("Tu peludito se ha guardado correctamente");
+      navigate("/adoptar");
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.errors) {
+        setErrors(error.response.data.errors);
+      } else {
+        alert("Hubo un problema al guardar el animal.");
       }
     }
-  }
+  };
 
   return (
     <div className="container--form">
@@ -79,6 +94,7 @@ const Form = () => {
             />
             Gato
           </label>
+          {errors.tipo && <p className="error">{errors.tipo}</p>}
         </div>
         <div className="container--input--form">
           <div className="container--input--divs">
@@ -91,6 +107,7 @@ const Form = () => {
                 placeholder="Nombre"
                 onChange={(event) => setNombre(event.target.value)}
               />
+              {errors.nombre && <p className="error">{errors.nombre}</p>}
             </div>
             <div>
               <label htmlFor="raza">Raza</label>
@@ -101,6 +118,7 @@ const Form = () => {
                 placeholder="Raza"
                 onChange={(event) => setRaza(event.target.value)}
               />
+              {errors.raza && <p className="error">{errors.raza}</p>}
             </div>
             <div>
               <label htmlFor="edad">Edad</label>
@@ -111,6 +129,7 @@ const Form = () => {
                 placeholder="Edad"
                 onChange={(event) => setEdad(event.target.value)}
               />
+              {errors.edad && <p className="error">{errors.edad}</p>}
             </div>
           </div>
           <div className="container--input--divs">
@@ -123,6 +142,7 @@ const Form = () => {
                 placeholder="Ubicación"
                 onChange={(event) => setUbicacion(event.target.value)}
               />
+              {errors.ubicacion && <p className="error">{errors.ubicacion}</p>}
             </div>
             <div>
               <label htmlFor="imagen">Enlace de la foto</label>
@@ -133,6 +153,7 @@ const Form = () => {
                 placeholder="Enlace de la foto"
                 onChange={(event) => setImagen(event.target.value)}
               />
+              {errors.imagen && <p className="error">{errors.imagen}</p>}
             </div>
             <div>
               <label htmlFor="tamano">Tamaño</label>
@@ -149,6 +170,7 @@ const Form = () => {
                 <option value="mediano">Mediano</option>
                 <option value="pequeño">Pequeño</option>
               </select>
+              {errors.tamano && <p className="error">{errors.tamano}</p>}
             </div>
           </div>
           <div className="container--input--divs">
@@ -161,6 +183,9 @@ const Form = () => {
                 placeholder="Cuidados del animal"
                 onChange={(event) => setCuidadosEspeciales(event.target.value)}
               />
+              {errors.cuidadosEspeciales && (
+                <p className="error">{errors.cuidadosEspeciales}</p>
+              )}
             </div>
           </div>
         </div>

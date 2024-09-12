@@ -21,6 +21,12 @@
     color: var(--text-color);
 }
 
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
 .form--tipo {
     width: 50%;
     display: flex;
