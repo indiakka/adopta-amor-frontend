@@ -1,16 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import "./navbar.css"; 
+import "./navbar.css";
 import Logo from "../logo/Logo";
 import ShelterLogo from "../shelterLogo/ShelterLogo";
 import Shelter from "../../shelter/Shelter";
-import { FaSignOutAlt } from "react-icons/fa"; 
-import { useAuth } from "../../../context/AuthContext"; 
+import { FaSignOutAlt } from "react-icons/fa";
+import { useAuth } from "../../../context/AuthContext";
 
 const Navbar = ({ animalNumber }) => {
   const [openShelter, setOpenShelter] = useState(false);
   const shelterRef = useRef(null);
-  const { isAuthenticated, logout } = useAuth(); 
+  const { isAuthenticated, logout } = useAuth();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -26,7 +26,7 @@ const Navbar = ({ animalNumber }) => {
   }, [shelterRef]);
 
   const toggleCasita = () => {
-    setOpenShelter(!openShelter);
+    setOpenShelter(!openShelter); // Alternar la visibilidad de Shelter
   };
 
   const handleLogout = () => {
@@ -54,16 +54,14 @@ const Navbar = ({ animalNumber }) => {
           </NavLink>
         </div>
         <div className="shelter-container" ref={shelterRef}>
-          <ShelterLogo onClick={toggleCasita} />
+          {/* Pasamos toggleCasita como prop para controlar la visibilidad */}
+          <ShelterLogo toggleShelter={toggleCasita} />
           {animalNumber > 0 && (
             <span className="animal-number">{animalNumber}</span>
           )}
-          {openShelter && (
-            <div className="shelter-dropdown">
-              <Shelter />
-            </div>
-          )}
-          
+          {/* Renderizamos Shelter con el estado de visibilidad */}
+          <Shelter visible={openShelter} />
+
           {isAuthenticated && (
             <div
               className="logout-icon"

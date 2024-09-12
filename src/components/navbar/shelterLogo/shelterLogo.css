@@ -1,4 +1,4 @@
-.shelter {
+/* .shelter {
     width: 39%;
     height: 9%;
     stroke: var(--main-color);
@@ -14,18 +14,149 @@
     font-size: 12px;
 }
 
+
+.container-shelter-card.active {
+    display: block;
+    position: absolute;
+    border: 3px solid var(--main-color);
+    border-radius: 10px;
+    width: 15%;
+    height: 5%;
+    background-color: #FFF;
+}
+
+
 .counter {
     position: relative;
     top: -20px;
     right: -20px;
-
     background-color: var(--main-color-light);
     color: var(--gray-color);
     width: 25px;
     height: 25px;
-
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
 }
+
+.container-shelter-card {
+    display: none;
+    position: absolute;
+    top: 1%;
+    right: 3%;
+    display: grid;
+    border: 3px solid var(--main-color);
+    border-radius: 10px;
+    width: 15%;
+    height: auto;
+    padding: 5px;
+    font-family: Manrope;
+    background-color: #FFF
+}
+
+.shelter-card {
+    border-radius: 3%;
+    width: 85%;
+    height: 50%;
+    border: 2px solid var(--text-color);
+    padding: 10px;
+    margin: 5px;
+    justify-self: center;
+}
+
+.shelter-image {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 3%;
+}
+
+.shelter-text h4,
+h5 {
+    text-align: left;
+    color: var(--text-color);
+    margin: 5px;
+}
+
+.shelter-button {
+    width: 120px;
+    height: 2.5em;
+    border-radius: 40px;
+    border-style: none;
+    color: #FFF;
+    background-color: var(--main-color);
+    font-family: var(--fuente-principal);
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 5px;
+    margin-left: 2.7em;
+    cursor: pointer;
+}
+
+.container-x-card {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.x-card {
+    width: 11%;
+    margin: 7px;
+    cursor: pointer;
+
+}
+
+@media only screen and (max-width: 768px) {
+    .container-shelter-card {
+        width: 20%;
+        margin-top: 5px;
+        right: 8%;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .container-shelter-card {
+        width: 90%;
+        margin: auto;
+        top: 150px;
+        right: 0;
+        left: 0;
+    }
+} */
+ .shelter {
+     width: 50px;
+     height: 50px;
+     stroke: var(--main-color);
+     cursor: pointer;
+ }
+
+ .shelter:hover {
+     transform: scale(1.1);
+ }
+
+ .counter {
+     position: relative;
+     top: -20px;
+     right: -20px;
+     background-color: var(--main-color-light);
+     color: var(--gray-color);
+     width: 25px;
+     height: 25px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     border-radius: 50%;
+ }
+
+ .counter-animals {
+     font-size: 14px;
+     font-weight: bold;
+     color: var(--text-color);
+ }
+
+ .container-logo-shelter {
+     position: relative;
+     display: inline-block;
+     cursor: pointer;
+     margin: 10px;
+ }
