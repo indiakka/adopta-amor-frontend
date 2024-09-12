@@ -1,76 +1,62 @@
-import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import "./shelter.css";
+import { NavLink } from "react-router-dom";
 
-const Shelter = ({ todosLosAnimales, setTodosLosAnimales }) => {
-  const [activo, setActivo] = useState(false);
+const Shelter = ({ visible }) => {
+  const [todosLosAnimales, setTodosLosAnimales] = useState([]);
 
-  const eliminarAnimalCasita = (animal) => {
+  useEffect(() => {
+    const animalesCasita =
+      JSON.parse(localStorage.getItem("animalesCasita")) || [];
+    setTodosLosAnimales(animalesCasita);
+  }, []);
+
+  const eliminarAnimalCasita = (animalId) => {
     const resultados = todosLosAnimales.filter(
-      (elemento) => elemento.id !== animal.id
+      (elemento) => elemento.id !== animalId
     );
-    setTotal(total + animal.cantidad);
-    setContarAnimales(contarAnimales - animal.cantidad);
     setTodosLosAnimales(resultados);
+    localStorage.setItem("animalesCasita", JSON.stringify(resultados));
   };
 
   const alVaciarCasita = () => {
     setTodosLosAnimales([]);
-    setTotal(0);
-    setContarAnimales(0);
+    localStorage.setItem("animalesCasita", JSON.stringify([]));
   };
 
-  useEffect(() => {
-    const cerrarCasita = (event) => {
-      if (
-        !document.getElementById("container-shelter").contains(event.target)
-      ) {
-        setCasitaAbierta(false);
-      }
-    };
-
-    document.addEventListener("click", cerrarCasita);
-
-    return () => {
-      document.removeEventListener("click", cerrarCasita);
-    };
-  }, []);
+  if (!visible) return null; 
 
   return (
-    <div id="container-shelter" className="container-shelter-card">
-      <div
-        className={`container-animals-shelter ${
-          activo ? "" : "shelter-oculta"
-        }`}
-      >
+    <div className="container-shelter-card">
+      <div className="listado-animales">
         {todosLosAnimales.length ? (
           <>
-            <div className="listado-animals">
+            <div className="animal-list">
               {todosLosAnimales.map((animal) => (
                 <div key={animal.id} className="shelter-card">
                   <div className="container-x-card">
                     <img
-                      src="/assets/images/x_card.svg"
-                      onClick={(event) => eliminarAnimalCasita(animal.id)}
+                      src="/assets/images/x-card.svg"
+                      onClick={() => eliminarAnimalCasita(animal.id)}
                       className="x-card"
                       alt="descartar-animal"
                     />
                   </div>
                   <img
-                    className="shelter-imagen"
+                    className="shelter-image"
                     src={animal.imagen}
                     alt={animal.nombre}
                   />
-                  <div className="shelter-texto">
+                  <div className="shelter-text">
                     <h4>{animal.nombre}</h4>
                     <h5>
-                      {animal.edad},{animal.ubicacion}
+                      {animal.edad}{animal.ubicacion}
                     </h5>
                   </div>
                 </div>
               ))}
             </div>
-            <button className="button-borrar-todo" onClick={alVaciarCasita}>
+            <button className="button-delete-all" onClick={alVaciarCasita}>
               Vaciar Carrito
             </button>
           </>
@@ -78,7 +64,7 @@ const Shelter = ({ todosLosAnimales, setTodosLosAnimales }) => {
           <p>La casita está vacía</p>
         )}
       </div>
-      <NavLink to="/contact">
+      <NavLink to="/contacto">
         <button type="submit" className="shelter-button">
           Reservar cita
         </button>

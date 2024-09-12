@@ -125,11 +125,11 @@ const AnimalInfo = ({
             <>
               <NavLink to={`/editInfo/${animal.id}`}>
                 <button onClick={manejarCerrar} className="buttons--edit">
-                  <img src="..//assets/images/Edit.png" alt="editar" />
+                  <img src="./assets/images/Edit.png" alt="editar" />
                 </button>
               </NavLink>
               <button onClick={clickEliminarAnimal} className="buttons--edit">
-                <img src="..//assets/images/Delete.png" alt="borrar" />
+                <img src="./assets/images/Delete.png" alt="borrar" />
               </button>
             </>
           )}
