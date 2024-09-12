@@ -107,7 +107,6 @@ const Adoptar = () => {
     setCriteriosFilter({ tipo: [], tamano: [], edad: [] });
   };
 
-  // Calcular los elementos de la página actual
   const indiceUltimoElemento = paginaActual * elementosPorPagina;
   const indicePrimerElemento = indiceUltimoElemento - elementosPorPagina;
   const elementosActuales =

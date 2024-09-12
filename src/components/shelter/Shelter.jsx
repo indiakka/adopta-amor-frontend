@@ -50,7 +50,7 @@ const Shelter = ({ visible }) => {
                   <div className="shelter-text">
                     <h4>{animal.nombre}</h4>
                     <h5>
-                      {animal.edad}{animal.ubicacion}
+                      {animal.edad} {animal.ubicacion}
                     </h5>
                   </div>
                 </div>

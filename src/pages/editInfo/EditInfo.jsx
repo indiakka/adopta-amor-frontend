@@ -4,11 +4,10 @@ import { useNavigate, useParams } from "react-router";
 import { actualizarAnimal, recibirAnimal } from "../../axios";
 
 const EditInfo = () => {
-  const { id } = useParams(); // Obtener el ID del animal a editar
+  const { id } = useParams();
   const [animalGuardado, setAnimalGuardado] = useState({});
   const navigate = useNavigate();
 
-  // Cargar los datos del animal cuando el componente se monte
   useEffect(() => {
     const cargarAnimal = async () => {
       const datosAnimal = await recibirAnimal(id);
@@ -21,14 +20,9 @@ const EditInfo = () => {
     cargarAnimal();
   }, [id]);
 
-  // Manejar el envío del formulario
   const manejarEnvio = async (event) => {
     event.preventDefault();
 
-    // Asegúrate de que los datos se estén enviando correctamente
-    console.log("Datos enviados al servidor:", animalGuardado);
-
-    // Verifica que `animalGuardado` tenga contenido
     if (!animalGuardado || !animalGuardado.tipo || !animalGuardado.nombre) {
       alert("Faltan datos por completar");
       return;

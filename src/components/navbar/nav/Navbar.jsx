@@ -26,7 +26,7 @@ const Navbar = ({ animalNumber }) => {
   }, [shelterRef]);
 
   const toggleCasita = () => {
-    setOpenShelter(!openShelter); // Alternar la visibilidad de Shelter
+    setOpenShelter(!openShelter); 
   };
 
   const handleLogout = () => {

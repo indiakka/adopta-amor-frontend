@@ -5,7 +5,7 @@ import Input from "../../components/input/Input";
 import Button from "../../components/buttons/Button";
 import Popup from "../../components/popups/Popups.jsx";
 import axios from "axios";
-import { useAuth } from "../../context/AuthContext"; // Usa el contexto de autenticación
+import { useAuth } from "../../context/AuthContext";  
 import "./login.css";
 
 const Login = () => {
@@ -16,7 +16,7 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState("");
-  const { login } = useAuth(); // Usamos el contexto de autenticación
+  const { login } = useAuth(); 
   const navigate = useNavigate();
 
   const handleEmail = (e) => {
@@ -57,11 +57,9 @@ const Login = () => {
       const { token, userId, name, role } = response.data;
 
       if (token && userId && name && role) {
-        // Usa el login del contexto en lugar de manipular directamente el localStorage
         login(token);
         localStorage.setItem("user", JSON.stringify({ userId, name, role }));
 
-        // En lugar de alert, muestra el mensaje de bienvenida en el popup
         setPopUpMessage(`Bienvenido ${name}`);
         setIsPopupOpen(true);
       } else {
