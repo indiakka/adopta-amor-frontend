@@ -8,45 +8,52 @@ import React, { useState, useEffect } from "react";
 const AnimalInfo = ({
   animal,
   setTodosLosAnimales,
-  todosLosAnimales,
   onClick,
   alEliminar,
 }) => {
   const [animalesCasita, setAnimalesCasita] = useState([]);
   const [estaAbierta, setEstaAbierta] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false); 
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user && user.role === "ADMIN") {
-      setIsAdmin(true); 
+      setIsAdmin(true);
     }
   }, []);
 
-  const anadirAnimal = (animal) => {
-    if (todosLosAnimales.find((elemento) => elemento.id === animal.id)) {
-      const animals = todosLosAnimales.map((elemento) =>
-        elemento.id === animal.id
-          ? { ...elemento, cantidad: elemento.cantidad + 1 }
-          : elemento
-      );
-      setTotal(total);
-      setContarAnimales(contarAnimales + animal.cantidad);
-      alert("Animal añadido a tu casita");
-      return setTodosLosAnimales([...animals]);
-    }
+  useEffect(() => {
+    const animalesAlmacenados =
+      JSON.parse(localStorage.getItem("animalesCasita")) || [];
+    setAnimalesCasita(animalesAlmacenados);
+  }, []);
+
+  const guardarEnLocalStorage = (animales) => {
+    localStorage.setItem("animalesCasita", JSON.stringify(animales));
+    setAnimalesCasita(animales); 
+    setTodosLosAnimales(animales); 
   };
 
-  useEffect(() => {
-    const animalesAlmacenados = localStorage.getItem("animalesCasita");
-    if (animalesAlmacenados) {
-      setAnimalesCasita(JSON.parse(animalesAlmacenados));
-    }
-  }, []);
+  const anadirAnimal = () => {
+    const existe = animalesCasita.some((elemento) => elemento.id === animal.id);
 
-  useEffect(() => {
-    localStorage.setItem("animalesCasita", JSON.stringify(animalesCasita));
-  }, [animalesCasita]);
+    if (existe) {
+      alert("Este animal ya está en tu casita.");
+      return;
+    }
+
+    const nuevoAnimal = {
+      id: animal.id,
+      nombre: animal.nombre,
+      imagen: animal.imagen,
+      cantidad: 1,
+    };
+
+    const animalesActualizados = [...animalesCasita, nuevoAnimal];
+    guardarEnLocalStorage(animalesActualizados); 
+    alert( "Animal añadido a tu casita" );
+    window.location.reload()
+  };
 
   const clickEliminarAnimal = async (event) => {
     event.preventDefault();
@@ -59,7 +66,7 @@ const AnimalInfo = ({
   };
 
   if (!estaAbierta) {
-    return null; 
+    return null;
   }
 
   return (

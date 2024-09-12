@@ -2,12 +2,19 @@ import React, { useState } from "react";
 import "./animalCard.css";
 import AnimalInfo from "../animalInfo/AnimalInfo";
 
-const CardAnimal = ({ animal, alEliminar }) => {
-  const [isOpen, setIsOpen] = useState(false);
+
+const AnimalCard = ({
+  animal,
+  alEliminar,
+}) => {
+  const [ isOpen, setIsOpen ] = useState( false );
+  const [todosLosAnimales, setTodosLosAnimales] = useState([]);
+
 
   const changeInfoState = () => {
     setIsOpen(!isOpen);
   };
+
 
   return (
     <>
@@ -36,10 +43,12 @@ const CardAnimal = ({ animal, alEliminar }) => {
           alEliminar={alEliminar}
           animal={animal}
           onClick={changeInfoState}
+          todosLosAnimales={todosLosAnimales}
+          setTodosLosAnimales={setTodosLosAnimales}
         />
       )}
     </>
   );
 };
 
-export default CardAnimal;
+export default AnimalCard;

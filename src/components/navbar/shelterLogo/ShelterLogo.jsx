@@ -1,18 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react"; 
 import "./shelterLogo.css";
 
+
 const ShelterLogo = () => {
-  const [active, setActive] = useState(false);
   const [animalCounter, setAnimalCounter] = useState(0);
 
+  useEffect(() => {
+    const animalesCasita =
+      JSON.parse(localStorage.getItem("animalesCasita")) || [];
+    setAnimalCounter(animalesCasita.length);
+
+    const handleStorageChange = () => {
+      const animalesCasita =
+        JSON.parse(localStorage.getItem("animalesCasita")) || [];
+      setAnimalCounter(animalesCasita.length);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [animalCounter]); 
   return (
     <>
       <div className="container-logo">
-        <div
-          className="container-logo-shelter"
-          onClick={() => setActive(!active)}
-        >
+        <div className="container-logo-shelter">
           <svg
             className="shelter"
             width="95"
