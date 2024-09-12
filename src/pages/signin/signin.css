@@ -42,7 +42,7 @@
 }
 
 .button-signin:hover {
-    background-color: #4cae4c;
+    background-color: var(--main-color-light);
 }
 
 .signin-footer {
