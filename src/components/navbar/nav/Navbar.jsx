@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import "./navbar.css"; // Mantiene el archivo de estilos
+import "./navbar.css"; 
 import Logo from "../logo/Logo";
 import ShelterLogo from "../shelterLogo/ShelterLogo";
 import Shelter from "../../shelter/Shelter";
-import { FaSignOutAlt } from "react-icons/fa"; // Icono de cerrar sesión
-import { useAuth } from "../../../context/AuthContext"; // Usa el contexto de autenticación
+import { FaSignOutAlt } from "react-icons/fa"; 
+import { useAuth } from "../../../context/AuthContext"; 
 
 const Navbar = ({ animalNumber }) => {
   const [openShelter, setOpenShelter] = useState(false);

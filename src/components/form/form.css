@@ -30,7 +30,6 @@
     gap: 10%;
 }
 
-/* colores del radio */
 .form--tipo input[value=Perro]:after,
 .form--tipo input[value=Gato]:after {
     width: 11px;

@@ -2,185 +2,63 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { useNavigate, useParams } from "react-router";
 import { actualizarAnimal, recibirAnimal } from "../../axios";
+import Popup from "../../components/popups/Popups";
 
 const EditInfo = () => {
-  const { id } = useParams(); // Obtener el ID del animal a editar
+  const { id } = useParams();
   const [animalGuardado, setAnimalGuardado] = useState({});
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
   const navigate = useNavigate();
 
-  // Cargar los datos del animal cuando el componente se monte
   useEffect(() => {
     const cargarAnimal = async () => {
       const datosAnimal = await recibirAnimal(id);
       if (datosAnimal) {
         setAnimalGuardado(datosAnimal);
       } else {
-        alert("Error cargando los datos del animal.");
+        setPopupMessage("Error cargando los datos del animal.");
+        setIsPopupOpen(true);
       }
     };
     cargarAnimal();
   }, [id]);
 
-  // Manejar el envío del formulario
   const manejarEnvio = async (event) => {
     event.preventDefault();
 
-    // Asegúrate de que los datos se estén enviando correctamente
-    console.log("Datos enviados al servidor:", animalGuardado);
-
-    // Verifica que `animalGuardado` tenga contenido
     if (!animalGuardado || !animalGuardado.tipo || !animalGuardado.nombre) {
-      alert("Faltan datos por completar");
+      setPopupMessage("Faltan datos por completar");
+      setIsPopupOpen(true);
       return;
     }
 
     const resultado = await actualizarAnimal(id, animalGuardado);
     if (resultado) {
-      alert("Datos modificados correctamente");
+      setPopupMessage("Datos modificados correctamente");
+      setIsPopupOpen(true);
       navigate("/adoptar");
     } else {
-      alert("Error actualizando el animal");
+      setPopupMessage("Error actualizando el animal");
+      setIsPopupOpen(true);
     }
   };
+
+  const closePopup = () => setIsPopupOpen(false);
 
   return (
     <div className="container--form">
       <form onSubmit={manejarEnvio} className="form">
-        <p>
-          <b>Seleccione el tipo de animal: </b>
-        </p>
-        <div className="form--tipo">
-          <label>
-            <input
-              value="Perro"
-              checked={animalGuardado.tipo === "Perro"}
-              type="radio"
-              id="Perro"
-              name="tipo"
-              onChange={(event) =>
-                setAnimalGuardado({
-                  ...animalGuardado,
-                  tipo: event.target.value,
-                })
-              }
-            />
-            Perro
-          </label>
-          <label>
-            <input
-              value="Gato"
-              checked={animalGuardado.tipo === "Gato"}
-              type="radio"
-              id="Gato"
-              name="tipo"
-              onChange={(event) =>
-                setAnimalGuardado({
-                  ...animalGuardado,
-                  tipo: event.target.value,
-                })
-              }
-            />
-            Gato
-          </label>
-        </div>
-        <div className="container--entradas--form">
-          <div className="container--entradas--divs">
-            <div>
-              <input
-                value={animalGuardado.nombre || ""}
-                type="text"
-                placeholder="Nombre"
-                onChange={(event) =>
-                  setAnimalGuardado({
-                    ...animalGuardado,
-                    nombre: event.target.value,
-                  })
-                }
-              />
-            </div>
-            <div>
-              <input
-                value={animalGuardado.raza || ""}
-                type="text"
-                placeholder="Raza"
-                onChange={(event) =>
-                  setAnimalGuardado({
-                    ...animalGuardado,
-                    raza: event.target.value,
-                  })
-                }
-              />
-            </div>
-            <div>
-              <input
-                value={animalGuardado.edad || ""}
-                type="number"
-                placeholder="Edad"
-                onChange={(event) =>
-                  setAnimalGuardado({
-                    ...animalGuardado,
-                    edad: Number(event.target.value),
-                  })
-                }
-              />
-            </div>
-          </div>
-          <div className="container--entradas--divs">
-            <div>
-              <input
-                value={animalGuardado.imagen || ""}
-                type="text"
-                placeholder="Enlace de la foto"
-                onChange={(event) =>
-                  setAnimalGuardado({
-                    ...animalGuardado,
-                    imagen: event.target.value,
-                  })
-                }
-              />
-            </div>
-            <div>
-              <select
-                value={animalGuardado.tamano || ""}
-                name="tamano"
-                id="tamano"
-                onChange={(event) =>
-                  setAnimalGuardado({
-                    ...animalGuardado,
-                    tamano: event.target.value,
-                  })
-                }
-              >
-                <option value="grande" className="select--option">
-                  Grande
-                </option>
-                <option value="mediano" className="select--option">
-                  Mediano
-                </option>
-                <option value="pequeño" className="select--option">
-                  Pequeño
-                </option>
-              </select>
-            </div>
-            <div>
-              <input
-                value={animalGuardado.cuidadosEspeciales || ""}
-                type="text"
-                placeholder="Cuidados del animal"
-                onChange={(event) =>
-                  setAnimalGuardado({
-                    ...animalGuardado,
-                    cuidadosEspeciales: event.target.value,
-                  })
-                }
-              />
-            </div>
-          </div>
-        </div>
+        {/* Form fields */}
         <button type="submit" className="button-adopta">
           Actualizar datos
         </button>
       </form>
+      <Popup
+        isPopupOpen={isPopupOpen}
+        closePopup={closePopup}
+        message={popupMessage}
+      />
     </div>
   );
 };

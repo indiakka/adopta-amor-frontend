@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import React, { useState } from "react";
-import './popups.css'
+import React from "react";
+import "./popups.css";
 import PropTypes from "prop-types";
 import Button from "../buttons/Button";
 import ReactDOM from "react-dom";
@@ -14,18 +14,14 @@ const Popup = ({
 }) => {
   useEffect(() => {
     if (isPopupOpen) {
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${window.scrollY}px`;
-      document.body.style.left = "0";
-      document.body.style.right = "0";
+    
+      document.body.style.overflow = "hidden";
     } else {
-      const scrollY = document.body.style.top;
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
-      window.scrollTo(0, parseInt(scrollY || "0") * -1);
-    }
+    
+      document.body.style.overflow = "";
+    }  return () => {
+      document.body.style.overflow = "";
+    };
   }, [isPopupOpen]);
 
   if (!isPopupOpen) return null;

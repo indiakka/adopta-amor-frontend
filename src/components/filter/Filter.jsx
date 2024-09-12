@@ -33,19 +33,16 @@ const Filter = ({ onClick, onClearFilters }) => {
   };
 
   const manejarClicAnimal = (tipo) => {
-    console.log("Especie seleccionada:", tipo);
     setEspeciesSeleccionadas(tipo);
     onClick("tipo", [tipo]);
   };
 
   const manejarClicTamano = (tamano) => {
-    console.log("Tamaño seleccionado:", tamano);
     setTamanoSeleccionado(tamano);
     onClick("tamano", [tamano]);
   };
 
   const manejarClicEdad = (edad) => {
-    console.log("Edad seleccionada:", edad);
     setEdadSeleccionada(edad);
     onClick("edad", [edad]);
   };
@@ -61,7 +58,6 @@ const Filter = ({ onClick, onClearFilters }) => {
 
   return (
     <div className="filter">
-      {/* Filter de animals */}
       <button
         className="campoFilter campoFilterRadioIzquierda"
         onClick={alternarListaAnimales}
@@ -93,7 +89,6 @@ const Filter = ({ onClick, onClearFilters }) => {
         ) : null}
       </button>
 
-      {/* Filter de tamaño */}
       <button className="campoFilter" onClick={alternarListaTamanos}>
         Tamaño{" "}
         {tamanoSeleccionado && (
@@ -130,7 +125,6 @@ const Filter = ({ onClick, onClearFilters }) => {
         ) : null}
       </button>
 
-      {/* Filter de edad */}
       <button className="campoFilter" onClick={alternarListaEdades}>
         Edad{" "}
         {edadSeleccionada && (
