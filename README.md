@@ -93,6 +93,12 @@ Abre el enlace que aparece con tu puerto local.
 
 
 ## Demo
-**Versión desktop:**
+![image](https://github.com/user-attachments/assets/fd0b349f-7122-4338-a668-6be840f51aac)
+
+![image](https://github.com/user-attachments/assets/11b1aa70-6cc7-4735-942e-a268d4488a74)
+![image](https://github.com/user-attachments/assets/a58a9680-dc4e-4779-b9cb-65894fae2d7c)
+
+![image](https://github.com/user-attachments/assets/935830fa-7d50-49f9-a07b-6d2266bb59a9)
+![image](https://github.com/user-attachments/assets/9e224cf2-3a1d-4374-b792-cb2682ed98b5)
 
 
