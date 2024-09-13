@@ -51,7 +51,7 @@ footer a {
 }
 
 .light-effect:hover {
-    color: var(main-color-light)
+    color: var(--main-color-light)
 }
 
 

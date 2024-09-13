@@ -18,17 +18,17 @@ const Footer = () => {
           <h3>Descubrir</h3>
           <p className="light-effect">Cómo funciona</p>
           <p className="light-effect">
-            <NavLink to="/Adoptar">Adopta</NavLink>
+            <NavLink to="/adoptar">Adopta</NavLink>
           </p>
           <p className="light-effect">
-            <NavLink to="/Donar">Dona</NavLink>
+            <NavLink to="/donar">Dona</NavLink>
           </p>
         </div>
         <div className="footer-nav-info">
           <h3>Info</h3>
-          <p className="light-effect">Sobre nosotros</p>
+          <NavLink to='/aboutUs' className="light-effect">Sobre nosotros</NavLink>
           <p className="light-effect">FAQ</p>
-          <p className="light-effect">Contactar</p>
+          <NavLink to='/contacto' className="light-effect">Contactar</NavLink>
         </div>
         <div className="footer-social-media">
           <h3>
