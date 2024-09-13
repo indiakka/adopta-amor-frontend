@@ -78,7 +78,6 @@
     margin: 0 10px;
 }
 
-/* Media Queries */
 @media only screen and (max-width: 768px) {
     .filter {
         grid-column-start: 1;

@@ -31,7 +31,6 @@ const ShelterLogo = ({ toggleShelter }) => {
         fill="none"
         viewBox="0 0 95 96"
       >
-        {/* SVG del logo */}
         <path
           strokeMiterlimit="10"
           strokeWidth="3"

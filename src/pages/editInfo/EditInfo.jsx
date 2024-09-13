@@ -41,7 +41,6 @@ const EditInfo = () => {
   return (
     <div className="container--form">
       <form onSubmit={manejarEnvio} className="form">
-        {/* Tipo de animal arriba */}
         <div className="form--tipo-container">
           <p>
             <b>Seleccione el tipo de animal: </b>
@@ -82,7 +81,6 @@ const EditInfo = () => {
           </div>
         </div>
 
-        {/* Campos divididos en dos columnas */}
         <div className="form--column-container">
           <div className="form--column">
             <div>

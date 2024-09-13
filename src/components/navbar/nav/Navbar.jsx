@@ -54,12 +54,10 @@ const Navbar = ({ animalNumber }) => {
           </NavLink>
         </div>
         <div className="shelter-container" ref={shelterRef}>
-          {/* Pasamos toggleCasita como prop para controlar la visibilidad */}
           <ShelterLogo toggleShelter={toggleCasita} />
           {animalNumber > 0 && (
             <span className="animal-number">{animalNumber}</span>
           )}
-          {/* Renderizamos Shelter con el estado de visibilidad */}
           <Shelter visible={openShelter} />
 
           {isAuthenticated && (
