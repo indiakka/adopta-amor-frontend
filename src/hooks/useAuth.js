@@ -13,9 +13,10 @@ export const useAuth = () => {
   }, []);
 
   const logout = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("user");
-    setIsAuthenticated(false);
+     localStorage.removeItem("authToken");
+     localStorage.removeItem("user");
+     setIsAuthenticated(false);
+     navigate("/");
   };
 
   return { isAuthenticated, logout };

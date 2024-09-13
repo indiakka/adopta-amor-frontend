@@ -3,23 +3,6 @@
   box-sizing: border-box;
 }
 
-/* 
-.style-adoptar {
-  width: 100%;
-  padding-top: 2em;
-  padding-bottom: 2em;
-
-  display: grid;
-  grid-template-columns: repeat(3, 30%);
-  justify-items: center;
-  column-gap: 2em;
-  row-gap: 4em;
-  align-items: center;
-  justify-content: center;
-
-  font-family: Manrope;
-  padding-inline: 4em;
-} */
 
 
 .cards {
@@ -91,7 +74,6 @@
 
 
 
-/* @media tablet */
 @media only screen and (max-width: 768px) {
   .style-adoptar {
     grid-template-columns: repeat(2, 48%);
@@ -108,7 +90,6 @@
   }
 }
 
-/* @media móvil */
 @media only screen and (max-width: 360px) {
   .style-adoptar {
     grid-template-columns: 99%;
