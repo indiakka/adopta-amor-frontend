@@ -11,8 +11,13 @@
     font-family: Manrope;
     background-color: #FFF;
     z-index: 999;
+   
 }
 
+.animal-list{
+     display: flex;
+        justify-content: center;
+}
 
 .shelter-card {
     border-radius: 3%;
@@ -21,6 +26,7 @@
     padding: 10px;
     margin: 5px;
     justify-self: center;
+
 }
 
 .shelter-image {
@@ -54,7 +60,7 @@ h5 {
     cursor: pointer;
 }
 
-.button-delete-all {
+.shelter-button {
     display: block;
     width: 100%;
     background-color: var(--main-color);
@@ -65,30 +71,15 @@ h5 {
     cursor: pointer;
     font-weight: bold;
     text-align: center;
+  
+}
+a {
+    text-decoration: none;
 }
 
-.button-delete-all:hover {
-    background-color: var(--main-color-dark);
-}
-
-.shelter-button {
-    width: 120px;
-    height: 2.5em;
-    border-radius: 40px;
-    border-style: none;
-    color: #FFF;
-    background-color: var(--main-color);
-    font-family: var(--fuente-principal);
-    text-align: center;
-    font-size: 14px;
-    font-weight: 700;
-    margin: 5px;
-    margin-left: 2.7em;
-    cursor: pointer;
-}
 
 .shelter-button:hover {
-    background-color: var(--main-color-dark);
+    background-color: var(--main-color-light);  
 }
 
 .p {
