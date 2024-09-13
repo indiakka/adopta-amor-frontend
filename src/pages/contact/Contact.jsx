@@ -15,13 +15,13 @@ const Contact = () => {
           <b>Rellene los siguientes campos: </b>
         </p>
         <div className="container--input--divs">
-          <input type="text" placeholder="Nombre completo*" />
+          <input type="text" placeholder="Nombre completo*" required/>
         </div>
         <div className="container--input--divs">
-          <input type="text" placeholder="Correo electrónico*" />
+          <input type="text" placeholder="Correo electrónico*" required/>
         </div>
         <div className="container--input--divs">
-          <input type="text" placeholder="Número de contacto*" />
+          <input type="text" placeholder="Número de contacto*" required />
         </div>
         <div
           className={`ocultarNotificacion ${
