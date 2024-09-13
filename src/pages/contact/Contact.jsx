@@ -21,7 +21,7 @@ const Contact = () => {
           <input type="text" placeholder="Correo electrónico*" />
         </div>
         <div className="container--input--divs">
-          <input type="text" placeholder="Número de contact*" />
+          <input type="text" placeholder="Número de contacto*" />
         </div>
         <div
           className={`ocultarNotificacion ${

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./shelter.css";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Shelter = ({ visible }) => {
   const [todosLosAnimales, setTodosLosAnimales] = useState([]);
@@ -16,14 +16,16 @@ const Shelter = ({ visible }) => {
       (elemento) => elemento.id !== animalId
     );
     setTodosLosAnimales(resultados);
-    localStorage.setItem("animalesCasita", JSON.stringify(resultados));
+    localStorage.setItem( "animalesCasita", JSON.stringify( resultados ) );
+    window.location.reload()
+
   };
 
   const alVaciarCasita = () => {
     setTodosLosAnimales([]);
-    localStorage.setItem("animalesCasita", JSON.stringify([]));
+    localStorage.setItem( "animalesCasita", JSON.stringify( [] ) );
+    
   };
-
   if (!visible) return null; 
 
   return (
@@ -56,19 +58,16 @@ const Shelter = ({ visible }) => {
                 </div>
               ))}
             </div>
-            <button className="button-delete-all" onClick={alVaciarCasita}>
-              Vaciar Carrito
-            </button>
+            <Link to="/contacto" className="shelter-button">
+              <button type="submit" className="shelter-button">
+                Reservar cita
+              </button>
+            </Link>
           </>
         ) : (
           <p>La casita está vacía</p>
         )}
       </div>
-      <NavLink to="/contacto">
-        <button type="submit" className="shelter-button">
-          Reservar cita
-        </button>
-      </NavLink>
     </div>
   );
 };
