@@ -105,7 +105,7 @@ const Form = () => {
                 placeholder="Nombre"
                 onChange={(event) => setNombre(event.target.value)}
               />
-              {errors.nombre && <p className="error">{errors.nombre}</p>}
+              <p className="error">{errors.nombre ? "Nombre requerido" : ""}</p>
             </div>
             <div>
               <label htmlFor="raza">Raza</label>
@@ -116,7 +116,7 @@ const Form = () => {
                 placeholder="Raza"
                 onChange={(event) => setRaza(event.target.value)}
               />
-              {errors.raza && <p className="error">{errors.raza}</p>}
+              <p className="error">{errors.raza ? "Raza requerida" : ""}</p>
             </div>
             <div>
               <label htmlFor="edad">Edad</label>
@@ -127,6 +127,7 @@ const Form = () => {
                 placeholder="Edad"
                 onChange={(event) => setEdad(event.target.value)}
               />
+              <p className="error">{errors.edad ? "Edad requerida" : ""}</p>
               {errors.edad && <p className="error">{errors.edad}</p>}
             </div>
           </div>
@@ -140,7 +141,9 @@ const Form = () => {
                 placeholder="Ubicación"
                 onChange={(event) => setUbicacion(event.target.value)}
               />
-              {errors.ubicacion && <p className="error">{errors.ubicacion}</p>}
+              <p className="error">
+                {errors.ubicacion ? "Ubicacion requerida" : ""}
+              </p>
             </div>
             <div>
               <label htmlFor="imagen">Enlace de la foto</label>
@@ -151,7 +154,7 @@ const Form = () => {
                 placeholder="Enlace de la foto"
                 onChange={(event) => setImagen(event.target.value)}
               />
-              {errors.imagen && <p className="error">{errors.imagen}</p>}
+              <p className="error">{errors.imagen ? "" : ""}</p>
             </div>
             <div>
               <label htmlFor="tamano">Tamaño</label>
@@ -168,7 +171,7 @@ const Form = () => {
                 <option value="mediano">Mediano</option>
                 <option value="pequeño">Pequeño</option>
               </select>
-              {errors.tamano && <p className="error">{errors.tamano}</p>}
+              <p className="error">{errors.tamano ? "Tamaño requerido" : ""}</p>
             </div>
           </div>
           <div className="container--input--divs">
@@ -181,9 +184,9 @@ const Form = () => {
                 placeholder="Cuidados del animal"
                 onChange={(event) => setCuidadosEspeciales(event.target.value)}
               />
-              {errors.cuidadosEspeciales && (
-                <p className="error">{errors.cuidadosEspeciales}</p>
-              )}
+              <p className="error">
+                {errors.cuidadosEspeciales ? "" : ""}
+              </p>
             </div>
           </div>
         </div>

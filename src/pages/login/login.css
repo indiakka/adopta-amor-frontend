@@ -31,16 +31,18 @@
 }
 
 .error-text {
-    color: var(--main-color);
-    font-size: 1rem;
-    padding-left: 1rem;
+    color: red;
+        font-size: 0.75rem;
+        min-height: 1rem;
+        padding-left: 1rem;
+        margin-top: 5px;
 }
 
 .button-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding: 0.25rem;
+    padding: 2rem;
 }
 
 

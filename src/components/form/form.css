@@ -4,7 +4,7 @@
 }
 
 .container--form {
-    height: 60vh;
+    height: 100vh;
     display: flex;
     align-self: center;
     justify-content: center;
@@ -13,7 +13,7 @@
 
 .form {
     width: 100%;
-    height: 60vh;
+    height:100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,6 +25,7 @@
     color: red;
     font-size: 14px;
     margin-top: 5px;
+    min-height: 1rem;
 }
 
 .form--tipo {
@@ -91,7 +92,9 @@
 .container--input--divs {
     width: 50%;
     padding: 0.5em;
+    position: relative;
 }
+
 
 .container--input--divs div {
     padding: 0.5em;

@@ -7,7 +7,7 @@ const Donar = () => {
     <div>
       <div className="container-donar">
         <h1>Dona un animal</h1>
-        <p>¿Conoces un animal que necesita un nuevo hogar?</p>
+        <p>¿Conoces un animal que necesite un nuevo hogar?</p>
       </div>
       <Form />
     </div>

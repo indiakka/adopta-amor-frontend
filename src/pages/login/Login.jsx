@@ -19,7 +19,7 @@ const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const baseURL = import.meta.env.API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL;
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -97,7 +97,9 @@ const Login = () => {
                 value={email}
                 onChange={handleEmail}
               />
-              {emailError && <p className="error-text">E-mail requerido</p>}
+              <p className="error-text">
+                {emailError ? "E-mail requerido" : ""}
+              </p>
             </div>
 
             <div className="container--input--divs">
@@ -108,9 +110,9 @@ const Login = () => {
                 value={password}
                 onChange={handlePassword}
               />
-              {passwordError && (
-                <p className="error-text">Contraseña requerida</p>
-              )}
+              <p className="error-text">
+                {passwordError ? "Contraseña requerida" : ""}
+              </p>
             </div>
 
             <div className="button-container">

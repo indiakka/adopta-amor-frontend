@@ -16,7 +16,7 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const baseURL = import.meta.env.API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
   const closePopup = () => setIsPopupOpen(false);
 
@@ -100,7 +100,7 @@ const SignIn = () => {
             onChange={handleEmail}
             placeholder="Ingresa tu correo electrónico"
           />
-          {emailError && <p className="error-text">Email requerido</p>}
+          <p className="error-text">{emailError ? "E-mail requerido" : ""}</p>{" "}
         </div>
         <div className="form-group">
           <label htmlFor="password">Contraseña</label>
@@ -111,7 +111,9 @@ const SignIn = () => {
             onChange={handlePassword}
             placeholder="Ingresa tu contraseña"
           />
-          {passwordError && <p className="error-text">Contraseña requerida</p>}
+          <p className="error-text">
+            {passwordError ? "Contraseña requerida" : ""}
+          </p>
         </div>
         <button type="submit" className="button-signin" disabled={loading}>
           {loading ? "Registrando..." : "Registrarse"}
