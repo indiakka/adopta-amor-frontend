@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./signin.css"; // Archivo CSS para estilos
 import Popup from "../../components/popups/Popups";
+import "./signin.css"; 
 
 const SignIn = () => {
   const [nombre, setNombre] = useState("");
@@ -13,30 +13,26 @@ const SignIn = () => {
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const baseURL = import.meta.env.API_BASE_URL;
 
   const closePopup = () => setIsPopupOpen(false);
 
   const handleName = (e) => {
     setNombre(e.target.value);
-    if (e.target.value) {
-      setNameError(false);
-    }
+    setNameError(!e.target.value);
   };
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
-    if (e.target.value) {
-      setEmailError(false);
-    }
+    setEmailError(!e.target.value);
   };
 
   const handlePassword = (e) => {
     setPassword(e.target.value);
-    if (e.target.value) {
-      setPasswordError(false);
-    }
+    setPasswordError(!e.target.value);
   };
 
   const handleSubmit = async (event) => {
@@ -49,8 +45,10 @@ const SignIn = () => {
       return;
     }
 
+    setLoading(true);
+
     try {
-      const response = await axios.post("http://localhost:4001/auth/register", {
+      const response = await axios.post(`${baseURL}/auth/register`, {
         email,
         password,
         name: nombre,
@@ -59,21 +57,29 @@ const SignIn = () => {
       if (response.data) {
         setPopupMessage("Registro exitoso. Redirigiendo al login...");
         setIsPopupOpen(true);
-        setTimeout(() => navigate("/login"), 2000);
+        setTimeout(() => {
+          closePopup();
+          navigate("/login");
+        }, 2000);
       } else {
-        setPopupMessage("Error en el servidor. Inténtalo nuevamente.");
-        setIsPopupOpen(true);
+        throw new Error("Respuesta inesperada del servidor");
       }
     } catch (error) {
       console.error("Error en el servidor:", error);
-      setPopupMessage("Error en el servidor. Inténtalo nuevamente.");
+      setPopupMessage(
+        error.response?.data?.message ||
+          "Error en el servidor. Inténtalo nuevamente."
+      );
       setIsPopupOpen(true);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="container--signin">
       <form onSubmit={handleSubmit} className="form">
+        <h1>Registro de usuario</h1>
         <div className="form-group">
           <label htmlFor="nombre">Nombre</label>
           <input
@@ -82,7 +88,6 @@ const SignIn = () => {
             value={nombre}
             onChange={handleName}
             placeholder="Ingresa tu nombre"
-            required
           />
           {nameError && <p className="error-text">Nombre requerido</p>}
         </div>
@@ -94,7 +99,6 @@ const SignIn = () => {
             value={email}
             onChange={handleEmail}
             placeholder="Ingresa tu correo electrónico"
-            required
           />
           {emailError && <p className="error-text">Email requerido</p>}
         </div>
@@ -106,12 +110,11 @@ const SignIn = () => {
             value={password}
             onChange={handlePassword}
             placeholder="Ingresa tu contraseña"
-            required
           />
           {passwordError && <p className="error-text">Contraseña requerida</p>}
         </div>
-        <button type="submit" className="button-signin">
-          Registrarse
+        <button type="submit" className="button-signin" disabled={loading}>
+          {loading ? "Registrando..." : "Registrarse"}
         </button>
       </form>
       <div className="signin-footer">
