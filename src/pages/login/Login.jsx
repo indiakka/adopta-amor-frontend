@@ -5,7 +5,7 @@ import Input from "../../components/input/Input";
 import Button from "../../components/buttons/Button";
 import Popup from "../../components/popups/Popups.jsx";
 import axios from "axios";
-import { useAuth } from "../../context/AuthContext";  
+import { useAuth } from "../../context/AuthContext";
 import "./login.css";
 
 const Login = () => {
@@ -16,8 +16,10 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState("");
-  const { login } = useAuth(); 
+  const { login } = useAuth();
   const navigate = useNavigate();
+
+  const baseURL = import.meta.env.API_BASE_URL;
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -49,7 +51,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:4001/auth/login", {
+      const response = await axios.post(`${baseURL}/auth/login`, {
         email,
         password,
       });
@@ -62,13 +64,18 @@ const Login = () => {
 
         setPopUpMessage(`Bienvenido ${name}`);
         setIsPopupOpen(true);
+        setTimeout(() => {
+          closePopup();
+          navigate("/donar");
+        }, 2000);
       } else {
         throw new Error("Token o datos de usuario faltantes");
       }
     } catch (error) {
       console.error("Error durante el inicio de sesión:", error);
       setPopUpMessage(
-        "Error al iniciar sesión. Por favor, verifica tus credenciales."
+        error.response?.data?.message ||
+          "Error al iniciar sesión. Verifica tus credenciales."
       );
       setIsPopupOpen(true);
     } finally {
@@ -107,8 +114,12 @@ const Login = () => {
             </div>
 
             <div className="button-container">
-              <button type="submit" className="button-signin">
-                Aceptar
+              <button
+                type="submit"
+                className="button-signin"
+                disabled={loading}
+              >
+                {loading ? "Cargando..." : "Aceptar"}
               </button>
               <button
                 className="button-cancel"
@@ -127,8 +138,8 @@ const Login = () => {
         isPopupOpen={isPopupOpen}
         closePopup={closePopup}
         message={popUpMessage}
-        onConfirm={popUpFunction} 
-        showCancel={false} 
+        onConfirm={popUpFunction}
+        showCancel={false}
       />
     </div>
   );

@@ -15,20 +15,20 @@ const Contact = () => {
           <b>Rellene los siguientes campos: </b>
         </p>
         <div className="container--input--divs">
-          <input type="text" placeholder="Nombre completo*" required/>
+          <input type="text" placeholder="Nombre completo*" />
         </div>
         <div className="container--input--divs">
-          <input type="text" placeholder="Correo electrónico*" required/>
+          <input type="text" placeholder="Correo electrónico*" />
         </div>
         <div className="container--input--divs">
-          <input type="text" placeholder="Número de contacto*" required />
+          <input type="text" placeholder="Número de contacto*"  />
         </div>
         <div
           className={`ocultarNotificacion ${
             mostrarNotificacion ? "mostrarNotificacion" : ""
           }`}
         >
-          <article>¡Gracias!¡Nos pondremos en contact muy pronto!</article>
+          <article>¡Gracias!¡Nos pondremos en contacto muy pronto!</article>
         </div>
         <button className="button-adopta button--conoceme" type="submit">
           Enviar
