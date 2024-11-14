@@ -10,7 +10,7 @@
     overflow: hidden;
     width: 48rem;
     max-width: 100%;
-    min-height: 34.5rem;
+    min-height: 35rem;
     margin: 1rem auto;
 }
 
@@ -41,7 +41,7 @@
 .signContainer .formContainer form .inputLogin {
     border: none;
     border-bottom: 0.1rem solid var(--main-color-light);
-    padding: 0.75rem 0.93rem;
+    padding: 0.5rem 0.93rem;
     margin-top: 0.5rem;
     width: 100%;
 }
@@ -54,12 +54,12 @@
 .signContainer .formContainer form .passwordContainer .inputLogin {
     border: none;
     border-bottom: 0.1rem solid var(--main-color-light);
-    padding: 0.75rem 0.93rem;
+    padding: 0.5rem 0.93rem;
     margin-top: 0.5rem;
     width: 100%;
 }
 
-.eyeIcon{
+.eyeIcon {
     width: 1.25rem;
     position: absolute;
     top: 1.5rem;
@@ -69,8 +69,8 @@
 }
 
 
-.signContainer .formContainer form .errorText {
-    font-size: 0.8rem;
+.error-text {
+    font-size: 0.6rem;
     color: red;
     text-align: left;
     margin: 0;
@@ -113,12 +113,26 @@
     background-color: var(--main-color-light);
 }
 
-.signContainer .formContainer form p {
-    font-weight: bold;
+ form p {
     line-height: 1.25rem;
     letter-spacing: 0.03rem;
-    margin: 1.25rem 0 1.8rem;
+    margin: 0.25rem 0 0.8rem;
+    padding-left: 0.5rem;
+    font-weight: bold;
+}
+
+.signContainer .formContainer form p span {
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: var(--main-color-light);
+}
+
+ .linkside {
+    line-height: 1.25rem;
+    letter-spacing: 0.1rem;
+    margin: 1.5rem 0 1.8rem;
     padding-left: 1.5rem;
+    font-weight: bold;
 }
 
 @media (max-width: 720px) {
@@ -127,11 +141,7 @@
     }
 }
 
-.signContainer .formContainer form p span {
-    font-size: 0.9rem;
-    cursor: pointer;
-    color: var(--main-color-light);
-}
+
 
 .signContainer .formContainer .inputError .inputLogin {
     height: 1.5rem;
@@ -185,7 +195,8 @@
     margin-block-end: 6.8rem;
     gap: 1.25rem;
 }
-.loginLogo:hover{
+
+.loginLogo:hover {
     transition: none;
     transform: none;
 }

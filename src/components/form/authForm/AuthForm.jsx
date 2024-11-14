@@ -1,28 +1,38 @@
 import React, { useState, useEffect } from "react";
-import "./authForm.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import OpenEyeIcon from "/assets/images/icons/open.png";
 import CloseEyeIcon from "/assets/images/icons/close.png";
 import Logo from "../../navbar/logo/Logo";
+import axios from "axios";
+import Popup from "../../popups/Popups";
+import "./authForm.css";
 
 const AuthForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { login, isAuthenticated } = useAuth();
   const [isSignPanelActive, setIsSignPanelActive] = useState(false);
-  const [error, setError] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const baseURL = import.meta.env.VITE_API_BASE_URL;
+
   const [form, setForm] = useState({
     name: "",
     lastname: "",
     email: "",
     password: "",
-    confirmPassword: "", 
-    dni: "", 
+    confirmPassword: "",
+    dni: "",
   });
+
+  const [errors, setErrors] = useState({});
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
-    useState(false); 
+    useState(false);
+
+  const handleToggle = () => setIsSignPanelActive(!isSignPanelActive);
 
   useEffect(() => {
     if (location.state?.isSignPanelActive) {
@@ -33,44 +43,97 @@ const AuthForm = () => {
   useEffect(() => {
     if (isAuthenticated) {
       setTimeout(() => {
-        navigate("/reverso-social/femsenior", {
-          state: { showWelcomeAlert: true },
-        });
+        navigate("/donar", { state: { showWelcomeAlert: true } });
       }, 100);
     }
   }, [isAuthenticated, navigate]);
 
-  const resetForm = () => {
-    setForm({
-      name: "",
-      lastname: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      dni: "",
-    });
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: value,
-    });
+    setForm((prevForm) => ({ ...prevForm, [name]: value }));
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" })); // Clear error on field change
   };
 
-  const handlePanel = () => {
-    resetForm();
-    setError(null);
-    setIsSignPanelActive(!isSignPanelActive);
-  };
-
-  const togglePasswordVisibility = () => {
+  const togglePasswordVisibility = () =>
     setIsPasswordVisible(!isPasswordVisible);
+  const toggleConfirmPasswordVisibility = () =>
+    setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (isSignPanelActive) {
+      if (!form.name) newErrors.name = "El nombre es obligatorio";
+      if (!form.lastname) newErrors.lastname = "El apellido es obligatorio";
+      if (!form.dni) newErrors.dni = "El DNI es obligatorio";
+      if (!form.email) newErrors.email = "El correo electrónico es obligatorio";
+      if (!form.password) newErrors.password = "La contraseña es obligatoria";
+      if (!form.confirmPassword)
+        newErrors.confirmPassword = "Debes confirmar la contraseña";
+      if (
+        form.password &&
+        form.confirmPassword &&
+        form.password !== form.confirmPassword
+      ) {
+        newErrors.confirmPassword = "Las contraseñas no coinciden";
+      }
+    } else {
+      if (!form.email) newErrors.email = "El correo electrónico es obligatorio";
+      if (!form.password) newErrors.password = "La contraseña es obligatoria";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const toggleConfirmPasswordVisibility = () => {
-    setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
+    setLoading(true);
+
+    try {
+      if (isSignPanelActive) {
+        // Registro
+        const response = await axios.post(`${baseURL}/auth/register`, {
+          email: form.email,
+          password: form.password,
+          name: form.name,
+          lastname: form.lastname,
+          dni: form.dni,
+        });
+
+        if (response.data) {
+          setPopupMessage("Registro exitoso. Redirigiendo al login...");
+          setIsPopupOpen(true);
+          setTimeout(() => {
+            setIsPopupOpen(false);
+            navigate("/login");
+          }, 2000);
+        }
+      } else {
+        const response = await axios.post(`${baseURL}/auth/login`, {
+          email: form.email,
+          password: form.password,
+        });
+
+        const { token, userId, name, role } = response.data;
+        login(token);
+        localStorage.setItem("user", JSON.stringify({ userId, name, role }));
+        setPopupMessage(`Bienvenido ${name}`);
+        setIsPopupOpen(true);
+        setTimeout(() => navigate("/donar"), 2000);
+      }
+    } catch (error) {
+      setPopupMessage(
+        error.response?.data?.message ||
+          "Error en el servidor. Inténtalo nuevamente."
+      );
+      setIsPopupOpen(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -82,7 +145,7 @@ const AuthForm = () => {
         className="formContainer signUpContainer"
         style={{ display: isSignPanelActive ? "block" : "none" }}
       >
-        <form>
+        <form onSubmit={handleSubmit}>
           <h2 className="registerTitle">Crea una cuenta</h2>
           <input
             className="inputLogin"
@@ -92,6 +155,7 @@ const AuthForm = () => {
             name="name"
             value={form.name}
           />
+          {errors.name && <p className="error-text">{errors.name}</p>}
           <input
             className="inputLogin"
             type="text"
@@ -100,6 +164,7 @@ const AuthForm = () => {
             name="lastname"
             value={form.lastname}
           />
+          {errors.lastname && <p className="error-text">{errors.lastname}</p>}
           <input
             className="inputLogin"
             type="email"
@@ -108,6 +173,7 @@ const AuthForm = () => {
             name="email"
             value={form.email}
           />
+          {errors.email && <p className="error-text">{errors.email}</p>}
           <input
             className="inputLogin"
             type="text"
@@ -116,6 +182,7 @@ const AuthForm = () => {
             name="dni"
             value={form.dni}
           />
+          {errors.dni && <p className="error-text">{errors.dni}</p>}
           <div className="passwordContainer">
             <input
               className="inputLogin"
@@ -132,6 +199,7 @@ const AuthForm = () => {
               onClick={togglePasswordVisibility}
             />
           </div>
+          {errors.password && <p className="error-text">{errors.password}</p>}
           <div className="passwordContainer">
             <input
               className="inputLogin"
@@ -148,12 +216,15 @@ const AuthForm = () => {
               onClick={toggleConfirmPasswordVisibility}
             />
           </div>
-          <button className="loginButton" type="submit">
-            Registrar
+          {errors.confirmPassword && (
+            <p className="error-text">{errors.confirmPassword}</p>
+          )}
+          <button className="loginButton" type="submit" disabled={loading}>
+            {loading ? "Cargando..." : "Registrar"}
           </button>
-          <p>
+          <p className="linkside">
             ¿Ya tienes cuenta?{" "}
-            <span className="link" onClick={handlePanel}>
+            <span className="link" onClick={handleToggle}>
               Accede aquí
             </span>
           </p>
@@ -164,7 +235,7 @@ const AuthForm = () => {
         className="formContainer signInContainer"
         style={{ display: !isSignPanelActive ? "block" : "none" }}
       >
-        <form>
+        <form onSubmit={handleSubmit}>
           <h2 className="logInTitle">Accede a tu cuenta</h2>
           <input
             className="inputLogin"
@@ -174,6 +245,7 @@ const AuthForm = () => {
             name="email"
             value={form.email}
           />
+          {errors.email && <p className="error-text">{errors.email}</p>}
           <div className="passwordContainer">
             <input
               className="inputLogin"
@@ -190,17 +262,26 @@ const AuthForm = () => {
               onClick={togglePasswordVisibility}
             />
           </div>
-          <button className="loginButton" type="submit">
-            Ingresar
+          {errors.password && <p className="error-text">{errors.password}</p>}
+          <button className="loginButton" type="submit" disabled={loading}>
+            {loading ? "Cargando..." : "Ingresar"}
           </button>
-          <p>
+          <p className="linkside">
             ¿No tienes cuenta?{" "}
-            <span className="link" onClick={handlePanel}>
+            <span className="link" onClick={handleToggle}>
               Regístrate aquí
             </span>
           </p>
         </form>
       </div>
+
+      {isPopupOpen && (
+        <Popup
+          isPopupOpen={isPopupOpen}
+          closePopup={() => setIsPopupOpen(false)}
+          message={popupMessage}
+        />
+      )}
 
       <div className="loginContainer">
         <div className="loginPanel loginLeft">
@@ -209,8 +290,7 @@ const AuthForm = () => {
             <Logo />
           </div>
         </div>
-        <div className="loginPanel loginRight">
-        </div>
+        <div className="loginPanel loginRight"></div>
       </div>
     </div>
   );
