@@ -10,6 +10,7 @@ import EditInfo from "../pages/editInfo/EditInfo";
 import Login from "../pages/login/Login";
 import PrivateRoute from "./PrivateRoute";
 import SignIn from "../pages/signin/SignIn";
+import AuthForm from "../components/form/authForm/AuthForm";
 
 export const router = createBrowserRouter([
   {
@@ -50,11 +51,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login />,
+        element: <AuthForm />,
       },
       {
         path: "/signin",
-        element: <SignIn />,
+        element: <AuthForm />,
       },
     ],
   },
