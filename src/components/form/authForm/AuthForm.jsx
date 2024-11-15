@@ -3,9 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import OpenEyeIcon from "/assets/images/icons/open.png";
 import CloseEyeIcon from "/assets/images/icons/close.png";
+import Popup from "../../popups/Popups"; 
 import Logo from "../../navbar/logo/Logo";
 import axios from "axios";
-import Popup from "../../popups/Popups";
 import "./authForm.css";
 
 const AuthForm = () => {
@@ -42,16 +42,14 @@ const AuthForm = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      setTimeout(() => {
-        navigate("/donar", { state: { showWelcomeAlert: true } });
-      }, 100);
+      navigate("/donar");
     }
   }, [isAuthenticated, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prevForm) => ({ ...prevForm, [name]: value }));
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" })); // Clear error on field change
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
   const togglePasswordVisibility = () =>
@@ -105,14 +103,13 @@ const AuthForm = () => {
         });
 
         if (response.data) {
-          setPopupMessage("Registro exitoso. Redirigiendo al login...");
+          setPopupMessage(
+            "Registro exitoso. Haz clic en aceptar para iniciar sesión."
+          );
           setIsPopupOpen(true);
-          setTimeout(() => {
-            setIsPopupOpen(false);
-            navigate("/login");
-          }, 2000);
         }
       } else {
+        // Inicio de sesión
         const response = await axios.post(`${baseURL}/auth/login`, {
           email: form.email,
           password: form.password,
@@ -121,18 +118,24 @@ const AuthForm = () => {
         const { token, userId, name, role } = response.data;
         login(token);
         localStorage.setItem("user", JSON.stringify({ userId, name, role }));
-        setPopupMessage(`Bienvenido ${name}`);
-        setIsPopupOpen(true);
-        setTimeout(() => navigate("/donar"), 2000);
+        navigate("/donar", { state: { popupMessage: `Bienvenido ${name}` } });
       }
     } catch (error) {
+      console.error("Error en el servidor:", error.response || error.message);
       setPopupMessage(
         error.response?.data?.message ||
-          "Error en el servidor. Inténtalo nuevamente."
+          "Error en el servidor. Por favor, inténtalo de nuevo."
       );
       setIsPopupOpen(true);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handlePopupClose = () => {
+    setIsPopupOpen(false);
+    if (isSignPanelActive) {
+      setIsSignPanelActive(false); 
     }
   };
 
@@ -244,6 +247,7 @@ const AuthForm = () => {
             onChange={handleChange}
             name="email"
             value={form.email}
+            autoComplete={isSignPanelActive ? "email" : ""} 
           />
           {errors.email && <p className="error-text">{errors.email}</p>}
           <div className="passwordContainer">
@@ -254,6 +258,9 @@ const AuthForm = () => {
               onChange={handleChange}
               name="password"
               value={form.password}
+              autoComplete={
+                isSignPanelActive ? "new-password" : "current-password"
+              }
             />
             <img
               src={isPasswordVisible ? CloseEyeIcon : OpenEyeIcon}
@@ -275,10 +282,11 @@ const AuthForm = () => {
         </form>
       </div>
 
+      {/* Popup */}
       {isPopupOpen && (
         <Popup
           isPopupOpen={isPopupOpen}
-          closePopup={() => setIsPopupOpen(false)}
+          closePopup={handlePopupClose}
           message={popupMessage}
         />
       )}
