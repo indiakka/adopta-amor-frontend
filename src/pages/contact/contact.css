@@ -13,12 +13,12 @@
 }
 
 
-.container--input--divs{
+.coontact form{
      display: flex;
     justify-content: center;
     align-items: center;
 }
-.container--input--divs input {
+.contact-form input {
     width: 60%;
 }
 

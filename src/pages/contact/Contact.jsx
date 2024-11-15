@@ -52,12 +52,12 @@ const Contact = () => {
   };
   return (
     <div className="formContainerContacto">
-      <form ref={form} className="form contact-form" onSubmit={handleSubmit}>
+      <form ref={form} className="form contact-form " onSubmit={handleSubmit}>
         <h1>Formulario de Contacto</h1>
         <p>
           <b>Rellene los siguientes campos </b>
         </p>
-        <div className="container--input--divs">
+        <div className="container--input--divs contact-form">
           <input
             type="text"
             id="name"
