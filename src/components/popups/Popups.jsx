@@ -14,12 +14,11 @@ const Popup = ({
 }) => {
   useEffect(() => {
     if (isPopupOpen) {
-    
       document.body.style.overflow = "hidden";
     } else {
-    
       document.body.style.overflow = "";
-    }  return () => {
+    }
+    return () => {
       document.body.style.overflow = "";
     };
   }, [isPopupOpen]);
@@ -27,7 +26,12 @@ const Popup = ({
   if (!isPopupOpen) return null;
 
   const popupContent = (
-    <div className="popup-overlay">
+    <div
+      className="popup-overlay"
+      role="dialog"
+      aria-hidden={!isPopupOpen}
+      aria-modal="true"
+    >
       <div className="ventana-Popup">
         <div className="popup-content">
           <p className="popup-message">{message}</p>
@@ -59,10 +63,10 @@ const Popup = ({
 };
 
 Popup.propTypes = {
-  isPopupOpen: PropTypes.bool,
-  closePopup: PropTypes.func,
+  isPopupOpen: PropTypes.bool.isRequired,
+  closePopup: PropTypes.func.isRequired,
   onConfirm: PropTypes.func,
-  message: PropTypes.string,
+  message: PropTypes.string.isRequired,
   showCancel: PropTypes.bool,
 };
 
