@@ -22,7 +22,6 @@ const Contact = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(form.current);
 
     setMostrarNotificacion(true);
 
@@ -36,13 +35,19 @@ const Contact = () => {
 
       .then(
         (result) => {
-          console.log(result.text);
-          setMostrarNotificacion(true);
-          console.log(form.current);
+          setMostrarNotificacion( true );
+            setValues({
+              name: "",
+              email: "",
+              number: "",
+              message: "",
+            });
+          form.current.reset()
         },
         (error) => {
           console.log(error.text);
         }
+
       );
   };
   return (
