@@ -7,7 +7,25 @@
     width: 100%;
     text-align: center;
 }
+
 .mostrarNotificacion {
     display: block;
 }
 
+
+.container--input--divs{
+     display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container--input--divs input {
+    width: 60%;
+}
+
+.email-message input {
+    height: 4rem;
+}
+
+.contact-form {
+    margin-top: -5rem;
+}
