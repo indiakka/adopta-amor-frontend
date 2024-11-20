@@ -1,5 +1,6 @@
 .formContainerContacto {
     height: 80vh;
+    margin-top: -5rem;
 }
 
 .ocultarNotificacion {
@@ -13,19 +14,18 @@
 }
 
 
-.coontact form{
-     display: flex;
+.contact-form{
+  display: flex;
     justify-content: center;
     align-items: center;
 }
 .contact-form input {
-    width: 60%;
+    width: 60%;   
 }
 
 .email-message input {
     height: 4rem;
+    width:60%;
+    margin-bottom: 1rem;
 }
 
-.contact-form {
-    margin-top: -5rem;
-}
