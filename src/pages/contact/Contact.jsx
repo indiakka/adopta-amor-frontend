@@ -102,7 +102,7 @@ const Contact = () => {
             mostrarNotificacion ? "mostrarNotificacion" : ""
           }`}
         >
-          <article>¡Gracias!¡Nos pondremos en contacto muy pronto!</article>
+          <Popup>¡Gracias!¡Nos pondremos en contacto muy pronto!</Popup>
         </div>
         <button className="button-adopta button--conoceme" type="submit">
           Enviar
