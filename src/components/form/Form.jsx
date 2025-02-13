@@ -1,8 +1,8 @@
 import "./form.css";
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 import { guardarAnimal } from "../../axios";
 import { useNavigate } from "react-router";
+import { useState } from "react";
 
 const Form = () => {
   const [tipo, setTipo] = useState("");
@@ -12,7 +12,8 @@ const Form = () => {
   const [cuidadosEspeciales, setCuidadosEspeciales] = useState("");
   const [edad, setEdad] = useState(0);
   const [ubicacion, setUbicacion] = useState("");
-  const [imagen, setImagen] = useState("");
+  // const [imagen, setImagen] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
@@ -22,12 +23,16 @@ const Form = () => {
     if (!tipo) newErrors.tipo = "Por favor, selecciona el tipo de animal.";
     if (!nombre) newErrors.nombre = "El nombre es obligatorio.";
     if (!raza) newErrors.raza = "La raza es obligatoria.";
-    if (edad < -1) newErrors.edad = "La edad debe ser mayor a -1.";
+    if (edad < 0) newErrors.edad = "La edad no puede ser negativa.";
     if (!ubicacion) newErrors.ubicacion = "La ubicación es obligatoria.";
     if (!tamano) newErrors.tamano = "Por favor, selecciona el tamaño.";
- 
 
     return newErrors;
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
   };
 
   const onSubmit = async (event) => {
@@ -38,27 +43,26 @@ const Form = () => {
       setErrors(newErrors);
       return;
     }
-
-    const datos = {
-      tipo,
-      raza,
-      nombre,
-      tamano,
-      cuidadosEspeciales,
-      ubicacion,
-      edad: parseInt(edad),
-      imagen,
-    };
-
+    const formData = new FormData();
+    formData.append("tipo", tipo);
+    formData.append("nombre", nombre);
+    formData.append("raza", raza);
+    formData.append("tamano", tamano);
+    formData.append("cuidadosEspeciales", cuidadosEspeciales);
+    formData.append("ubicacion", ubicacion);
+    formData.append("edad", parseInt(edad));
+    if (selectedFile) {
+      formData.append("imagen", selectedFile);
+    }
     try {
-      await guardarAnimal(datos);
-      alert("Tu peludito se ha guardado correctamente");
+      await guardarAnimal(formData);
+      alerta("Tu peludito se ha guardado correctamente");
       navigate("/adoptar");
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
         setErrors(error.response.data.errors);
       } else {
-        alert("Hubo un problema al guardar el animal.");
+        alerta("Hubo un problema al guardar el animal.");
       }
     }
   };
@@ -146,17 +150,6 @@ const Form = () => {
               </p>
             </div>
             <div>
-              <label htmlFor="imagen">Enlace de la foto</label>
-              <input
-                id="imagen"
-                value={imagen}
-                type="text"
-                placeholder="Enlace de la foto"
-                onChange={(event) => setImagen(event.target.value)}
-              />
-              <p className="error">{errors.imagen ? "" : ""}</p>
-            </div>
-            <div>
               <label htmlFor="tamano">Tamaño</label>
               <select
                 id="tamano"
@@ -173,6 +166,31 @@ const Form = () => {
               </select>
               <p className="error">{errors.tamano ? "Tamaño requerido" : ""}</p>
             </div>
+            <div>
+              <label htmlFor="imagen">Subir foto</label>
+              <input
+                id="imagen"
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+              />
+              {selectedFile && (
+                <img
+                  className="form-image"
+                  src={URL.createObjectURL(selectedFile)}
+                  alt="Preview"
+                />
+              )}
+              {/* <label htmlFor="imagen">Enlace de la foto</label>
+              <input
+                id="imagen"
+                value={imagen}
+                type="text"
+                placeholder="Enlace de la foto"
+                onChange={(event) => setImagen(event.target.value)}
+              />
+              <p className="error">{errors.imagen ? "" : ""}</p>*/}
+            </div>
           </div>
           <div className="container--input--divs">
             <div>
@@ -184,9 +202,7 @@ const Form = () => {
                 placeholder="Cuidados del animal"
                 onChange={(event) => setCuidadosEspeciales(event.target.value)}
               />
-              <p className="error">
-                {errors.cuidadosEspeciales ? "" : ""}
-              </p>
+              <p className="error">{errors.cuidadosEspeciales ? "" : ""}</p>
             </div>
           </div>
         </div>

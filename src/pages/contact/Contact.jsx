@@ -67,7 +67,7 @@ const Contact = () => {
             placeholder="Nombre completo*"
           />
         </div>
-        <div className="container--input--divs">
+        <div className="container--input--divs contact-form">
           <input
             type="email"
             id="email"
@@ -77,7 +77,7 @@ const Contact = () => {
             placeholder="Correo electrónico*"
           />
         </div>
-        <div className="container--input--divs">
+        <div className="container--input--divs contact-form">
           <input
             type="number"
             id="number"
@@ -87,7 +87,7 @@ const Contact = () => {
             placeholder="Número de contacto*"
           />
         </div>
-        <div className="container--input--divs email-message">
+        <div className="container--input--divs  contact-form email-message">
           <input
             type="text"
             id="message"
@@ -102,7 +102,7 @@ const Contact = () => {
             mostrarNotificacion ? "mostrarNotificacion" : ""
           }`}
         >
-          <article>¡Gracias!¡Nos pondremos en contacto muy pronto!</article>
+          <Popup>¡Gracias!¡Nos pondremos en contacto muy pronto!</Popup>
         </div>
         <button className="button-adopta button--conoceme" type="submit">
           Enviar
