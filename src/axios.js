@@ -1,103 +1,128 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const url = "/pets";
 
+const mostrarAlerta = (mensaje, tipo = "error") => {
+  Swal.fire({
+    icon: tipo,
+    title: tipo === "error" ? "Error" : "Éxito",
+    text: mensaje,
+  });
+};
+
 export const recibirAnimales = async () => {
   try {
-
     const respuesta = await axios.get(url, {
-      headers: {
-        "Content-Type": "application/json", 
-      },
+      headers: { "Content-Type": "application/json" },
     });
     return respuesta.data;
   } catch (error) {
-    alert("Hubo un problema al cargar la lista de animales.");
-    return null; 
+    mostrarAlerta("Hubo un problema al cargar la lista de animales.");
+    return null;
   }
 };
 
 export const recibirAnimal = async (id) => {
   try {
-    const token = localStorage.getItem("authToken"); 
-    if (!token) {
-      throw new Error("Token no encontrado");
-    }
+    const token = localStorage.getItem("authToken");
+    if (!token) throw new Error("Token no encontrado");
 
     const respuesta = await axios.get(`${url}/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`, 
-        "Content-Type": "application/json",
-      },
-    });
-    return respuesta.data;
-  } catch (error) {
-    alert("Hubo un problema al cargar la información del animal.");
-    return null;
-  }
-};
-
-
-export const guardarAnimal = async (datos) => {
-  try {
-    const token = localStorage.getItem("authToken");
-
-    await axios.post(url, datos, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
-    alert("Animal guardado correctamente.");
+    return respuesta.data;
   } catch (error) {
-    alert("Hubo un problema al guardar el animal.");
+    mostrarAlerta("Hubo un problema al cargar la información del animal.");
+    return null;
   }
 };
 
+export const guardarAnimal = async (datos) => {
+  try {
+    const token = localStorage.getItem("authToken");
+    if (!token) throw new Error("Token no encontrado");
 
-
+    const respuesta = await axios.post(url, datos, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    mostrarAlerta("Animal guardado correctamente.", "success");
+    return respuesta.data;
+  } catch (error) {
+    if (error.response) {
+      throw new Error(
+        error.response.data.message || "Error al guardar el animal."
+      );
+    } else if (error.request) {
+      throw new Error(
+        "No se pudo conectar con el servidor. Verifica tu conexión."
+      );
+    } else {
+      throw new Error("Ocurrió un error inesperado.");
+    }
+  }
+};
 
 export const actualizarAnimal = async (id, animalGuardado) => {
   try {
-    const token = localStorage.getItem("authToken"); 
+    const token = localStorage.getItem("authToken");
+    if (!token) throw new Error("Token no encontrado");
 
     if (!animalGuardado || !animalGuardado.nombre || !animalGuardado.tipo) {
-      alert("Faltan datos por completar");
+      mostrarAlerta("Faltan datos por completar");
       return null;
     }
 
     const respuesta = await axios.put(`${url}/${id}`, animalGuardado, {
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
-    
-    alert("Animal actualizado correctamente.");
+
+    mostrarAlerta("Animal actualizado correctamente.", "success");
     return respuesta.data;
   } catch (error) {
-    alert("Hubo un problema al actualizar el animal.");
+    mostrarAlerta("Hubo un problema al actualizar el animal.");
     return null;
   }
 };
 
-
 export const eliminarAnimal = async (id) => {
-  const conf = window.confirm(`¿Quieres realmente borrar este animal (${id})?`);
-  if (!conf) {
-    return alert("El animal NO ha sido borrado");
+  const conf = await Swal.fire({
+    title: "¿Estás seguro?",
+    text: "No podrás revertir esto!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Sí, eliminar!",
+  });
+
+  if (!conf.isConfirmed) {
+    mostrarAlerta("El animal NO ha sido borrado");
+    return;
   }
 
   try {
-    const token = localStorage.getItem("authToken"); 
+    const token = localStorage.getItem("authToken");
+    if (!token) throw new Error("Token no encontrado");
+
     await axios.delete(`${url}/${id}`, {
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
-    alert("Este animal ha sido borrado correctamente");
+
+    mostrarAlerta("Este animal ha sido borrado correctamente", "success");
   } catch (error) {
-    alert("Hubo un problema al borrar el animal.");
+    mostrarAlerta("Hubo un problema al borrar el animal.");
   }
 };
