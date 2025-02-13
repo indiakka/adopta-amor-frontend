@@ -3,9 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import OpenEyeIcon from "/assets/images/icons/open.png";
 import CloseEyeIcon from "/assets/images/icons/close.png";
-import Popup from "../../popups/Popups"; 
 import Logo from "../../navbar/logo/Logo";
 import axios from "axios";
+import Alerta from "../../alerta/Alerta"; // Importa el componente Alert
 import "./authForm.css";
 
 const AuthForm = () => {
@@ -13,8 +13,8 @@ const AuthForm = () => {
   const navigate = useNavigate();
   const { login, isAuthenticated } = useAuth();
   const [isSignPanelActive, setIsSignPanelActive] = useState(false);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [popupMessage, setPopupMessage] = useState("");
+  const [isAlertaOpen, setIsAlertaOpen] = useState(false);
+  const [alertaMessage, setAlertaMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const baseURL = import.meta.env.VITE_API_BASE_URL;
 
@@ -103,10 +103,10 @@ const AuthForm = () => {
         });
 
         if (response.data) {
-          setPopupMessage(
+          setAlertaMessage(
             "Registro exitoso. Haz clic en aceptar para iniciar sesión."
           );
-          setIsPopupOpen(true);
+          setIsAlertaOpen(true);
         }
       } else {
         // Inicio de sesión
@@ -118,24 +118,24 @@ const AuthForm = () => {
         const { token, userId, name, role } = response.data;
         login(token);
         localStorage.setItem("user", JSON.stringify({ userId, name, role }));
-        navigate("/donar", { state: { popupMessage: `Bienvenido ${name}` } });
+        navigate("/donar", { state: { alertaMessage: ` ${name}` } });
       }
     } catch (error) {
       console.error("Error en el servidor:", error.response || error.message);
-      setPopupMessage(
+      setAlertaMessage(
         error.response?.data?.message ||
-          "Error en el servidor. Por favor, inténtalo de nuevo."
+          "El email o usuario no son correctos. Por favor, inténtalo de nuevo."
       );
-      setIsPopupOpen(true);
+      setIsAlertaOpen(true);
     } finally {
       setLoading(false);
     }
   };
 
-  const handlePopupClose = () => {
-    setIsPopupOpen(false);
+  const handleAlertaClose = () => {
+    setIsAlertaOpen(false);
     if (isSignPanelActive) {
-      setIsSignPanelActive(false); 
+      setIsSignPanelActive(false);
     }
   };
 
@@ -247,7 +247,7 @@ const AuthForm = () => {
             onChange={handleChange}
             name="email"
             value={form.email}
-            autoComplete={isSignPanelActive ? "email" : ""} 
+            autoComplete={isSignPanelActive ? "email" : ""}
           />
           {errors.email && <p className="error-text">{errors.email}</p>}
           <div className="passwordContainer">
@@ -282,15 +282,17 @@ const AuthForm = () => {
         </form>
       </div>
 
-      {/* Popup */}
-      {isPopupOpen && (
-        <Popup
-          isPopupOpen={isPopupOpen}
-          closePopup={handlePopupClose}
-          message={popupMessage}
-        />
+      {/* Alert */}
+      {isAlertaOpen &&  (
+        <Alerta
+        isOpen={isAlertaOpen}
+        onClose={handleAlertaClose}
+        title={isSignPanelActive ? "Registro exitoso" : "Error"}
+        text={alertaMessage}
+        icon={isSignPanelActive ? "success" : "error"}
+        onConfirm={handleAlertaClose}
+      />
       )}
-
       <div className="loginContainer">
         <div className="loginPanel loginLeft">
           <h3>Bienvenido a</h3>
