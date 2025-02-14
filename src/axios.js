@@ -93,8 +93,8 @@ export const eliminarAnimal = async (id) => {
     text: "No podrás revertir esto!",
     icon: "warning",
     showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
+    confirmButtonColor: "rgb(131, 62, 172)",
+    cancelButtonColor: "rgba(142, 133, 133, 1)",
     confirmButtonText: "Sí, eliminar!",
   });
 
