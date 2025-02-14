@@ -1,26 +1,32 @@
 import Form from "../../components/form/Form";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import Popup from "../../components/popups/Popups";
+import Alerta from "../../components/alerta/Alerta";
 import "./donar.css";
 
 const Donar = () => {
   const location = useLocation();
-  const [popupMessage, setPopupMessage] = useState(null);
+  const [alertaMessage, setAlertaMessage] = useState(null);
 
   useEffect(() => {
-    if (location.state?.popupMessage) {
-      setPopupMessage(location.state.popupMessage);
+    if (location.state?.alertaMessage) {
+      setAlertaMessage(location.state.alertaMessage);
     }
   }, [location.state]);
+
+  const handleCloseAlerta = () => {
+    setAlertaMessage(null); 
+  };
+
   return (
     <div className="donar-container">
-      {/* Renderiza el popup si hay un mensaje */}
-      {popupMessage && (
-        <Popup
-          isPopupOpen={!!popupMessage}
-          closePopup={() => setPopupMessage(null)}
-          message={popupMessage}
+      {alertaMessage && (
+        <Alerta
+          isOpen={true} 
+          onClose={handleCloseAlerta} 
+          title="Bienvenido"
+          text={alertaMessage}
+          icon="success"
         />
       )}
       <div>
