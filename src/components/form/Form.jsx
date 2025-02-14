@@ -167,7 +167,7 @@ const Form = () => {
               <p className="error">{errors.tamano ? "Tamaño requerido" : ""}</p>
             </div>
             <div>
-              <label htmlFor="imagen">Subir foto</label>
+              <label htmlFor="imagen">Foto</label>
               <input
                 id="imagen"
                 type="file"
@@ -181,15 +181,6 @@ const Form = () => {
                   alt="Preview"
                 />
               )}
-              {/* <label htmlFor="imagen">Enlace de la foto</label>
-              <input
-                id="imagen"
-                value={imagen}
-                type="text"
-                placeholder="Enlace de la foto"
-                onChange={(event) => setImagen(event.target.value)}
-              />
-              <p className="error">{errors.imagen ? "" : ""}</p>*/}
             </div>
           </div>
           <div className="container--input--divs">
