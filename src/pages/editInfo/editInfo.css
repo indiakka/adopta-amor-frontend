@@ -7,9 +7,11 @@
 .container--form--edit {
     height: 100vh;
     max-height: 100vh;
-    margin: 0 0 -8rem;
 }
 
+.form--edit{
+    height: 90vh;
+}
 
 .form--tipo {
     display: inline-flex;
@@ -18,12 +20,12 @@
 
 .form--tipo input[value=Perro]:after,
 .form--tipo input[value=Gato]:after {
-    top: -1px;
+    top: -5px;
 }
 
 .form--tipo input[value=Perro]:checked:after,
 .form--tipo input[value=Gato]:checked:after {
-    top: -1px;
+    top: -5px;
 }
 
 .form--column-container {

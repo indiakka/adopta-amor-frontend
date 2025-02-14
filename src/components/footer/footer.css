@@ -17,6 +17,7 @@ footer a {
     margin-bottom: 0;
     bottom: 0;
     align-items: center;
+    align-content: center;
 }
 
 .footer-first-block {
@@ -38,6 +39,7 @@ footer a {
     align-self: center;
     grid-template-columns: repeat(3, 1fr);
     gap: 10%;
+    margin-bottom: 1rem;
 }
 
 .footer-social-media img {
@@ -54,6 +56,10 @@ footer a {
     color: var(--main-color-light)
 }
 
+
+.footer-nav-discover{
+    height: 10rem;
+}
 
 @media only screen and (max-width: 360px) {
 
