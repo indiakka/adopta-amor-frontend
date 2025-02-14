@@ -2,11 +2,24 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { useNavigate, useParams } from "react-router";
 import { actualizarAnimal, recibirAnimal } from "../../axios";
-import "./editInfo.css"
+import Alerta from "../../components/alerta/Alerta"
+import "./editInfo.css";
 
 const EditInfo = () => {
   const { id } = useParams();
-  const [animalGuardado, setAnimalGuardado] = useState({});
+  const [animalGuardado, setAnimalGuardado] = useState({
+    tipo: "",
+    nombre: "",
+    raza: "",
+    tamano: "",
+    cuidadosEspeciales: "",
+    edad: 0,
+    ubicacion: "",
+    imagen: "",
+  });
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [errors, setErrors] = useState({});
+  const [alertConfig, setAlertConfig] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,77 +28,130 @@ const EditInfo = () => {
       if (datosAnimal) {
         setAnimalGuardado(datosAnimal);
       } else {
-        alert("Error cargando los datos del animal.");
+        setAlertConfig({
+          isOpen: true,
+          title: "Error",
+          text: "Error cargando los datos del animal.",
+          icon: "error",
+        });
       }
     };
     cargarAnimal();
   }, [id]);
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+  };
+
+  const validarFormulario = () => {
+    const newErrors = {};
+    if (!animalGuardado.tipo)
+      newErrors.tipo = "Por favor, selecciona el tipo de animal.";
+    if (!animalGuardado.nombre) newErrors.nombre = "El nombre es obligatorio.";
+    if (!animalGuardado.raza) newErrors.raza = "La raza es obligatoria.";
+    if (!animalGuardado.tamano)
+      newErrors.tamano = "Por favor, selecciona el tamaño.";
+    if (!animalGuardado.ubicacion)
+      newErrors.ubicacion = "La ubicación es obligatoria.";
+    if (animalGuardado.edad < 0)
+      newErrors.edad = "La edad no puede ser negativa.";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const manejarEnvio = async (event) => {
     event.preventDefault();
-
-    if (!animalGuardado || !animalGuardado.tipo || !animalGuardado.nombre) {
-      alert("Faltan datos por completar");
+    if (!validarFormulario()) {
+      setAlertConfig({
+        isOpen: true,
+        title: "Error",
+        text: "Faltan datos por completar o hay errores en el formulario.",
+        icon: "error",
+      });
       return;
     }
 
-    const resultado = await actualizarAnimal(id, animalGuardado);
+    const formData = new FormData();
+    formData.append("tipo", animalGuardado.tipo);
+    formData.append("nombre", animalGuardado.nombre);
+    formData.append("raza", animalGuardado.raza);
+    formData.append("tamano", animalGuardado.tamano);
+    formData.append("cuidadosEspeciales", animalGuardado.cuidadosEspeciales);
+    formData.append("ubicacion", animalGuardado.ubicacion);
+    formData.append("edad", animalGuardado.edad);
+    if (selectedFile) {
+      formData.append("imagen", selectedFile);
+    }
+
+    const resultado = await actualizarAnimal(id, formData);
     if (resultado) {
-      alert("Datos modificados correctamente");
-      navigate("/adoptar");
+      setAlertConfig({
+        isOpen: true,
+        title: "Éxito",
+        text: "Datos modificados correctamente",
+        icon: "success",
+        onConfirm: () => navigate("/adoptar"),
+      });
     } else {
-      alert("Error actualizando el animal");
+      setAlertConfig({
+        isOpen: true,
+        title: "Error",
+        text: "Error actualizando el animal",
+        icon: "error",
+      });
     }
   };
 
   return (
-    <div className="container--form">
-      <form onSubmit={manejarEnvio} className="form">
-        <div className="form--tipo-container">
-          <p>
-            <b>Seleccione el tipo de animal: </b>
-          </p>
-          <div className="form--tipo">
-            <label>
-              <input
-                value="Perro"
-                checked={animalGuardado.tipo === "Perro"}
-                type="radio"
-                id="Perro"
-                name="tipo"
-                onChange={(event) =>
-                  setAnimalGuardado({
-                    ...animalGuardado,
-                    tipo: event.target.value,
-                  })
-                }
-              />
-              Perro
-            </label>
-            <label>
-              <input
-                value="Gato"
-                checked={animalGuardado.tipo === "Gato"}
-                type="radio"
-                id="Gato"
-                name="tipo"
-                onChange={(event) =>
-                  setAnimalGuardado({
-                    ...animalGuardado,
-                    tipo: event.target.value,
-                  })
-                }
-              />
-              Gato
-            </label>
-          </div>
+    <div className="container--form container--form--edit">
+      <form onSubmit={manejarEnvio} className="form form-edit">
+        <p>
+          <b>Seleccione el tipo de animal: </b>
+        </p>
+        <div className="form--tipo">
+          <label htmlFor="perro">
+            <input
+              value="Perro"
+              checked={animalGuardado.tipo === "Perro"}
+              type="radio"
+              id="perro"
+              name="tipo"
+              onChange={(event) =>
+                setAnimalGuardado({
+                  ...animalGuardado,
+                  tipo: event.target.value,
+                })
+              }
+            />
+            Perro
+          </label>
+          <label htmlFor="gato">
+            <input
+              value="Gato"
+              checked={animalGuardado.tipo === "Gato"}
+              type="radio"
+              id="gato"
+              name="tipo"
+              onChange={(event) =>
+                setAnimalGuardado({
+                  ...animalGuardado,
+                  tipo: event.target.value,
+                })
+              }
+            />
+            Gato
+          </label>
+          {errors.tipo && <p className="error">{errors.tipo}</p>}
         </div>
 
-        <div className="form--column-container">
-          <div className="form--column">
-            <div>
+        <div className="container--input--form">
+          <div className="container--input--divs">
+            <div className="container--input--divs--edit">
+              <label htmlFor="nombre">Nombre</label>
               <input
-                className="input--text"
+                id="nombre"
                 value={animalGuardado.nombre || ""}
                 type="text"
                 placeholder="Nombre"
@@ -96,10 +162,12 @@ const EditInfo = () => {
                   })
                 }
               />
+              {errors.nombre && <p className="error">{errors.nombre}</p>}
             </div>
-            <div>
+            <div className="container--input--divs--edit">
+              <label htmlFor="raza">Raza</label>
               <input
-                className="input--text"
+                id="raza"
                 value={animalGuardado.raza || ""}
                 type="text"
                 placeholder="Raza"
@@ -110,10 +178,12 @@ const EditInfo = () => {
                   })
                 }
               />
+              {errors.raza && <p className="error">{errors.raza}</p>}
             </div>
-            <div>
+            <div className="container--input--divs--edit">
+              <label htmlFor="edad">Edad</label>
               <input
-                className="input--text"
+                id="edad"
                 value={animalGuardado.edad || ""}
                 type="number"
                 placeholder="Edad"
@@ -124,13 +194,15 @@ const EditInfo = () => {
                   })
                 }
               />
+              {errors.edad && <p className="error">{errors.edad}</p>}
             </div>
           </div>
 
-          <div className="form--column">
-            <div>
+          <div className="container--input--divs">
+            <div className="container--input--divs--edit">
+              <label htmlFor="ubicacion">Ubicación</label>
               <input
-                className="input--text"
+                id="ubicacion"
                 value={animalGuardado.ubicacion || ""}
                 type="text"
                 placeholder="Ubicación"
@@ -141,27 +213,14 @@ const EditInfo = () => {
                   })
                 }
               />
+              {errors.ubicacion && <p className="error">{errors.ubicacion}</p>}
             </div>
-            <div>
-              <input
-                className="input--text"
-                value={animalGuardado.imagen || ""}
-                type="text"
-                placeholder="Enlace de la foto"
-                onChange={(event) =>
-                  setAnimalGuardado({
-                    ...animalGuardado,
-                    imagen: event.target.value,
-                  })
-                }
-              />
-            </div>
-            <div>
+            <div className="container--input--divs--edit">
+              <label htmlFor="tamano">Tamaño</label>
               <select
-                className="input--select"
+                id="tamano"
                 value={animalGuardado.tamano || ""}
                 name="tamano"
-                id="tamano"
                 onChange={(event) =>
                   setAnimalGuardado({
                     ...animalGuardado,
@@ -172,42 +231,64 @@ const EditInfo = () => {
                 <option hidden value="">
                   Selecciona el tamaño
                 </option>
-                <option value="grande" className="select--option">
-                  Grande
-                </option>
-                <option value="mediano" className="select--option">
-                  Mediano
-                </option>
-                <option value="pequeño" className="select--option">
-                  Pequeño
-                </option>
+                <option value="grande">Grande</option>
+                <option value="mediano">Mediano</option>
+                <option value="pequeño">Pequeño</option>
               </select>
+              {errors.tamano && <p className="error">{errors.tamano}</p>}
+            </div>
+            <div className="container--input--divs--edit">
+              <label htmlFor="imagen">Subir foto</label>
+              <input
+                id="imagen"
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+              />
+              {selectedFile && (
+                <img
+                  className="form-image"
+                  src={URL.createObjectURL(selectedFile)}
+                  alt="Preview"
+                />
+              )}
+              {!selectedFile && animalGuardado.imagen && (
+                <img
+                  className="form-image"
+                  src={animalGuardado.imagen}
+                  alt="Imagen actual"
+                />
+              )}
+            </div>
+          </div>
+
+          <div className="container--input--divs">
+            <div className="container--input--divs--edit">
+              <label htmlFor="cuidados">Cuidados especiales</label>
+              <input
+                id="cuidados"
+                value={animalGuardado.cuidadosEspeciales || ""}
+                type="text"
+                placeholder="Cuidados del animal"
+                onChange={(event) =>
+                  setAnimalGuardado({
+                    ...animalGuardado,
+                    cuidadosEspeciales: event.target.value,
+                  })
+                }
+              />
             </div>
           </div>
         </div>
 
-        <div className="form--cuidados">
-          <input
-            className="input--text"
-            value={animalGuardado.cuidadosEspeciales || ""}
-            type="text"
-            placeholder="Cuidados del animal"
-            onChange={(event) =>
-              setAnimalGuardado({
-                ...animalGuardado,
-                cuidadosEspeciales: event.target.value,
-              })
-            }
-          />
-        </div>
-
-        <button type="submit" className="button-adopta">
+        <button type="submit" className="button-adopta button--confirm--edit">
           Actualizar datos
         </button>
       </form>
+
+      {alertConfig.isOpen && <Alerta {...alertConfig} />}
     </div>
   );
 };
-
 
 export default EditInfo;

@@ -1,13 +1,31 @@
 .form--tipo-container {
     margin-bottom: 20px;
     margin: 1.5rem;
-  
+    margin-bottom: 0;
+}
+
+.container--form--edit {
+    height: 100vh;
+    max-height: 100vh;
+}
+
+.form--edit{
+    height: 90vh;
 }
 
 .form--tipo {
     display: inline-flex;
     justify-content: center;
-    gap: 10px;
+}
+
+.form--tipo input[value=Perro]:after,
+.form--tipo input[value=Gato]:after {
+    top: -5px;
+}
+
+.form--tipo input[value=Perro]:checked:after,
+.form--tipo input[value=Gato]:checked:after {
+    top: -5px;
 }
 
 .form--column-container {
@@ -34,3 +52,10 @@
     border-radius: 5px;
 }
 
+.container--input--divs--edit {
+    padding: 1em;
+}
+
+.button--confirm--edit{
+    width: 210px;
+}

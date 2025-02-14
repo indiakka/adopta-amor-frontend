@@ -69,28 +69,21 @@ export const guardarAnimal = async (datos) => {
   }
 };
 
-export const actualizarAnimal = async (id, animalGuardado) => {
+export const actualizarAnimal = async (id, formData) => {
   try {
     const token = localStorage.getItem("authToken");
     if (!token) throw new Error("Token no encontrado");
 
-    if (!animalGuardado || !animalGuardado.nombre || !animalGuardado.tipo) {
-      mostrarAlerta("Faltan datos por completar");
-      return null;
-    }
-
-    const respuesta = await axios.put(`${url}/${id}`, animalGuardado, {
+    const respuesta = await axios.put(`${url}/${id}`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
       },
     });
 
-    mostrarAlerta("Animal actualizado correctamente.", "success");
-    return respuesta.data;
+    return true; 
   } catch (error) {
-    mostrarAlerta("Hubo un problema al actualizar el animal.");
-    return null;
+    console.error("Error al actualizar el animal:", error);
+    return false; 
   }
 };
 
