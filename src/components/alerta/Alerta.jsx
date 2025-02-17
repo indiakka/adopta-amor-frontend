@@ -4,10 +4,8 @@ import "./alerta.css";
 
 const Alerta = ({ isOpen, title, text, icon, onClose }) => {
   useEffect(() => {
-    console.log("🔥 [Alerta] useEffect ejecutado con:", { isOpen, title, text, icon });
 
     if (isOpen) {
-      console.log("🚀 Ejecutando Swal.fire...");
       Swal.fire({
         title: title,
         text: text,
