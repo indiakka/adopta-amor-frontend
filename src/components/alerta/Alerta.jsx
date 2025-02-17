@@ -22,16 +22,16 @@ const Alerta = ({
         showCancelButton: showCancelButton,
         confirmButtonText: confirmButtonText,
         cancelButtonText: cancelButtonText,
-        confirmButtonColor: "rgb(131, 62, 172);", // Color del botón de confirmación
-        cancelButtonColor: "rgba(142, 133, 133, 1)", // Color del botón de cancelación
-        background: "#f0f0f0", // Color de fondo del modal
+        confirmButtonColor: "rgb(131, 62, 172);", 
+        cancelButtonColor: "rgba(142, 133, 133, 1)", 
+        background: "#f0f0f0",
         color: "#333",
       }).then((result) => {
         if (result.isConfirmed && onConfirm) { 
-          onConfirm(); // Ejecuta la función de confirmación si se proporciona
+          onConfirm(); 
         }
         if (onClose) {
-          onClose(); // Cierra el modal
+          onClose(); 
         }
       });
     }
@@ -47,7 +47,7 @@ const Alerta = ({
     onConfirm,
   ]);
 
-  return null; // No renderiza nada en el DOM
+  return null; 
 };
 
 export default Alerta;

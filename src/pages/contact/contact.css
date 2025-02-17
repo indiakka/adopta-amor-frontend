@@ -1,6 +1,15 @@
 .formContainerContacto {
-    height: 80vh;
-    margin-top: -5rem;
+    height: 90vh;
+    margin-top: -4rem;
+
+    .label-contact::after{
+        content: "*";
+        color: red
+    }
+
+    p{
+        font-size:x-small;
+    }
 }
 
 .ocultarNotificacion {
@@ -14,18 +23,18 @@
 }
 
 
-.contact-form{
-  display: flex;
+.contact-form {
+    display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .contact-form input {
-    width: 60%;   
+    width: 60%;
 }
 
 .email-message input {
     height: 4rem;
-    width:60%;
+    width: 60%;
     margin-bottom: 1rem;
 }
-
