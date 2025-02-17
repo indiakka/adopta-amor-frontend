@@ -4,16 +4,26 @@ import { faTimes, faPaw } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
 import { eliminarAnimal } from "../../axios";
 import React, { useState, useEffect } from "react";
+import Alerta from "../alerta/Alerta";
+import Swal from "sweetalert2";
 
-const AnimalInfo = ({
-  animal,
-  setTodosLosAnimales,
-  onClick,
-  alEliminar,
-}) => {
+const AnimalInfo = ({ animal, setTodosLosAnimales, onClick, alEliminar }) => {
   const [animalesCasita, setAnimalesCasita] = useState([]);
   const [estaAbierta, setEstaAbierta] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [mostrarNotificacion, setMostrarNotificacion] = useState({
+    isOpen: false,
+    title: "",
+    text: "",
+    icon: "",
+  });
+
+  useEffect(() => {
+    console.log(
+      "📢 Estado actualizado de mostrarNotificacion:",
+      mostrarNotificacion
+    );
+  }, [mostrarNotificacion]);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -23,22 +33,32 @@ const AnimalInfo = ({
   }, []);
 
   useEffect(() => {
+    console.log("🔄 Actualizando la casita desde localStorage...");
     const animalesAlmacenados =
       JSON.parse(localStorage.getItem("animalesCasita")) || [];
     setAnimalesCasita(animalesAlmacenados);
-  }, []);
+  }, [mostrarNotificacion]); 
 
   const guardarEnLocalStorage = (animales) => {
     localStorage.setItem("animalesCasita", JSON.stringify(animales));
-    setAnimalesCasita(animales); 
-    setTodosLosAnimales(animales); 
+    setAnimalesCasita([...animales]);
+    setTodosLosAnimales(animales);
+    console.log("📁 Guardando en localStorage:", animales);
   };
 
   const anadirAnimal = () => {
+    console.log("📢 Añadiendo animal...");
+
     const existe = animalesCasita.some((elemento) => elemento.id === animal.id);
 
     if (existe) {
-      alert("Este animal ya está en tu casita.");
+      console.log("❌ Este animal ya está en la casita.");
+      Swal.fire({
+        isOpen: true,
+        title: "Error",
+        text: "Este animal ya está en tu casita",
+        icon: "error",
+      });
       return;
     }
 
@@ -50,9 +70,20 @@ const AnimalInfo = ({
     };
 
     const animalesActualizados = [...animalesCasita, nuevoAnimal];
-    guardarEnLocalStorage(animalesActualizados); 
-    alert( "Animal añadido a tu casita" );
-    window.location.reload()
+    guardarEnLocalStorage(animalesActualizados);
+
+    console.log("✅ Animal añadido correctamente.");
+
+    setMostrarNotificacion({ isOpen: false });
+
+    setTimeout(() => {
+      console.log("🚀 Mostrando alerta manualmente con Swal.fire...");
+      Swal.fire({
+        title: "Éxito",
+        text: "Animal añadido a tu casita",
+        icon: "success",
+      });
+    });
   };
 
   const clickEliminarAnimal = async (event) => {
@@ -120,7 +151,7 @@ const AnimalInfo = ({
               onClick={manejarCerrar}
             />
           </div>
-
+          {mostrarNotificacion.isOpen && <Alerta {...mostrarNotificacion} />}
           {isAdmin && (
             <>
               <NavLink to={`/editInfo/${animal.id}`}>
