@@ -1,20 +1,13 @@
 import Swal from "sweetalert2";
 import { useEffect } from "react";
-import "./alerta.css"
+import "./alerta.css";
 
-const Alerta = ({
-  isOpen,
-  onClose,
-  title,
-  text,
-  icon = "info",
-  showCancelButton = false,
-  confirmButtonText = "Aceptar",
-  cancelButtonText = "Cancelar",
-  onConfirm,
-}) => {
+const Alerta = ({ isOpen, title, text, icon, onClose }) => {
   useEffect(() => {
+    console.log("🔥 [Alerta] useEffect ejecutado con:", { isOpen, title, text, icon });
+
     if (isOpen) {
+      console.log("🚀 Ejecutando Swal.fire...");
       Swal.fire({
         title: title,
         text: text,
@@ -31,7 +24,7 @@ const Alerta = ({
           onConfirm(); 
         }
         if (onClose) {
-          onClose(); 
+          onClose();
         }
       });
     }
@@ -47,7 +40,7 @@ const Alerta = ({
     onConfirm,
   ]);
 
-  return null; 
+  return null;
 };
 
 export default Alerta;
