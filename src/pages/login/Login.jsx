@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../components/input/Input";
 import Button from "../../components/buttons/Button";
-import Popup from "../../components/popups/Popups.jsx";
+import Alerta from "../../components/alerta/Alerta";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import "./login.css";
@@ -14,7 +14,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isAlertaOpen, setIsAlertaOpen] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -31,12 +31,12 @@ const Login = () => {
     setPasswordError(!e.target.value);
   };
 
-  const closePopup = () => {
-    setIsPopupOpen(false);
+  const closeAlerta = () => {
+    setIsAlertaOpen(false);
   };
 
   const popUpFunction = () => {
-    closePopup();
+    closeAlerta();
     navigate("/donar");
   };
 
@@ -63,9 +63,9 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify({ userId, name, role }));
 
         setPopUpMessage(`Bienvenido ${name}`);
-        setIsPopupOpen(true);
+        setIsAlertaOpen(true);
         setTimeout(() => {
-          closePopup();
+          closeAlerta();
           navigate("/donar");
         }, 2000);
       } else {
@@ -77,7 +77,7 @@ const Login = () => {
         error.response?.data?.message ||
           "Error al iniciar sesión. Verifica tus credenciales."
       );
-      setIsPopupOpen(true);
+      setIsAlertaOpen(true);
     } finally {
       setLoading(false);
     }
@@ -136,9 +136,9 @@ const Login = () => {
         </form>
       </section>
 
-      <Popup
-        isPopupOpen={isPopupOpen}
-        closePopup={closePopup}
+      <Alerta
+        isAlertaOpen={isAlertaOpen}
+        closeAlerta={closeAlerta}
         message={popUpMessage}
         onConfirm={popUpFunction}
         showCancel={false}

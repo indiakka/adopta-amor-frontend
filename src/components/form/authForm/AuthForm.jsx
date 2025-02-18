@@ -5,7 +5,7 @@ import OpenEyeIcon from "/assets/images/icons/open.png";
 import CloseEyeIcon from "/assets/images/icons/close.png";
 import Logo from "../../navbar/logo/Logo";
 import axios from "axios";
-import Alerta from "../../alerta/Alerta"; // Importa el componente Alert
+import Alerta from "../../alerta/Alerta";
 import "./authForm.css";
 
 const AuthForm = () => {
@@ -104,7 +104,7 @@ const AuthForm = () => {
 
         if (response.data) {
           setAlertaMessage(
-            "Registro exitoso. Haz clic en aceptar para iniciar sesión."
+            "Te has registrado correctamente. Haz clic en aceptar para iniciar sesión."
           );
           setIsAlertaOpen(true);
         }

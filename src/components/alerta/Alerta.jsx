@@ -2,9 +2,18 @@ import Swal from "sweetalert2";
 import { useEffect } from "react";
 import "./alerta.css";
 
-const Alerta = ({ isOpen, title, text, icon, onClose }) => {
+const Alerta = ({
+  isOpen,
+  title = "Aviso",
+  text = "",
+  icon = "info",
+  onClose,
+  confirmButtonText = "Aceptar", 
+  showCancelButton = false,
+  cancelButtonText = "Cancelar",
+  onConfirm,
+}) => {
   useEffect(() => {
-
     if (isOpen) {
       Swal.fire({
         title: title,
@@ -13,13 +22,13 @@ const Alerta = ({ isOpen, title, text, icon, onClose }) => {
         showCancelButton: showCancelButton,
         confirmButtonText: confirmButtonText,
         cancelButtonText: cancelButtonText,
-        confirmButtonColor: "rgb(131, 62, 172);", 
-        cancelButtonColor: "rgba(142, 133, 133, 1)", 
+        confirmButtonColor: "rgb(131, 62, 172)",
+        cancelButtonColor: "rgba(142, 133, 133, 1)",
         background: "#f0f0f0",
         color: "#333",
       }).then((result) => {
-        if (result.isConfirmed && onConfirm) { 
-          onConfirm(); 
+        if (result.isConfirmed && onConfirm) {
+          onConfirm();
         }
         if (onClose) {
           onClose();
