@@ -4,13 +4,13 @@ import { faTimes, faPaw } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
 import { eliminarAnimal } from "../../axios";
 import React, { useState, useEffect } from "react";
-import Alerta from "../alerta/Alerta";
 import Swal from "sweetalert2";
 
 const AnimalInfo = ({ animal, setTodosLosAnimales, onClick, alEliminar }) => {
   const [animalesCasita, setAnimalesCasita] = useState([]);
   const [estaAbierta, setEstaAbierta] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+
   const [mostrarNotificacion, setMostrarNotificacion] = useState({
     isOpen: false,
     title: "",
@@ -19,10 +19,9 @@ const AnimalInfo = ({ animal, setTodosLosAnimales, onClick, alEliminar }) => {
   });
 
   useEffect(() => {
-    console.log(
-      "📢 Estado actualizado de mostrarNotificacion:",
-      mostrarNotificacion
-    );
+    if (mostrarNotificacion.isOpen) {
+      console.log("🚀 Mostrando alerta...");
+    }
   }, [mostrarNotificacion]);
 
   useEffect(() => {
@@ -33,64 +32,67 @@ const AnimalInfo = ({ animal, setTodosLosAnimales, onClick, alEliminar }) => {
   }, []);
 
   useEffect(() => {
-    console.log("🔄 Actualizando la casita desde localStorage...");
     const animalesAlmacenados =
       JSON.parse(localStorage.getItem("animalesCasita")) || [];
     setAnimalesCasita(animalesAlmacenados);
-  }, [mostrarNotificacion]); 
+  }, []);
 
   const guardarEnLocalStorage = (animales) => {
     localStorage.setItem("animalesCasita", JSON.stringify(animales));
-    setAnimalesCasita([...animales]);
-    setTodosLosAnimales(animales);
-    console.log("📁 Guardando en localStorage:", animales);
+    setAnimalesCasita(animales);
+    setTodosLosAnimales(animales); 
   };
 
-  const anadirAnimal = () => {
-    console.log("📢 Añadiendo animal...");
+const anadirAnimal = () => {
 
-    const existe = animalesCasita.some((elemento) => elemento.id === animal.id);
+  const existe = animalesCasita.some((elemento) => elemento.id === animal.id);
 
-    if (existe) {
-      console.log("❌ Este animal ya está en la casita.");
-      Swal.fire({
-        isOpen: true,
-        title: "Error",
-        text: "Este animal ya está en tu casita",
-        icon: "error",
-      });
-      return;
-    }
-
-    const nuevoAnimal = {
-      id: animal.id,
-      nombre: animal.nombre,
-      imagen: animal.imagen,
-      cantidad: 1,
-    };
-
-    const animalesActualizados = [...animalesCasita, nuevoAnimal];
-    guardarEnLocalStorage(animalesActualizados);
-
-    console.log("✅ Animal añadido correctamente.");
-
-    setMostrarNotificacion({ isOpen: false });
-
-    setTimeout(() => {
-      console.log("🚀 Mostrando alerta manualmente con Swal.fire...");
-      Swal.fire({
-        title: "Éxito",
-        text: "Animal añadido a tu casita",
-        icon: "success",
-      });
+  if (existe) {
+    Swal.fire({
+      title: "Error",
+      text: "Este animal ya está en tu casita",
+      icon: "error",
     });
+    return;
+  }
+
+  const nuevoAnimal = {
+    id: animal.id,
+    nombre: animal.nombre,
+    imagen: animal.imagen,
+    cantidad: 1,
   };
 
-  const clickEliminarAnimal = async (event) => {
-    event.preventDefault();
-    await eliminarAnimal(animal.id);
-    await alEliminar();
-  };
+  const animalesActualizados = [...animalesCasita, nuevoAnimal];
+
+  localStorage.setItem("animalesCasita", JSON.stringify(animalesActualizados));
+
+  setAnimalesCasita(animalesActualizados);
+  setTodosLosAnimales(animalesActualizados);
+
+  window.dispatchEvent(new Event("storage"));
+
+
+  Swal.fire({
+    title: "Éxito",
+    text: "Animal añadido a tu casita",
+    icon: "success",
+    confirmButtonColor: "rgb(131, 62, 172)",
+  });
+};
+
+const clickEliminarAnimal = async (event) => {
+  event.preventDefault();
+  await eliminarAnimal(animal.id);
+
+  const animalesActualizados = animalesCasita.filter((a) => a.id !== animal.id);
+  localStorage.setItem("animalesCasita", JSON.stringify(animalesActualizados));
+  setAnimalesCasita(animalesActualizados);
+  setTodosLosAnimales(animalesActualizados);
+
+  window.dispatchEvent(new Event("storage"));
+};
+
 
   const manejarCerrar = () => {
     setEstaAbierta(false);
@@ -151,7 +153,6 @@ const AnimalInfo = ({ animal, setTodosLosAnimales, onClick, alEliminar }) => {
               onClick={manejarCerrar}
             />
           </div>
-          {mostrarNotificacion.isOpen && <Alerta {...mostrarNotificacion} />}
           {isAdmin && (
             <>
               <NavLink to={`/editInfo/${animal.id}`}>
