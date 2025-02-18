@@ -6,9 +6,20 @@ const Shelter = ({ visible }) => {
   const [todosLosAnimales, setTodosLosAnimales] = useState([]);
 
   useEffect(() => {
-    const animalesCasita =
-      JSON.parse(localStorage.getItem("animalesCasita")) || [];
-    setTodosLosAnimales(animalesCasita);
+    console.log("🔄 Cargando animales desde localStorage...");
+    const cargarAnimales = () => {
+      const animalesCasita =
+        JSON.parse(localStorage.getItem("animalesCasita")) || [];
+      setTodosLosAnimales(animalesCasita);
+    };
+
+    cargarAnimales();
+
+    window.addEventListener("storage", cargarAnimales);
+
+    return () => {
+      window.removeEventListener("storage", cargarAnimales);
+    };
   }, []);
 
   const eliminarAnimalCasita = (animalId) => {
@@ -16,17 +27,19 @@ const Shelter = ({ visible }) => {
       (elemento) => elemento.id !== animalId
     );
     setTodosLosAnimales(resultados);
-    localStorage.setItem( "animalesCasita", JSON.stringify( resultados ) );
-    window.location.reload()
+    localStorage.setItem("animalesCasita", JSON.stringify(resultados));
 
+    window.dispatchEvent(new Event("storage"));
   };
 
   const alVaciarCasita = () => {
     setTodosLosAnimales([]);
-    localStorage.setItem( "animalesCasita", JSON.stringify( [] ) );
-    
+    localStorage.setItem("animalesCasita", JSON.stringify([]));
+
+    window.dispatchEvent(new Event("storage"));
   };
-  if (!visible) return null; 
+
+  if (!visible) return null;
 
   return (
     <div className="container-shelter-card">

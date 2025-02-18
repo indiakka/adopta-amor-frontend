@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Popup from "../../components/popups/Popups";
-import "./signin.css"; 
+import Alerta from "../../components/alerta/Alerta";
+import "./signin.css";
 
 const SignIn = () => {
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [popupMessage, setPopupMessage] = useState("");
+  const [isAlertaOpen, setIsAlertaOpen] = useState(false);
+  const [popupMessage, setAlertaMessage] = useState("");
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL;
 
-  const closePopup = () => setIsPopupOpen(false);
+  const closeAlerta = () => setIsAlertaOpen(false);
 
   const handleName = (e) => {
     setNombre(e.target.value);
@@ -55,10 +55,10 @@ const baseURL = import.meta.env.VITE_API_BASE_URL;
       });
 
       if (response.data) {
-        setPopupMessage("Registro exitoso. Redirigiendo al login...");
-        setIsPopupOpen(true);
+        setAlertaMessage("Registro exitoso. Redirigiendo al login...");
+        setIsAlertaOpen(true);
         setTimeout(() => {
-          closePopup();
+          closeAlerta();
           navigate("/login");
         }, 2000);
       } else {
@@ -66,11 +66,11 @@ const baseURL = import.meta.env.VITE_API_BASE_URL;
       }
     } catch (error) {
       console.error("Error en el servidor:", error);
-      setPopupMessage(
+      setAlertaMessage(
         error.response?.data?.message ||
           "Error en el servidor. Inténtalo nuevamente."
       );
-      setIsPopupOpen(true);
+      setIsAlertaOpen(true);
     } finally {
       setLoading(false);
     }
@@ -125,10 +125,10 @@ const baseURL = import.meta.env.VITE_API_BASE_URL;
           aquí
         </Link>
       </div>
-      {isPopupOpen && (
-        <Popup
-          isPopupOpen={isPopupOpen}
-          closePopup={closePopup}
+      {isAlertaOpen && (
+        <Alerta
+          isAlertaOpen={isAlertaOpen}
+          closeAlerta={closeAlerta}
           message={popupMessage}
         />
       )}
