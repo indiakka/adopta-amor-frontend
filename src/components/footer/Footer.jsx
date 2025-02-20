@@ -1,5 +1,5 @@
 import "./footer.css";
-import React from "react"; 
+import React from "react";
 import { NavLink } from "react-router-dom";
 
 const Footer = () => {
@@ -16,7 +16,7 @@ const Footer = () => {
       <div className="footer-second-block">
         <div className="footer-nav-discover">
           <h3>Descubrir</h3>
-          <p className="light-effect">Cómo funciona</p>
+          <p className="light-effect">Colabora con nosotros</p>
           <p className="light-effect">
             <NavLink to="/adoptar">Adopta</NavLink>
           </p>
@@ -26,9 +26,10 @@ const Footer = () => {
         </div>
         <div className="footer-nav-info">
           <h3>Info</h3>
-          <NavLink to='/aboutUs' className="light-effect">Sobre nosotros</NavLink>
-          <p className="light-effect">FAQ</p>
-          <NavLink to='/contacto' className="light-effect">Contactar</NavLink>
+          <NavLink to="/aboutUs" className="light-effect">
+            Sobre nosotros
+          </NavLink>
+          <p>adoptaAmor@gmail.com</p>
         </div>
         <div className="footer-social-media">
           <h3>
