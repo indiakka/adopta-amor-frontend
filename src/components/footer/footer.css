@@ -42,14 +42,22 @@ footer a {
 
 }
 
-.footer-social-media img {
-    margin: 4%;
-    width: 15%;
-    display: inline;
+
+.footer-social-media {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    bottom: 0;
+    img {
+        margin: 4%;
+        width: 15%;
+        display: inline;
+    }
 }
 
 .footer-social-media p {
     margin: 0;
+
 }
 
 .footer-social-media img path:hover {
