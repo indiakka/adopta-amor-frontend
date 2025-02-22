@@ -71,7 +71,7 @@ const Shelter = ({ visible }) => {
                 </div>
               ))}
             </div>
-            <Link to="/contacto" className="shelter-button">
+            <Link to="/shelterForm" className="shelter-button">
               <button type="submit" className="shelter-button">
                 Reservar cita
               </button>
