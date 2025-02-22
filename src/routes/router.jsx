@@ -11,6 +11,7 @@ import Login from "../pages/login/Login";
 import PrivateRoute from "./PrivateRoute";
 import SignIn from "../pages/signin/SignIn";
 import AuthForm from "../components/form/authForm/AuthForm";
+import ShelterForm from "../components/form/shetlerForm/ShetlerForm";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
       {
         path: "/contacto",
         element: <Contact />,
+      },
+      {
+        path: "/shelterForm",
+        element: <ShelterForm />,
       },
       {
         path: "/editInfo/:id",
