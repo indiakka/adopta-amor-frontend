@@ -1,7 +1,54 @@
-.selectedImage{
-    width: 20vh;
+.selectedImage {
+    width: 10vw;
 }
 
-.imageChecked{
+.contact--animals {
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+    margin-bottom: 3%;
+}
+
+.imageChecked {
     margin: -2rem;
+}
+
+.contact--animal--info {
+    color: var(--gray-color);
+}
+
+.contact--form--details {
+    width: 80vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-form-info {
+    margin-top: 0.5rem;
+
+    div {
+        width: 40vw;
+        margin-bottom: 1rem;
+    }
+}
+
+.contact--input--form {
+    margin-top: 2rem;
+
+    .contact--form--div {
+        width: 40vw;
+        margin-top: 0.5rem;
+    }
+}
+
+.contact--message {
+    width: 40vw !important;
+    height: 5rem;
+}
+
+.contact-button {
+    margin-top: 2rem;
+    width: 15% !important;
 }

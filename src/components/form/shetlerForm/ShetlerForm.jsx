@@ -36,56 +36,94 @@ const ShelterForm = () => {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        {onShelter.map((animal) => (
-          <div key={animal.id}>
-            <img className="selectedImage" src={animal.imagen} />
-            <input
-              type="checkbox"
-              className="imageCheckbox"
-              defaultChecked={true}
-              {...register(`checked.${animal.id}`, {
-                required: "Algun animal debe estar seleccionado",
-              })}
-              aria-invalid={errors.checked?.[animal.id] ? "true" : "false"}
-            />
-            {errors.checked?.[animal.id] && (
-              <p role="alert">{errors.checked?.[animal.id].message}</p>
-            )}
+    <div className="container--form">
+      <form onSubmit={handleSubmit(onSubmit)} className="form contact-form">
+        <div className="contact--animals">
+          {onShelter.map((animal) => (
+            <div key={animal.id} className=" ">
+              <div className="contact--animal--info">
+                <img className="selectedImage" src={animal.imagen} />
+                {animal.name}
+              </div>
+              <input
+                type="checkbox"
+                className="imageCheckbox"
+                defaultChecked={true}
+                {...register(`checked.${animal.id}`, {
+                  required: "Algun animal debe estar seleccionado",
+                })}
+                aria-invalid={errors.checked?.[animal.id] ? "true" : "false"}
+              />
+              {errors.checked?.[animal.id] && (
+                <p role="alert">{errors.checked?.[animal.id].message}</p>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="contact--form--details">
+          <div className="contact-form-info">
+            <label className="label-contact" htmlFor="name">
+              Nombre y Apellido
+            </label>
+            <div className="container--input--divs contact--form--div">
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={values.name}
+                onChange={handleChange}
+                placeholder="Nombre completo"
+              />
+            </div>
+            <label className="label-contact" htmlFor="email">
+              Email
+            </label>
+            <div className="container--input--divs contact--form--div">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={values.email}
+                onChange={handleChange}
+                placeholder="Correo electrónico"
+              />
+            </div>
+            <label htmlFor="number">Número de teléfono </label>
+            <div className="container--input--divs contact--form--div">
+              <input
+                type="number"
+                id="number"
+                name="number"
+                value={values.number}
+                onChange={handleChange}
+                placeholder="Número de contacto"
+              />
+            </div>
           </div>
-        ))}
-      </div>
-      <label htmlFor="respuesta">
-        ¿Qué necesitas?
-        <div>
-          <select name="respuesta" id="respuesta">
-            <option value="conocer">Quiero conocerlo</option>
-            <option value="info">Quiero saber más información sobre él</option>
-          </select>
+          <div className="contact--input--form">
+            <label htmlFor="respuesta">
+              ¿Qué necesitas?
+              <div className="container--input--divs contact--form--div">
+                <select name="respuesta" id="respuesta">
+                  <option value="conocer">Quiero conocerlo</option>
+                  <option value="info">
+                    Quiero saber más información sobre él
+                  </option>
+                </select>
+              </div>
+            </label>
+
+            <label htmlFor="mensaje">
+              Mensaje adicional
+              <div className="container--input--divs  contact--form--div">
+                <input className="contact--message" type="message" />
+              </div>
+            </label>
+          </div>
         </div>
-      </label>
-      <label htmlFor="mensaje">
-        Mensaje adicional
-        <div>
-          <input type="message" />
-        </div>
-      </label>
-      <label className="label-contact" htmlFor="name">
-        Nombre y Apellido{" "}
-      </label>
-      <div className="container--input--divs contact-form">
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={values.name}
-          onChange={handleChange}
-          placeholder="Nombre completo"
-        />
-      </div>
-      <input type="submit" />
-    </form>
+        <input type="submit" className="button-adopta contact-button" />
+      </form>
+    </div>
   );
 };
 
