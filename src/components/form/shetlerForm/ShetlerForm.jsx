@@ -40,20 +40,24 @@ const ShelterForm = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="form contact-form">
         <div className="contact--animals">
           {onShelter.map((animal) => (
-            <div key={animal.id} className=" ">
+            <div key={animal.id} className="animal-detail">
               <div className="contact--animal--info">
                 <img className="selectedImage" src={animal.imagen} />
-                {animal.name}
+                <div>
+                  <input
+                    type="checkbox"
+                    className="imageCheckbox"
+                    defaultChecked={true}
+                    {...register(`checked.${animal.id}`, {
+                      required: "Algun animal debe estar seleccionado",
+                    })}
+                    aria-invalid={
+                      errors.checked?.[animal.id] ? "true" : "false"
+                    }
+                  />
+                  {animal.nombre}
+                </div>
               </div>
-              <input
-                type="checkbox"
-                className="imageCheckbox"
-                defaultChecked={true}
-                {...register(`checked.${animal.id}`, {
-                  required: "Algun animal debe estar seleccionado",
-                })}
-                aria-invalid={errors.checked?.[animal.id] ? "true" : "false"}
-              />
               {errors.checked?.[animal.id] && (
                 <p role="alert">{errors.checked?.[animal.id].message}</p>
               )}
@@ -61,7 +65,7 @@ const ShelterForm = () => {
           ))}
         </div>
         <div className="contact--form--details">
-          <div className="contact-form-info">
+          <div className="contact--form--info">
             <label className="label-contact" htmlFor="name">
               Nombre y Apellido
             </label>
@@ -88,7 +92,9 @@ const ShelterForm = () => {
                 placeholder="Correo electrónico"
               />
             </div>
-            <label htmlFor="number">Número de teléfono </label>
+            <label className="label-contact" htmlFor="number">
+              Número de teléfono{" "}
+            </label>
             <div className="container--input--divs contact--form--div">
               <input
                 type="number"
@@ -101,7 +107,7 @@ const ShelterForm = () => {
             </div>
           </div>
           <div className="contact--input--form">
-            <label htmlFor="respuesta">
+            <label className="label-contact" htmlFor="respuesta">
               ¿Qué necesitas?
               <div className="container--input--divs contact--form--div">
                 <select name="respuesta" id="respuesta">
@@ -113,7 +119,7 @@ const ShelterForm = () => {
               </div>
             </label>
 
-            <label htmlFor="mensaje">
+            <label className="label-contact" htmlFor="mensaje">
               Mensaje adicional
               <div className="container--input--divs  contact--form--div">
                 <input className="contact--message" type="message" />

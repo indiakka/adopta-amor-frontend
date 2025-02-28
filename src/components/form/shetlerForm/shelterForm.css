@@ -5,46 +5,89 @@
 .contact--animals {
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
     gap: 5%;
     margin-bottom: 3%;
 }
 
+
+
 .imageChecked {
-    margin: -2rem;
+    background-color: var(--main-color);
+}
+
+.imageCheckbox {
+    left: 2rem;
 }
 
 .contact--animal--info {
+    margin: 1rem;
     color: var(--gray-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contact--animal--info {
+    background-color: var(--main-color-light);
 }
 
 .contact--form--details {
     width: 80vw;
+    height: 70vh;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-evenly;
+    align-items: stretch;
 }
 
-.contact-form-info {
-    margin-top: 0.5rem;
+.contact--form--details {
+    input:hover {
+        background-color: var(--main-color-light);
+    }
+}
 
-    div {
-        width: 40vw;
+.contact--form--info {
+    margin-bottom: 0.5rem;
+    /* height: 50vh; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 30vw;
+    row-gap: 5%;
+
+    input {
+        width: 100%;
         margin-bottom: 1rem;
     }
+
+    .contact--form--div:last-child {
+        width: 100%;
+    }
+
+    .container--input--divs {
+        width: 100%;
+        padding: 0;
+    }
+
 }
 
 .contact--input--form {
     margin-top: 2rem;
 
-    .contact--form--div {
-        width: 40vw;
-        margin-top: 0.5rem;
+    .contact--form--div,
+    .label-contact {
+        width: 30vw;
+        height: 4.5rem;
+        margin: 1rem 0;
     }
 }
 
+
+
 .contact--message {
-    width: 40vw !important;
+    width: 100% !important;
     height: 5rem;
 }
 
