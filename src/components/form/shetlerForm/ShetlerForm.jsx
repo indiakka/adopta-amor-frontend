@@ -108,12 +108,12 @@ const ShelterForm = () => {
           </div>
           <div className="contact--input--form">
             <label className="label-contact" htmlFor="respuesta">
-              ¿Qué necesitas?
+              ¿Qué quieres hacer?
               <div className="container--input--divs contact--form--div">
                 <select name="respuesta" id="respuesta">
                   <option value="conocer">Quiero conocerlo</option>
                   <option value="info">
-                    Quiero saber más información sobre él
+                    Necesito más información.
                   </option>
                 </select>
               </div>
